@@ -152,13 +152,14 @@ namespace MSniper
             Log.WriteLine("MSniper - NecroBot Pokemon Sniper by msx752");
             Log.WriteLine("GitHub Project https://github.com/msx752/MSniper",ConsoleColor.Yellow);
             Log.Write("Current Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString(), ConsoleColor.White);
-            if (!VersionCheck.IsLatest())
+            if (VersionCheck.IsLatest())
             {
-                Log.WriteLine("");
+                 Log.WriteLine("   * lasted version *", ConsoleColor.White);
             }
             else
             {
-                Log.WriteLine("   *new version up*", ConsoleColor.Green);
+                Log.WriteLine("   * new version up *", ConsoleColor.Green);
+                Log.WriteLine("* Loot at https://github.com/msx752/MSniper/releases *", ConsoleColor.Yellow);
             }
             Log.WriteLine(" *Necrobot must be running before MSniper*",ConsoleColor.White);
             Log.WriteLine("--------------------------------------------------------");
