@@ -24,11 +24,13 @@ namespace MSniper
             Console.Clear();
             helper();
             if (Process.GetProcessesByName(botname).Count() == 0)
+            {
                 Log.WriteLine("Any running NecroBot not found...", ConsoleColor.Red);
-
+                Log.WriteLine(" *Necrobot must be running before MSniper*", ConsoleColor.Red);
+            }
+            args = new string[] { "pokesniper2://Dragonite/37.766627,-122.403677" };//for debug mode
             if (args.Length == 1)
             {
-                //args[0] = "pokesniper2://Dragonite/37.766627,-122.403677";
                 ProcessStartInfo psi = null;
                 switch (args.First())
                 {
@@ -86,6 +88,13 @@ namespace MSniper
                         string pokemonName = pars[2];
                         foreach (var item in Process.GetProcessesByName(botname))
                         {
+                            string username = item.MainWindowTitle.Split('-').First().Split(' ')[2];
+                            if (!isBotUpperThan094(item.MainModule.FileVersionInfo))
+                            {
+                                Log.WriteLine(string.Format("Incompatible NecroBot version for {0}", username), ConsoleColor.Red);
+                                continue;
+                            }
+                            isBotUpperThan094(item.MainModule.FileVersionInfo);
                             List<MSniperInfo> MSniperLocation = new List<MSniperInfo>();
                             string path = Path.Combine(Path.GetDirectoryName(item.MainModule.FileName), snipefilename);
                             if (File.Exists(path))
@@ -120,8 +129,7 @@ namespace MSniper
                                             Formatting.Indented,
                                             new StringEnumConverter { CamelCaseText = true }));
                                         sw.Close();
-                                        string val = item.MainWindowTitle.Split('-').First().Split(' ')[2];
-                                        Log.WriteLine(string.Format("Sending to {3}: {0} {1},{2}", pokemonName, lat, lon, val), ConsoleColor.Green);
+                                        Log.WriteLine(string.Format("Sending to {3}: {0} {1},{2}", pokemonName, lat, lon, username), ConsoleColor.Green);
                                         break;
                                     }
                                     catch { Thread.Sleep(200); }
@@ -150,22 +158,32 @@ namespace MSniper
         {
             Log.WriteLine("");
             Log.WriteLine("MSniper - NecroBot Pokemon Sniper by msx752");
-            Log.WriteLine("GitHub Project https://github.com/msx752/MSniper",ConsoleColor.Yellow);
+            Log.WriteLine("GitHub Project https://github.com/msx752/MSniper", ConsoleColor.Yellow);
             Log.Write("Current Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString(), ConsoleColor.White);
             if (VersionCheck.IsLatest())
             {
-                 Log.WriteLine("   * lasted version *", ConsoleColor.White);
+                Log.WriteLine("   * lasted version *", ConsoleColor.White);
             }
             else
             {
                 Log.WriteLine("   * new version up *", ConsoleColor.Green);
                 Log.WriteLine("* Loot at https://github.com/msx752/MSniper/releases *", ConsoleColor.Yellow);
             }
-            Log.WriteLine(" *Necrobot must be running before MSniper*",ConsoleColor.White);
+            Log.WriteLine("MSniper integrated NecroBot v0.9.5 and upper", ConsoleColor.DarkCyan);
             Log.WriteLine("--------------------------------------------------------");
             Console.WriteLine("");
         }
-
+        static bool isBotUpperThan094(FileVersionInfo fversion)
+        {
+            if (new Version(fversion.FileVersion) >= new Version("0.9.5"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         static void Shutdown(int seconds)
         {
             Log.WriteLine("Program is closing in " + seconds + "sec");
