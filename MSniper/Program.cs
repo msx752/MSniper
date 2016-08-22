@@ -28,7 +28,7 @@ namespace MSniper
                 Log.WriteLine("Any running NecroBot not found...", ConsoleColor.Red);
                 Log.WriteLine(" *Necrobot must be running before MSniper*", ConsoleColor.Red);
             }
-            args = new string[] { "pokesniper2://Dragonite/37.766627,-122.403677" };//for debug mode
+            //args = new string[] { "pokesniper2://Dragonite/37.766627,-122.403677" };//for debug mode
             if (args.Length == 1)
             {
                 ProcessStartInfo psi = null;
