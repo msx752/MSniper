@@ -132,7 +132,7 @@ namespace MSniper
                         break;
                 }
             }
-            Shutdown(2);
+            Shutdown(3);
         }
         static void FileDelete(string path)
         {
@@ -150,8 +150,9 @@ namespace MSniper
         {
             Log.WriteLine("");
             Log.WriteLine("MSniper - NecroBot Pokemon Sniper by msx752");
+            Log.WriteLine("GitHub Project https://github.com/msx752/MSniper",ConsoleColor.Yellow);
             Log.Write("Current Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString(), ConsoleColor.White);
-            if (true)
+            if (!VersionCheck.IsLatest())
             {
                 Log.WriteLine("");
             }
@@ -159,6 +160,7 @@ namespace MSniper
             {
                 Log.WriteLine("   *new version up*", ConsoleColor.Green);
             }
+            Log.WriteLine(" *Necrobot must be running before MSniper*",ConsoleColor.White);
             Log.WriteLine("--------------------------------------------------------");
             Console.WriteLine("");
         }
