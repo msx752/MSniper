@@ -1,0 +1,2 @@
+# MSniper
+Snipe for NecroBot
