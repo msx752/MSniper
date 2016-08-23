@@ -1,29 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace MSniper
 {
-    public class NecroWebClient : WebClient
-    {
-        protected override WebRequest GetWebRequest(Uri uri)
-        {
-            WebRequest w = base.GetWebRequest(uri);
-            w.Timeout = 10000;
-            return w;
-        }
-    }
-
     public static class VersionCheck
     {
-        public static string VersionUri =
-            "https://raw.githubusercontent.com/msx752/MSniper/master/MSniper/Properties/AssemblyInfo.cs";
         public static Version RemoteVersion;
+
         public static bool IsLatest()
         {
             try
@@ -51,8 +36,18 @@ namespace MSniper
         {
             using (var wC = new NecroWebClient())
             {
-                return wC.DownloadString(VersionUri);
+                return wC.DownloadString(Program.VersionUri);
             }
+        }
+    }
+
+    public class NecroWebClient : WebClient
+    {
+        protected override WebRequest GetWebRequest(Uri uri)
+        {
+            WebRequest w = base.GetWebRequest(uri);
+            w.Timeout = 10000;
+            return w;
         }
     }
 }

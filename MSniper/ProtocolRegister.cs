@@ -1,17 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
+using System;
 using System.Windows.Forms;
 
 namespace MSniper
 {
     public static class ProtocolRegister
     {
-        public static string protocolName { get; set; } = "pokesniper2";
-        public static void RegisterUrl()
+        public static void DeleteUrl(string protocolName)
+        {
+            try
+            {
+                if (Registry.ClassesRoot.OpenSubKey(protocolName) != null)
+                    Registry.ClassesRoot.DeleteSubKeyTree(protocolName, true);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //not necessary
+        //public static void isProtocolExists(string protocolName)
+        //{
+        //    if (Registry.ClassesRoot.OpenSubKey(protocolName) == null)
+        //    {
+        //        RegisterUrl(protocolName);
+        //    }
+        //    else
+        //    {
+        //        DeleteUrl(protocolName);
+        //        RegisterUrl(protocolName);
+        //    }
+        //}
+
+        public static void RegisterUrl(string protocolName)
         {
             try
             {
@@ -27,32 +49,6 @@ namespace MSniper
             catch (Exception e)
             {
                 throw e;
-            }
-        }
-        public static void DeleteUrl()
-        {
-            try
-            {
-                if (Registry.ClassesRoot.OpenSubKey(protocolName) != null)
-                    Registry.ClassesRoot.DeleteSubKeyTree(protocolName, true);
-            }
-            catch (Exception e)
-            {
-
-                throw e;
-            }
-        }
-
-        public static void isProtocolExists()
-        {
-            if (Registry.ClassesRoot.OpenSubKey(protocolName) == null)
-            {
-                RegisterUrl();
-            }
-            else
-            {
-                DeleteUrl();
-                RegisterUrl();
             }
         }
     }
