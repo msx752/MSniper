@@ -1,5 +1,5 @@
 # MSniper
-Manual Snipe for NecroBot
+Manual Snipe for [NecroBot](https://github.com/NoxxDev/NecroBot)
 
 # Features
 - integrated with NecroBot (only communicating on SnipeMS.json)
