@@ -46,17 +46,12 @@ namespace MSniper
             }
             else
             {
-                Log.WriteLine(string.Format("   * New Version: {0} *",VersionCheck.RemoteVersion), ConsoleColor.Green);
+                Log.WriteLine(string.Format("   * New Version: {0} *", VersionCheck.RemoteVersion), ConsoleColor.Green);
                 Log.WriteLine(string.Format("* Loot at {0}/{1} *", githupProjectLink, "releases/latest"), ConsoleColor.Yellow);
             }
             Log.WriteLine("MSniper integrated NecroBot v0.9.5 or upper", ConsoleColor.DarkCyan);
             Log.WriteLine("--------------------------------------------------------");
             Console.WriteLine("");
-            if (Process.GetProcessesByName(botEXEname).Count() == 0)
-            {
-                Log.WriteLine("Any running NecroBot not found...", ConsoleColor.Red);
-                Log.WriteLine(" *Necrobot must be running before MSniper*", ConsoleColor.Red);
-            }
         }
 
         private static bool isBotUpperThan094(FileVersionInfo fversion)
@@ -75,6 +70,15 @@ namespace MSniper
         {
             Console.Clear();
             Helper();
+            if (Process.GetProcessesByName(botEXEname).Count() == 0)
+            {
+                Log.WriteLine("Any running NecroBot not found...", ConsoleColor.Red);
+                Log.WriteLine(" *Necrobot must be running before MSniper*", ConsoleColor.Red);
+            }
+            else if (args.Length == 0)
+            {
+                Log.WriteLine("Use any snipe website..", ConsoleColor.White);
+            }
             //args = new string[] { "pokesniper2://Dragonite/37.766627,-122.403677" };//for debug mode
             if (args.Length == 1)
             {
