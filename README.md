@@ -1,3 +1,4 @@
+[![All Releases](https://img.shields.io/github/downloads/msx752/MSniper/total.svg)](https://github.com/msx752/MSniper/releases)
 # MSniper
 Manual Snipe for [NecroBot](https://github.com/NoxxDev/NecroBot)
 
