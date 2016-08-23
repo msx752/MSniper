@@ -42,14 +42,14 @@ namespace MSniper
             Log.Write("Current Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString(), ConsoleColor.White);
             if (VersionCheck.IsLatest())
             {
-                Log.WriteLine("   * lastet version *", ConsoleColor.White);
+                Log.WriteLine("   * Latest Version *", ConsoleColor.White);
             }
             else
             {
                 Log.WriteLine(string.Format("   * New Version: {0} *",VersionCheck.RemoteVersion), ConsoleColor.Green);
-                Log.WriteLine(string.Format("* Loot at {0}/{1} *", githupProjectLink, "releases"), ConsoleColor.Yellow);
+                Log.WriteLine(string.Format("* Loot at {0}/{1} *", githupProjectLink, "releases/latest"), ConsoleColor.Yellow);
             }
-            Log.WriteLine("MSniper integrated NecroBot v0.9.5 and upper", ConsoleColor.DarkCyan);
+            Log.WriteLine("MSniper integrated NecroBot v0.9.5 or upper", ConsoleColor.DarkCyan);
             Log.WriteLine("--------------------------------------------------------");
             Console.WriteLine("");
             if (Process.GetProcessesByName(botEXEname).Count() == 0)
