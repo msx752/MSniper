@@ -10,7 +10,7 @@ Manual Snipe for NecroBot
 
 # Usage
 - firstly, run [NecroBot](https://github.com/NoxxDev/NecroBot/releases/latest)(v0.9.5 or upper) (doesn't matter how many use bot)
-- secondly, run registerProtocol.bat (onetime enough)
+- secondly, run once registerProtocol.bat(if you change file location, you have to run again)
 - thirdly, use any snipe website
 
 # Requirements
