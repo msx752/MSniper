@@ -10,10 +10,10 @@ Manual Snipe for [NecroBot](https://github.com/NoxxDev/NecroBot)
 - program can working multiple NecroBot and same pokemon location will send all working bot at the same time
 
 # Advantage
-- program can use with [PogoLocationFeeder](https://github.com/5andr0/PogoLocationFeeder/releases/latest) instead of other snipe program
+- program can use with [PogoLocationFeeder](https://github.com/5andr0/PogoLocationFeeder/releases/latest) +  NecroBot
 
-# Wiki
-- [Wiki](https://github.com/NoxxDev/NecroBot/wiki/MSniper-Manual-Snipping-Guide)
+# Guide
+- all information [here](https://github.com/msx752/MSniper/wiki/MSniper-Manual-Snipping-Guide)
 
 # Usage
 - firstly, run NecroBot (doesn't matter how many use bot)
