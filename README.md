@@ -18,4 +18,7 @@ Manual Snipe for [NecroBot](https://github.com/NoxxDev/NecroBot)
 - thirdly, use any snipe website
 
 # Requirements
-- [NecroBot](https://github.com/NoxxDev/NecroBot/releases/latest) v0.9.5 or upper
+- [NecroBot](https://github.com/NoxxDev/NecroBot/releases/latest) **v0.9.5 or Upper**
+
+# Download Latest Version
+- [MSniper Latest](https://github.com/msx752/MSniper/releases/latest)
