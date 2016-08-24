@@ -12,8 +12,8 @@ Manual Snipe for [NecroBot](https://github.com/NoxxDev/NecroBot)
 # Advantage
 - program can use with [PogoLocationFeeder](https://github.com/5andr0/PogoLocationFeeder/releases/latest) +  NecroBot
 
-# Wiki
-- [Wiki](https://github.com/NoxxDev/NecroBot/wiki/MSniper-Manual-Snipping-Guide)
+# Guide
+- all information [here](https://github.com/NoxxDev/NecroBot/wiki/MSniper-Manual-Snipping-Guide)
 
 # Usage
 - firstly, run NecroBot (doesn't matter how many use bot)
