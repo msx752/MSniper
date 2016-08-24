@@ -48,6 +48,7 @@ namespace MSniper
             {
                 Log.WriteLine(string.Format("   * New Version: {0} *", VersionCheck.RemoteVersion), ConsoleColor.Green);
                 Log.WriteLine(string.Format("* Loot at {0}/{1} *", githupProjectLink, "releases/latest"), ConsoleColor.Yellow);
+                Shutdown(5);
             }
             Log.WriteLine("MSniper integrated NecroBot v0.9.5 or upper", ConsoleColor.DarkCyan);
             Log.WriteLine("--------------------------------------------------------");
@@ -111,7 +112,7 @@ namespace MSniper
                         break;
                 }
             }
-            Shutdown(5);
+            Shutdown(4);
         }
 
         private static void RemoveAllSnipeMSJSON()
@@ -143,7 +144,7 @@ namespace MSniper
         {
             Log.WriteLine("Program is closing in " + seconds + "sec");
             Thread.Sleep(seconds * 1000);
-            Application.ExitThread();
+            Process.GetCurrentProcess().Kill();
         }
 
         private static void SnipePokemon(string[] parameters)
