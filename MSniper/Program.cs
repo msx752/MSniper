@@ -118,7 +118,7 @@ namespace MSniper
         {
             foreach (var item in Process.GetProcessesByName(botEXEname))
             {
-                string path = Path.Combine(Path.GetDirectoryName(item.MainModule.FileName), "temp", snipefilename);
+                string path = Path.Combine(Path.GetDirectoryName(item.MainModule.FileName), snipefilename);
                 if (File.Exists(path))
                 {
                     FileDelete(path);
