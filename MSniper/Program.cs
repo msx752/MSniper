@@ -62,6 +62,8 @@ namespace MSniper
             {
                 Log.WriteLine("Any running NecroBot not found...", ConsoleColor.Red);
                 Log.WriteLine(" *Necrobot must be running before MSniper*", ConsoleColor.Red);
+                if (args.Length != 1)
+                    Shutdown(5);
             }
 
             //args = new string[] { "pokesniper2://dragonite/37.766627,-122.403677" };//for debug mode
@@ -161,7 +163,7 @@ namespace MSniper
                     Log.WriteLine(string.Format("deleted {0} for {1}", snipefilename, val), ConsoleColor.Green);
                 }
             }
-            Log.WriteLine(string.Format("deleting finished count:{0}..", plist.Count()), ConsoleColor.Green);
+            Log.WriteLine(string.Format("deleting finished process count:{0}..", plist.Count()), ConsoleColor.Green);
         }
 
         private static void Runas(string executablepath, string parameters, bool afterKillSelf = true)
