@@ -14,7 +14,12 @@ Manual Snipe for [NecroBot](https://github.com/NoxxDev/NecroBot)
 - program can working multiple NecroBot and same pokemon location will send all working bot at the same time
 
 # Advantage
+- you can run multiple msniper
+- sending one pokemon, sharing with all running necrobot
 - program can use with [PogoLocationFeeder](https://github.com/5andr0/PogoLocationFeeder/releases/latest) +  NecroBot
+
+# Important
+- MSniper doesn't cause ban, only using necrobot will cause ban because every catching is controlling on NecroBot. **using bot your own risk**
 
 # Guide
 - all information [here](https://github.com/msx752/MSniper/wiki/MSniper-Manual-Snipping-Guide)
