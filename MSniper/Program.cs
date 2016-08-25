@@ -48,7 +48,7 @@ namespace MSniper
                 }
                 Shutdown(5);
             }
-            Log.WriteLine("MSniper integrated NecroBot v0.9.5 or upper", ConsoleColor.DarkCyan);
+            Log.WriteLine(string.Format("MSniper integrated NecroBot v{0} or upper", minRequireVersion), ConsoleColor.DarkCyan);
             Log.WriteLine("--------------------------------------------------------");
         }
 
@@ -64,7 +64,7 @@ namespace MSniper
                 Log.WriteLine(" *Necrobot must be running before MSniper*", ConsoleColor.Red);
             }
 
-            //args = new string[] { "pokesniper2://Dragonite/37.766627,-122.403677" };//for debug mode
+            //args = new string[] { "pokesniper2://dragonite/37.766627,-122.403677" };//for debug mode
             if (args.Length == 1)
             {
                 switch (args.First())
@@ -92,18 +92,18 @@ namespace MSniper
                         break;
 
                     default:
-                        string re1 = "(pokesniper2://)";//protocol
-                        string re6 = "((?:[a-z][a-z]+))";//pokemon name
-                        string re7 = "(\\/)";
-                        string re8 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
-                        string re9 = "(,)";
-                        string re10 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
+                        string re0 = "(pokesniper2://)";//protocol
+                        string re1 = "((?:[a-z][a-z]+))";//pokemon name
+                        string re2 = "(\\/)";//separator
+                        string re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
+                        string re4 = "(,)";//separator
+                        string re5 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
 
-                        Regex r = new Regex(re1 + re6 + re7 + re8 + re9 + re10, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                        Regex r = new Regex(re0 + re1 + re2 + re3 + re4 + re5, RegexOptions.IgnoreCase | RegexOptions.Singleline);
                         Match m = r.Match(args.First());
                         if (m.Success)
                         {
-                            Snipe(m.Groups[1].ToString(), m.Groups[3].ToString(), m.Groups[5].ToString());
+                            Snipe(m.Groups[2].ToString(), m.Groups[4].ToString(), m.Groups[6].ToString());
                         }
                         else
                         {
@@ -153,10 +153,10 @@ namespace MSniper
             Process[] plist = Process.GetProcessesByName(botEXEName);
             foreach (var item in plist)
             {
-                string path = Path.Combine(Path.GetDirectoryName(item.MainModule.FileName), snipefilename);
-                if (File.Exists(path))
+                string pathRemote = GetSnipeMSLocation(Path.GetDirectoryName(item.MainModule.FileName));
+                if (File.Exists(pathRemote))
                 {
-                    FileDelete(path);
+                    FileDelete(pathRemote);
                     string val = item.MainWindowTitle.Split('-').First().Split(' ')[2];
                     Log.WriteLine(string.Format("deleted {0} for {1}", snipefilename, val), ConsoleColor.Green);
                 }
@@ -235,8 +235,8 @@ namespace MSniper
                         Log.WriteLine(string.Format("Incompatible NecroBot version for {0}", username), ConsoleColor.Red);
                         continue;
                     }
-                    string path = Path.Combine(Path.GetDirectoryName(item.MainModule.FileName), snipefilename);
-                    List<MSniperInfo> MSniperLocation = ReadSnipeMS(path);
+                    string pathRemote = GetSnipeMSLocation(Path.GetDirectoryName(item.MainModule.FileName));
+                    List<MSniperInfo> MSniperLocation = ReadSnipeMS(pathRemote);
                     MSniperInfo newPokemon = new MSniperInfo()
                     {
                         Latitude = lat,
@@ -246,14 +246,18 @@ namespace MSniper
                     if (MSniperLocation.FindIndex(p => p.Id == newPokemon.Id && p.Latitude == newPokemon.Latitude && p.Longitude == newPokemon.Longitude) == -1)
                     {
                         MSniperLocation.Add(newPokemon);
-                        if (WriteSnipeMS(MSniperLocation, newPokemon, path))
+                        if (WriteSnipeMS(MSniperLocation, newPokemon, pathRemote))
                         {
                             Log.WriteLine(string.Format("Sending to {3}: {0} {1},{2}",
-                                newPokemon.Id,
+                                newPokemon.Id.ToLower(),
                                 newPokemon.Latitude,
                                 newPokemon.Longitude,
                                 username), ConsoleColor.Green);
                         }
+                    }
+                    else
+                    {
+                        Log.WriteLine(string.Format("{0}\t\tAlready Snipped...", newPokemon), ConsoleColor.DarkRed);
                     }
                 }
             }
@@ -263,6 +267,10 @@ namespace MSniper
             }
         }
 
+        private static string GetSnipeMSLocation(string NecroBotEXEPath)
+        {
+            return Path.Combine(NecroBotEXEPath, snipefilename);
+        }
         private static List<MSniperInfo> ReadSnipeMS(string path)
         {
             if (File.Exists(path))
