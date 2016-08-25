@@ -5,6 +5,9 @@
 # MSniper
 Manual Snipe for [NecroBot](https://github.com/NoxxDev/NecroBot)
 
+## Screen
+![Display](msniper1.gif)
+
 # Features
 - integrated with NecroBot (only communicating on SnipeMS.json)
 - running without username, password and device information
