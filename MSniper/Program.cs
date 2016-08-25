@@ -29,13 +29,7 @@ namespace MSniper
             Console.Title = string.Format("MSniper v{0}    by msx752", Assembly.GetExecutingAssembly().GetName().Version.ToString().Substring(0, 5));
             Console.Clear();
             Helper(args.Length == 0 ? false : true);
-            if (Process.GetProcessesByName(botEXEName).Count() == 0)
-            {
-                Log.WriteLine("Any running NecroBot not found...", ConsoleColor.Red);
-                Log.WriteLine(" *Necrobot must be running before MSniper*", ConsoleColor.Red);
-                if (args.Length != 1)
-                    Shutdown(5);
-            }
+            CheckNecroBots(args.Length != 1);
             //args = new string[] { "msniper://Ivysaur/-33.890835,151.223859" };//for debug mode
             //args = new string[] { "-registerp" };//for debug mode
             if (args.Length == 1)
@@ -95,6 +89,7 @@ namespace MSniper
                     Log.WriteLine("waiting data..", ConsoleColor.White);
                     Console.ForegroundColor = ConsoleColor.DarkCyan;
                     string snipping = Console.ReadLine();
+                    CheckNecroBots(true);
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     //snipping = "Dragonite 37.766627,-122.403677";//for debug mode
                     if (snipping.ToLower() == "e")
@@ -118,6 +113,17 @@ namespace MSniper
                 while (true);
             }
             Shutdown(5);
+        }
+
+        private static void CheckNecroBots(bool shutdownMSniper)
+        {
+            if (Process.GetProcessesByName(botEXEName).Count() == 0)
+            {
+                Log.WriteLine("Any running NecroBot not found...", ConsoleColor.Red);
+                Log.WriteLine(" *Necrobot must be running before MSniper*", ConsoleColor.Red);
+                if (shutdownMSniper)
+                    Shutdown(5);
+            }
         }
 
         private static void Helper(bool withParams)
