@@ -22,7 +22,11 @@ Manual Snipe for [NecroBot](https://github.com/NoxxDev/NecroBot)
 - MSniper doesn't cause ban, only using necrobot will cause ban because every catching is controlling on NecroBot. **using bot your own risk**
 
 # Guide
-- all information [here](https://github.com/msx752/MSniper/wiki/MSniper-Manual-Snipping-Guide)
+- Using information [here](https://github.com/msx752/MSniper/wiki/MSniper-Manual-Snipping-Guide)
+
+# Support
+- Frequently asked questions [here](https://github.com/msx752/MSniper/wiki/Frequently-asked-questions-and-solutions)
+
 
 # Usage
 - firstly, run NecroBot (doesn't matter how many use bot)
