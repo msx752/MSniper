@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -15,24 +16,12 @@ namespace MSniper
 {
     internal class Program
     {
-        public static string botEXEname = "necrobot";
-        public static string githupProjectLink = "https://github.com/msx752/MSniper";
+        private static string botEXEname = "necrobot";
+        private static string githupProjectLink = "https://github.com/msx752/MSniper";
         public static string protocolName = "pokesniper2";
-        public static string snipefilename = "SnipeMS.json";
+        private static string snipefilename = "SnipeMS.json";
         public static string VersionUri = "https://raw.githubusercontent.com/msx752/MSniper/master/MSniper/Properties/AssemblyInfo.cs";
-
-        private static void FileDelete(string path)
-        {
-            do
-            {
-                try
-                {
-                    File.Delete(path);
-                    break;
-                }
-                catch { }
-            } while (true);//waiting access
-        }
+        private static string RequireVersion = "0.9.5";
 
         private static void Helper()
         {
@@ -55,18 +44,6 @@ namespace MSniper
             Console.WriteLine("");
         }
 
-        private static bool isBotUpperThan094(FileVersionInfo fversion)
-        {
-            if (new Version(fversion.FileVersion) >= new Version("0.9.5"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         private static void Main(string[] args)
         {
             Console.Clear();
@@ -75,10 +52,6 @@ namespace MSniper
             {
                 Log.WriteLine("Any running NecroBot not found...", ConsoleColor.Red);
                 Log.WriteLine(" *Necrobot must be running before MSniper*", ConsoleColor.Red);
-            }
-            else if (args.Length == 0)
-            {
-                Log.WriteLine("Use any snipe website..", ConsoleColor.White);
             }
             //args = new string[] { "pokesniper2://Dragonite/37.766627,-122.403677" };//for debug mode
             if (args.Length == 1)
@@ -108,9 +81,53 @@ namespace MSniper
                         break;
 
                     default:
-                        SnipePokemon(args);
+                        string re1 = "(pokesniper2://)";//protocol
+                        string re6 = "((?:[a-z][a-z]+))";//pokemon name
+                        string re7 = "(\\/)";
+                        string re8 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
+                        string re9 = "(,)";
+                        string re10 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
+
+                        Regex r = new Regex(re1 + re6 + re7 + re8 + re9 + re10, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                        Match m = r.Match(args.First());
+                        if (m.Success)
+                        {
+                            Snipe(m.Groups[1].ToString(), m.Groups[3].ToString(), m.Groups[5].ToString());
+                        }
+                        else
+                        {
+                            Log.WriteLine("unknown format", ConsoleColor.Red);
+                        }
                         break;
                 }
+            }
+            else if (args.Length == 0)
+            {
+                Log.WriteLine("Paste Format=> PokemonName Latitude,Longitude", ConsoleColor.DarkGray);
+                do
+                {
+                    Log.WriteLine("waiting user data..", ConsoleColor.White);
+                    string snipping = Console.ReadLine();
+                    snipping = "Dragonite 37.766627,-122.403677";//for debug mode
+                    if (snipping.ToLower() == "e")
+                        break;
+                    string re1 = "((?:[a-z][a-z]+))";//pokemon name
+                    string re2 = "( )";//separator
+                    string re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
+                    string re4 = "(,)";//separator
+                    string re5 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
+                    Regex r = new Regex(re1 + re2 + re3 + re4 + re5, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                    Match m = r.Match(snipping);
+                    if (m.Success)
+                    {
+                        Snipe(m.Groups[1].ToString(), m.Groups[3].ToString(), m.Groups[5].ToString());
+                    }
+                    else
+                    {
+                        Log.WriteLine("wrong format retry or write 'E' for quit..", ConsoleColor.Red);
+                    }
+                }
+                while (true);
             }
             Shutdown(4);
         }
@@ -140,6 +157,19 @@ namespace MSniper
                 Process.GetCurrentProcess().Kill();
         }
 
+        private static void FileDelete(string path)
+        {
+            do
+            {
+                try
+                {
+                    File.Delete(path);
+                    break;
+                }
+                catch { }
+            } while (true);//waiting access
+        }
+
         private static void Shutdown(int seconds)
         {
             Log.WriteLine("Program is closing in " + seconds + "sec");
@@ -147,21 +177,24 @@ namespace MSniper
             Process.GetCurrentProcess().Kill();
         }
 
-        private static void SnipePokemon(string[] parameters)
+        private static bool isBotUpperThan094(FileVersionInfo fversion)
+        {
+            if (new Version(fversion.FileVersion) >= new Version(RequireVersion))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private static void Snipe(string pokemonName, string latt, string lonn)
         {
             try
             {
-                string[] pars = parameters[0].Split('/');//0:protocol,1:null,2:pokemonname,3:geocoords
-
-                if (pars.Length != 4)//pokesniper2://Dragonite/37.766627,-122.403677
-                {
-                    Log.WriteLine("unknown format", ConsoleColor.Red);
-                    return;
-                }
-                string[] coord = pars[3].Split(',');//0:lat,1:lon
-                double lat = double.Parse(coord[0], CultureInfo.InvariantCulture);
-                double lon = double.Parse(coord[1], CultureInfo.InvariantCulture);
-                string pokemonName = pars[2];
+                double lat = double.Parse(latt, CultureInfo.InvariantCulture);
+                double lon = double.Parse(lonn, CultureInfo.InvariantCulture);
                 foreach (var item in Process.GetProcessesByName(botEXEname))
                 {
                     string username = item.MainWindowTitle.Split('-').First().Split(' ')[2];
@@ -170,46 +203,25 @@ namespace MSniper
                         Log.WriteLine(string.Format("Incompatible NecroBot version for {0}", username), ConsoleColor.Red);
                         continue;
                     }
-                    isBotUpperThan094(item.MainModule.FileVersionInfo);
-                    List<MSniperInfo> MSniperLocation = new List<MSniperInfo>();
                     string path = Path.Combine(Path.GetDirectoryName(item.MainModule.FileName), snipefilename);
-                    if (File.Exists(path))
+                    List<MSniperInfo> MSniperLocation = ReadSnipeMS(path);
+                    MSniperInfo newPokemon = new MSniperInfo()
                     {
-                        string jsn = "";
-                        do
-                        {
-                            try
-                            {
-                                jsn = File.ReadAllText(path, Encoding.UTF8);
-                                break;
-                            }
-                            catch { Thread.Sleep(200); }
-                        } while (true);//waiting access
-                        MSniperLocation = JsonConvert.DeserializeObject<List<MSniperInfo>>(jsn);
-                    }
-                    if (MSniperLocation.FindIndex(p => p.Id == pokemonName && p.Latitude == lat && p.Longitude == lon) == -1)
+                        Latitude = lat,
+                        Longitude = lon,
+                        Id = pokemonName
+                    };
+                    if (MSniperLocation.FindIndex(p => p.Id == newPokemon.Id && p.Latitude == newPokemon.Latitude && p.Longitude == newPokemon.Longitude) == -1)
                     {
-                        MSniperLocation.Add(new MSniperInfo()
+                        MSniperLocation.Add(newPokemon);
+                        if (WriteSnipeMS(MSniperLocation, newPokemon, path))
                         {
-                            Latitude = lat,
-                            Longitude = lon,
-                            Id = pokemonName
-                        });
-                        do
-                        {
-                            try
-                            {
-                                StreamWriter sw = new StreamWriter(path, false, Encoding.UTF8);
-                                sw.WriteLine(JsonConvert.SerializeObject(
-                                    MSniperLocation,
-                                    Formatting.Indented,
-                                    new StringEnumConverter { CamelCaseText = true }));
-                                sw.Close();
-                                Log.WriteLine(string.Format("Sending to {3}: {0} {1},{2}", pokemonName, lat, lon, username), ConsoleColor.Green);
-                                break;
-                            }
-                            catch { Thread.Sleep(200); }
-                        } while (true);//waiting access
+                            Log.WriteLine(string.Format("Sending to {3}: {0} {1},{2}",
+                                newPokemon.Id,
+                                newPokemon.Latitude,
+                                newPokemon.Longitude,
+                                username), ConsoleColor.Green);
+                        }
                     }
                 }
             }
@@ -217,6 +229,49 @@ namespace MSniper
             {
                 Log.WriteLine(ex.Message, ConsoleColor.DarkRed);
             }
+        }
+
+        private static List<MSniperInfo> ReadSnipeMS(string path)
+        {
+            if (File.Exists(path))
+            {
+                string jsn = "";
+                do
+                {
+                    try
+                    {
+                        jsn = File.ReadAllText(path, Encoding.UTF8);
+                        break;
+                    }
+                    catch { Thread.Sleep(200); }
+                }
+                while (true);//waiting access
+                return JsonConvert.DeserializeObject<List<MSniperInfo>>(jsn);
+            }
+            else
+            {
+                return new List<MSniperInfo>();
+            }
+        }
+
+        private static bool WriteSnipeMS(List<MSniperInfo> _MSniperLocation, MSniperInfo _newpokemon, string path)
+        {
+            do
+            {
+                try
+                {
+                    StreamWriter sw = new StreamWriter(path, false, Encoding.UTF8);
+                    sw.WriteLine(JsonConvert.SerializeObject(
+                        _MSniperLocation,
+                        Formatting.Indented,
+                        new StringEnumConverter { CamelCaseText = true }));
+                    sw.Close();
+                    return true;
+                    break;
+                }
+                catch { Thread.Sleep(200); }
+            }
+            while (true);//waiting access
         }
     }
 }
