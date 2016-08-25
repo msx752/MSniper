@@ -26,6 +26,7 @@ namespace MSniper
         [STAThread]
         private static void Main(string[] args)
         {
+            ExportReferences();
             Console.Title = string.Format("MSniper v{0}    by msx752", Assembly.GetExecutingAssembly().GetName().Version.ToString().Substring(0, 5));
             Console.Clear();
             Helper();
@@ -36,7 +37,7 @@ namespace MSniper
                 if (args.Length != 1)
                     Shutdown(5);
             }
-            //args = new string[] { "pokesniper2://dragonite/37.766627,-122.403677" };//for debug mode
+            //args = new string[] { "pokesniper2://Ivysaur/-33.890835,151.223859" };//for debug mode
             if (args.Length == 1)
             {
                 switch (args.First())
@@ -65,7 +66,7 @@ namespace MSniper
 
                     default:
                         string re0 = "(pokesniper2://)";//protocol
-                        string re1 = "((?:[a-z][a-z]+))";//pokemon name
+                        string re1 = "((?:\\w+))";//pokemon name
                         string re2 = "(\\/)";//separator
                         string re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
                         string re4 = "(,)";//separator
@@ -98,7 +99,7 @@ namespace MSniper
                     //snipping = "Dragonite 37.766627,-122.403677";//for debug mode
                     if (snipping.ToLower() == "e")
                         break;
-                    string re1 = "((?:[a-z][a-z]+))";//pokemon name
+                    string re1 = "((?:\\w+))";//pokemon name
                     string re2 = "( )";//separator
                     string re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
                     string re4 = "(,)";//separator
@@ -265,6 +266,22 @@ namespace MSniper
             {
                 Log.WriteLine(ex.Message, ConsoleColor.DarkRed);
             }
+        }
+
+        private static void ExportReferences()
+        {
+            string path = Path.Combine(Application.StartupPath, "Newtonsoft.Json.dll");
+            if (!File.Exists(path))
+                File.WriteAllBytes(path, Properties.Resources.Newtonsoft_Json);
+            path = Path.Combine(Application.StartupPath, "registerProtocol.bat");
+            if (!File.Exists(path))
+                File.WriteAllText(path, Properties.Resources.registerProtocol);
+            path = Path.Combine(Application.StartupPath, "removeProtocol.bat");
+            if (!File.Exists(path))
+                File.WriteAllText(path, Properties.Resources.removeProtocol);
+            path = Path.Combine(Application.StartupPath, "resetSnipeList.bat");
+            if (!File.Exists(path))
+                File.WriteAllText(path, Properties.Resources.resetSnipeList);
         }
 
         private static string GetSnipeMSLocation(string NecroBotEXEPath)

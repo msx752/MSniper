@@ -69,5 +69,42 @@ namespace MSniper.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Newtonsoft_Json {
+            get {
+                object obj = ResourceManager.GetObject("Newtonsoft_Json", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MSniper -register.
+        /// </summary>
+        internal static string registerProtocol {
+            get {
+                return ResourceManager.GetString("registerProtocol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MSniper -remove.
+        /// </summary>
+        internal static string removeProtocol {
+            get {
+                return ResourceManager.GetString("removeProtocol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MSniper -resetallsnipelist.
+        /// </summary>
+        internal static string resetSnipeList {
+            get {
+                return ResourceManager.GetString("resetSnipeList", resourceCulture);
+            }
+        }
     }
 }
