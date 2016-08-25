@@ -1,18 +1,22 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace MSniper
 {
     public static class Protocol
     {
-        public static string protocolName = "pokesniper2";
+        private static List<string> protocols = new List<string>() { "msniper", "pokesniper2" };
         public static void Delete()
         {
             try
             {
-                if (Registry.ClassesRoot.OpenSubKey(protocolName) != null)
-                    Registry.ClassesRoot.DeleteSubKeyTree(protocolName, true);
+                foreach (var protocolName in protocols)
+                {
+                    if (Registry.ClassesRoot.OpenSubKey(protocolName) != null)
+                        Registry.ClassesRoot.DeleteSubKeyTree(protocolName, true);
+                }
             }
             catch (Exception e)
             {
@@ -22,14 +26,14 @@ namespace MSniper
 
         public static bool isRegistered()
         {
-            if (Registry.ClassesRoot.OpenSubKey(protocolName) == null)
+            foreach (var protocolName in protocols)
             {
-                return false;
+                if (Registry.ClassesRoot.OpenSubKey(protocolName) == null)
+                {
+                    return false;
+                }
             }
-            else
-            {
-                return true;
-            }
+            return true;
         }
         //not necessary
         //public static void isProtocolExists(string protocolName)
@@ -49,14 +53,18 @@ namespace MSniper
         {
             try
             {
-                RegistryKey nkey = Registry.ClassesRoot.CreateSubKey(protocolName);
-                nkey.SetValue(null, string.Format("URL:{0} protocol", protocolName));
-                nkey.SetValue("URL Protocol", string.Empty);
-                Registry.ClassesRoot.CreateSubKey(protocolName + "\\Shell");
-                Registry.ClassesRoot.CreateSubKey(protocolName + "\\Shell\\open");
-                nkey = Registry.ClassesRoot.CreateSubKey(protocolName + "\\Shell\\open\\command");
+                foreach (var protocolName in protocols)
+                {
+                    RegistryKey nkey = Registry.ClassesRoot.CreateSubKey(protocolName);
+                    nkey.SetValue(null, string.Format("URL:{0} protocol", protocolName));
+                    nkey.SetValue("URL Protocol", string.Empty);
+                    Registry.ClassesRoot.CreateSubKey(protocolName + "\\Shell");
+                    Registry.ClassesRoot.CreateSubKey(protocolName + "\\Shell\\open");
+                    nkey = Registry.ClassesRoot.CreateSubKey(protocolName + "\\Shell\\open\\command");
 
-                nkey.SetValue(null, "\"" + Application.ExecutablePath + "\" \"%1\"");
+                    nkey.SetValue(null, "\"" + Application.ExecutablePath + "\" \"%1\"");
+                    nkey.Close();
+                }
             }
             catch (Exception e)
             {
