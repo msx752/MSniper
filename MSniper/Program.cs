@@ -36,7 +36,16 @@ namespace MSniper
             else
             {
                 Log.WriteLine(string.Format("   * New Version: {0} *", VersionCheck.RemoteVersion), ConsoleColor.Green);
-                Log.WriteLine(string.Format("* DOWNLOAD LINK:  {0}/{1} *", githupProjectLink, "releases/latest"), ConsoleColor.Yellow);
+                string downloadlink = githupProjectLink + "/releases/latest";
+                Log.WriteLine(string.Format("* DOWNLOAD LINK:  {0} *", downloadlink), ConsoleColor.Yellow);
+                Log.WriteLine(string.Format("PRESS 'C' FOR COPY TO LINK OR PRESS ANYKEY FOR EXIT.."), ConsoleColor.DarkCyan);
+                char c = Console.ReadKey().KeyChar;
+                Console.SetCursorPosition(0, Console.CursorTop);
+                if (c == 'c' || c == 'C')
+                {
+                    Clipboard.SetText(downloadlink);
+                    Log.WriteLine(string.Format("link successfully copied.."), ConsoleColor.Green);
+                }
                 Shutdown(5);
             }
             Log.WriteLine("MSniper integrated NecroBot v0.9.5 or upper", ConsoleColor.DarkCyan);
@@ -44,6 +53,7 @@ namespace MSniper
             Console.WriteLine("");
         }
 
+        [STAThreadAttribute]
         private static void Main(string[] args)
         {
             Console.Clear();
@@ -53,83 +63,86 @@ namespace MSniper
                 Log.WriteLine("Any running NecroBot not found...", ConsoleColor.Red);
                 Log.WriteLine(" *Necrobot must be running before MSniper*", ConsoleColor.Red);
             }
-            //args = new string[] { "pokesniper2://Dragonite/37.766627,-122.403677" };//for debug mode
-            if (args.Length == 1)
+            else
             {
-                switch (args.First())
+                //args = new string[] { "pokesniper2://Dragonite/37.766627,-122.403677" };//for debug mode
+                if (args.Length == 1)
                 {
-                    case "-register":
-                        Runas(Application.ExecutablePath, "-registerp");
-                        break;
+                    switch (args.First())
+                    {
+                        case "-register":
+                            Runas(Application.ExecutablePath, "-registerp");
+                            break;
 
-                    case "-registerp":
-                        ProtocolRegister.RegisterUrl(protocolName);
-                        Log.WriteLine("Protocol Registered:", ConsoleColor.Green);
-                        break;
+                        case "-registerp":
+                            ProtocolRegister.RegisterUrl(protocolName);
+                            Log.WriteLine("Protocol Registered:", ConsoleColor.Green);
+                            break;
 
-                    case "-remove":
-                        Runas(Application.ExecutablePath, "-removep");
-                        break;
+                        case "-remove":
+                            Runas(Application.ExecutablePath, "-removep");
+                            break;
 
-                    case "-removep":
-                        ProtocolRegister.DeleteUrl(protocolName);
-                        Log.WriteLine("Protocol Deleted:", ConsoleColor.Red);
-                        break;
+                        case "-removep":
+                            ProtocolRegister.DeleteUrl(protocolName);
+                            Log.WriteLine("Protocol Deleted:", ConsoleColor.Red);
+                            break;
 
-                    case "-resetallsnipelist":
-                        RemoveAllSnipeMSJSON();
-                        break;
+                        case "-resetallsnipelist":
+                            RemoveAllSnipeMSJSON();
+                            break;
 
-                    default:
-                        string re1 = "(pokesniper2://)";//protocol
-                        string re6 = "((?:[a-z][a-z]+))";//pokemon name
-                        string re7 = "(\\/)";
-                        string re8 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
-                        string re9 = "(,)";
-                        string re10 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
+                        default:
+                            string re1 = "(pokesniper2://)";//protocol
+                            string re6 = "((?:[a-z][a-z]+))";//pokemon name
+                            string re7 = "(\\/)";
+                            string re8 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
+                            string re9 = "(,)";
+                            string re10 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
 
-                        Regex r = new Regex(re1 + re6 + re7 + re8 + re9 + re10, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-                        Match m = r.Match(args.First());
+                            Regex r = new Regex(re1 + re6 + re7 + re8 + re9 + re10, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                            Match m = r.Match(args.First());
+                            if (m.Success)
+                            {
+                                Snipe(m.Groups[1].ToString(), m.Groups[3].ToString(), m.Groups[5].ToString());
+                            }
+                            else
+                            {
+                                Log.WriteLine("unknown link format", ConsoleColor.Red);
+                            }
+                            break;
+                    }
+                }
+                else if (args.Length == 0)
+                {
+                    Log.WriteLine("Paste Format=> PokemonName Latitude,Longitude", ConsoleColor.DarkGray);
+                    do
+                    {
+                        Log.WriteLine("waiting user data..", ConsoleColor.White);
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        string snipping = Console.ReadLine();
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        //snipping = "Dragonite 37.766627,-122.403677";//for debug mode
+                        if (snipping.ToLower() == "e")
+                            break;
+                        string re1 = "((?:[a-z][a-z]+))";//pokemon name
+                        string re2 = "( )";//separator
+                        string re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
+                        string re4 = "(,)";//separator
+                        string re5 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
+                        Regex r = new Regex(re1 + re2 + re3 + re4 + re5, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                        Match m = r.Match(snipping);
                         if (m.Success)
                         {
                             Snipe(m.Groups[1].ToString(), m.Groups[3].ToString(), m.Groups[5].ToString());
                         }
                         else
                         {
-                            Log.WriteLine("unknown format", ConsoleColor.Red);
+                            Log.WriteLine("wrong format retry or write 'E' for quit..", ConsoleColor.Red);
                         }
-                        break;
-                }
-            }
-            else if (args.Length == 0)
-            {
-                Log.WriteLine("Paste Format=> PokemonName Latitude,Longitude", ConsoleColor.DarkGray);
-                do
-                {
-                    Log.WriteLine("waiting user data..", ConsoleColor.White);
-                    Console.ForegroundColor = ConsoleColor.DarkCyan;
-                    string snipping = Console.ReadLine();
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    //snipping = "Dragonite 37.766627,-122.403677";//for debug mode
-                    if (snipping.ToLower() == "e")
-                        break;
-                    string re1 = "((?:[a-z][a-z]+))";//pokemon name
-                    string re2 = "( )";//separator
-                    string re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
-                    string re4 = "(,)";//separator
-                    string re5 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
-                    Regex r = new Regex(re1 + re2 + re3 + re4 + re5, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-                    Match m = r.Match(snipping);
-                    if (m.Success)
-                    {
-                        Snipe(m.Groups[1].ToString(), m.Groups[3].ToString(), m.Groups[5].ToString());
                     }
-                    else
-                    {
-                        Log.WriteLine("wrong format retry or write 'E' for quit..", ConsoleColor.Red);
-                    }
+                    while (true);
                 }
-                while (true);
             }
             Shutdown(4);
         }
@@ -174,9 +187,24 @@ namespace MSniper
 
         private static void Shutdown(int seconds)
         {
-            Log.WriteLine("Program is closing in " + seconds + "sec");
-            Thread.Sleep(seconds * 1000);
+            for (int i = seconds; i >= 0; i--)
+            {
+                Log.WriteLine("Program is closing in " + (i + 1) + "sec");
+                setConsoleCursor(Log.lastLineCount, Console.CursorTop - 1);
+                Thread.Sleep(1000);
+                setDefaultConsoleCursor();
+            }
             Process.GetCurrentProcess().Kill();
+        }
+
+        private static void setConsoleCursor(int left, int top)
+        {
+            Console.SetCursorPosition(left, top);
+        }
+
+        private static void setDefaultConsoleCursor()
+        {
+            Console.SetCursorPosition(0, Console.CursorTop);
         }
 
         private static bool isBotUpperThan094(FileVersionInfo fversion)
