@@ -63,105 +63,105 @@ namespace MSniper
                 Log.WriteLine("Any running NecroBot not found...", ConsoleColor.Red);
                 Log.WriteLine(" *Necrobot must be running before MSniper*", ConsoleColor.Red);
             }
-            else
+
+            //args = new string[] { "pokesniper2://Dragonite/37.766627,-122.403677" };//for debug mode
+            if (args.Length == 1)
             {
-                //args = new string[] { "pokesniper2://Dragonite/37.766627,-122.403677" };//for debug mode
-                if (args.Length == 1)
+                switch (args.First())
                 {
-                    switch (args.First())
-                    {
-                        case "-register":
-                            Runas(Application.ExecutablePath, "-registerp");
-                            break;
+                    case "-register":
+                        Runas(Application.ExecutablePath, "-registerp");
+                        break;
 
-                        case "-registerp":
-                            ProtocolRegister.RegisterUrl(protocolName);
-                            Log.WriteLine("Protocol Registered:", ConsoleColor.Green);
-                            break;
+                    case "-registerp":
+                        ProtocolRegister.RegisterUrl(protocolName);
+                        Log.WriteLine("Protocol Successfully REGISTERED:", ConsoleColor.Green);
+                        break;
 
-                        case "-remove":
-                            Runas(Application.ExecutablePath, "-removep");
-                            break;
+                    case "-remove":
+                        Runas(Application.ExecutablePath, "-removep");
+                        break;
 
-                        case "-removep":
-                            ProtocolRegister.DeleteUrl(protocolName);
-                            Log.WriteLine("Protocol Deleted:", ConsoleColor.Red);
-                            break;
+                    case "-removep":
+                        ProtocolRegister.DeleteUrl(protocolName);
+                        Log.WriteLine("Protocol Successfully DELETED:", ConsoleColor.Green);
+                        break;
 
-                        case "-resetallsnipelist":
-                            RemoveAllSnipeMSJSON();
-                            break;
+                    case "-resetallsnipelist":
+                        RemoveAllSnipeMSJSON();
+                        break;
 
-                        default:
-                            string re1 = "(pokesniper2://)";//protocol
-                            string re6 = "((?:[a-z][a-z]+))";//pokemon name
-                            string re7 = "(\\/)";
-                            string re8 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
-                            string re9 = "(,)";
-                            string re10 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
+                    default:
+                        string re1 = "(pokesniper2://)";//protocol
+                        string re6 = "((?:[a-z][a-z]+))";//pokemon name
+                        string re7 = "(\\/)";
+                        string re8 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
+                        string re9 = "(,)";
+                        string re10 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
 
-                            Regex r = new Regex(re1 + re6 + re7 + re8 + re9 + re10, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-                            Match m = r.Match(args.First());
-                            if (m.Success)
-                            {
-                                Snipe(m.Groups[1].ToString(), m.Groups[3].ToString(), m.Groups[5].ToString());
-                            }
-                            else
-                            {
-                                Log.WriteLine("unknown link format", ConsoleColor.Red);
-                            }
-                            break;
-                    }
-                }
-                else if (args.Length == 0)
-                {
-                    Log.WriteLine("\t\tCUSTOM PASTE ACTIVE", ConsoleColor.DarkGray);
-                    Log.WriteLine("format: PokemonName Latitude,Longitude", ConsoleColor.DarkGray);
-                    Log.WriteLine("--------------------------------------------------------");
-                    do
-                    {
-                        Log.WriteLine("waiting data..", ConsoleColor.White);
-                        Console.ForegroundColor = ConsoleColor.DarkCyan;
-                        string snipping = Console.ReadLine();
-                        Console.ForegroundColor = ConsoleColor.DarkGray;
-                        //snipping = "Dragonite 37.766627,-122.403677";//for debug mode
-                        if (snipping.ToLower() == "e")
-                            break;
-                        string re1 = "((?:[a-z][a-z]+))";//pokemon name
-                        string re2 = "( )";//separator
-                        string re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
-                        string re4 = "(,)";//separator
-                        string re5 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
-                        Regex r = new Regex(re1 + re2 + re3 + re4 + re5, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-                        Match m = r.Match(snipping);
+                        Regex r = new Regex(re1 + re6 + re7 + re8 + re9 + re10, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                        Match m = r.Match(args.First());
                         if (m.Success)
                         {
                             Snipe(m.Groups[1].ToString(), m.Groups[3].ToString(), m.Groups[5].ToString());
                         }
                         else
                         {
-                            Log.WriteLine("wrong format retry or write 'E' for quit..", ConsoleColor.Red);
+                            Log.WriteLine("unknown link format", ConsoleColor.Red);
                         }
-                    }
-                    while (true);
+                        break;
                 }
             }
+            else if (args.Length == 0)
+            {
+                Log.WriteLine("\t\tCUSTOM PASTE ACTIVE", ConsoleColor.DarkGray);
+                Log.WriteLine("format: PokemonName Latitude,Longitude", ConsoleColor.DarkGray);
+                Log.WriteLine("--------------------------------------------------------");
+                do
+                {
+                    Log.WriteLine("waiting data..", ConsoleColor.White);
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    string snipping = Console.ReadLine();
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    //snipping = "Dragonite 37.766627,-122.403677";//for debug mode
+                    if (snipping.ToLower() == "e")
+                        break;
+                    string re1 = "((?:[a-z][a-z]+))";//pokemon name
+                    string re2 = "( )";//separator
+                    string re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
+                    string re4 = "(,)";//separator
+                    string re5 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
+                    Regex r = new Regex(re1 + re2 + re3 + re4 + re5, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                    Match m = r.Match(snipping);
+                    if (m.Success)
+                    {
+                        Snipe(m.Groups[1].ToString(), m.Groups[3].ToString(), m.Groups[5].ToString());
+                    }
+                    else
+                    {
+                        Log.WriteLine("wrong format retry or write 'E' for quit..", ConsoleColor.Red);
+                    }
+                }
+                while (true);
+            }
+
             Shutdown(5);
         }
 
         private static void RemoveAllSnipeMSJSON()
         {
-            foreach (var item in Process.GetProcessesByName(botEXEName))
+            Process[] plist = Process.GetProcessesByName(botEXEName);
+            foreach (var item in plist)
             {
                 string path = Path.Combine(Path.GetDirectoryName(item.MainModule.FileName), snipefilename);
                 if (File.Exists(path))
                 {
                     FileDelete(path);
                     string val = item.MainWindowTitle.Split('-').First().Split(' ')[2];
-                    Log.WriteLine(string.Format("deleted {0} for {1} :", snipefilename, val), ConsoleColor.Green);
+                    Log.WriteLine(string.Format("deleted {0} for {1}", snipefilename, val), ConsoleColor.Green);
                 }
             }
-            Log.WriteLine("deleting finished..", ConsoleColor.Green);
+            Log.WriteLine(string.Format("deleting finished count:{0}..", plist.Count()), ConsoleColor.Green);
         }
 
         private static void Runas(string executablepath, string parameters, bool afterKillSelf = true)

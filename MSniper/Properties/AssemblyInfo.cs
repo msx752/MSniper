@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following set of attributes.
 // Change these attribute values to modify the information associated with an assembly.
 [assembly: AssemblyTitle("MSniper")]
-[assembly: AssemblyDescription("necrobot pokemon sniper")]
+[assembly: AssemblyDescription("necrobot offical pokemon sniper")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("by msx752")]
 [assembly: AssemblyProduct("MSniper")]
