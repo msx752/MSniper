@@ -1,4 +1,6 @@
-[![All Releases](https://img.shields.io/github/downloads/msx752/MSniper/total.svg)](https://github.com/msx752/MSniper/releases)
+[![All Releases](https://img.shields.io/github/downloads/msx752/MSniper/total.svg?maxAge=100)](https://github.com/msx752/MSniper/releases)
+[![Latest Release](https://img.shields.io/github/release/msx752/MSniper.svg?maxAge=100)](https://github.com/msx752/MSniper/releases/latest)
+[![license](https://img.shields.io/github/license/msx752/MSniper.svg?maxAge=259200)](https://github.com/msx752/MSniper/blob/master/LICENSE.md)
 # MSniper
 Manual Snipe for [NecroBot](https://github.com/NoxxDev/NecroBot)
 
