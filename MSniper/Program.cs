@@ -36,7 +36,7 @@ namespace MSniper
             else
             {
                 Log.WriteLine(string.Format("   * New Version: {0} *", VersionCheck.RemoteVersion), ConsoleColor.Green);
-                Log.WriteLine(string.Format("* Loot at {0}/{1} *", githupProjectLink, "releases/latest"), ConsoleColor.Yellow);
+                Log.WriteLine(string.Format("* DOWNLOAD LINK:  {0}/{1} *", githupProjectLink, "releases/latest"), ConsoleColor.Yellow);
                 Shutdown(5);
             }
             Log.WriteLine("MSniper integrated NecroBot v0.9.5 or upper", ConsoleColor.DarkCyan);
@@ -107,8 +107,10 @@ namespace MSniper
                 do
                 {
                     Log.WriteLine("waiting user data..", ConsoleColor.White);
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
                     string snipping = Console.ReadLine();
-                    snipping = "Dragonite 37.766627,-122.403677";//for debug mode
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    //snipping = "Dragonite 37.766627,-122.403677";//for debug mode
                     if (snipping.ToLower() == "e")
                         break;
                     string re1 = "((?:[a-z][a-z]+))";//pokemon name
