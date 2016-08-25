@@ -36,7 +36,8 @@ namespace MSniper
                 if (args.Length != 1)
                     Shutdown(5);
             }
-            //args = new string[] { "pokesniper2://Ivysaur/-33.890835,151.223859" };//for debug mode
+            //args = new string[] { "msniper://Ivysaur/-33.890835,151.223859" };//for debug mode
+            //args = new string[] { "-registerp" };//for debug mode
             if (args.Length == 1)
             {
                 switch (args.First())
@@ -64,7 +65,7 @@ namespace MSniper
                         break;
 
                     default:
-                        string re0 = "(pokesniper2://)";//protocol
+                        string re0 = "(pokesniper2://|msniper://)";//protocol
                         string re1 = "((?:\\w+))";//pokemon name
                         string re2 = "(\\/)";//separator
                         string re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
@@ -125,7 +126,7 @@ namespace MSniper
             Log.WriteLine("MSniper - NecroBot Manual PokemonSniper by msx752");
             Log.WriteLine("GitHub Project " + githupProjectLink, ConsoleColor.Yellow);
             Log.Write("Current Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString().Substring(0, 5), ConsoleColor.White);
-            if (!Protocol.isRegistered() && withParams == false)
+            if (Protocol.isRegistered() == false && withParams == false)
             {
                 Log.WriteLine(" ");
                 Log.WriteLine("Protocol not found - Please run once registerProtocol.bat", ConsoleColor.Red);
