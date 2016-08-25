@@ -16,29 +16,29 @@ namespace MSniper
 {
     internal class Program
     {
-        private static string botEXEname = "necrobot";
+        private static string botEXEName = "necrobot";
         private static string githupProjectLink = "https://github.com/msx752/MSniper";
         public static string protocolName = "pokesniper2";
         private static string snipefilename = "SnipeMS.json";
-        public static string VersionUri = "https://raw.githubusercontent.com/msx752/MSniper/master/MSniper/Properties/AssemblyInfo.cs";
-        private static string RequireVersion = "0.9.5";
+        public static string versionUri = "https://raw.githubusercontent.com/msx752/MSniper/master/MSniper/Properties/AssemblyInfo.cs";
+        private static string minRequireVersion = "0.9.5";
 
         private static void Helper()
         {
             Log.WriteLine("");
             Log.WriteLine("MSniper - NecroBot Manual PokemonSniper by msx752");
             Log.WriteLine("GitHub Project " + githupProjectLink, ConsoleColor.Yellow);
-            Log.Write("Current Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString(), ConsoleColor.White);
+            Log.Write("Current Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString().Substring(0, 5), ConsoleColor.White);
             if (VersionCheck.IsLatest())
             {
                 Log.WriteLine("   * Latest Version *", ConsoleColor.White);
             }
             else
             {
-                Log.WriteLine(string.Format("   * New Version: {0} *", VersionCheck.RemoteVersion), ConsoleColor.Green);
+                Log.WriteLine(string.Format("   * NEW VERSION: {0} *", VersionCheck.RemoteVersion.ToString().Substring(0, 5)), ConsoleColor.Green);
                 string downloadlink = githupProjectLink + "/releases/latest";
                 Log.WriteLine(string.Format("* DOWNLOAD LINK:  {0} *", downloadlink), ConsoleColor.Yellow);
-                Log.WriteLine(string.Format("PRESS 'C' FOR COPY TO LINK OR PRESS ANYKEY FOR EXIT.."), ConsoleColor.DarkCyan);
+                Log.WriteLine(string.Format("PRESS 'C' TO COPY LINK OR PRESS ANY KEY FOR EXIT.."), ConsoleColor.DarkCyan);
                 char c = Console.ReadKey().KeyChar;
                 Console.SetCursorPosition(0, Console.CursorTop);
                 if (c == 'c' || c == 'C')
@@ -50,15 +50,15 @@ namespace MSniper
             }
             Log.WriteLine("MSniper integrated NecroBot v0.9.5 or upper", ConsoleColor.DarkCyan);
             Log.WriteLine("--------------------------------------------------------");
-            Console.WriteLine("");
         }
 
-        [STAThreadAttribute]
+        [STAThread]
         private static void Main(string[] args)
         {
+            Console.Title = string.Format("MSniper v{0}    by msx752", Assembly.GetExecutingAssembly().GetName().Version.ToString().Substring(0, 5));
             Console.Clear();
             Helper();
-            if (Process.GetProcessesByName(botEXEname).Count() == 0)
+            if (Process.GetProcessesByName(botEXEName).Count() == 0)
             {
                 Log.WriteLine("Any running NecroBot not found...", ConsoleColor.Red);
                 Log.WriteLine(" *Necrobot must be running before MSniper*", ConsoleColor.Red);
@@ -115,10 +115,12 @@ namespace MSniper
                 }
                 else if (args.Length == 0)
                 {
-                    Log.WriteLine("Paste Format=> PokemonName Latitude,Longitude", ConsoleColor.DarkGray);
+                    Log.WriteLine("\t\tCUSTOM PASTE ACTIVE", ConsoleColor.DarkGray);
+                    Log.WriteLine("format: PokemonName Latitude,Longitude", ConsoleColor.DarkGray);
+                    Log.WriteLine("--------------------------------------------------------");
                     do
                     {
-                        Log.WriteLine("waiting user data..", ConsoleColor.White);
+                        Log.WriteLine("waiting data..", ConsoleColor.White);
                         Console.ForegroundColor = ConsoleColor.DarkCyan;
                         string snipping = Console.ReadLine();
                         Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -144,12 +146,12 @@ namespace MSniper
                     while (true);
                 }
             }
-            Shutdown(4);
+            Shutdown(5);
         }
 
         private static void RemoveAllSnipeMSJSON()
         {
-            foreach (var item in Process.GetProcessesByName(botEXEname))
+            foreach (var item in Process.GetProcessesByName(botEXEName))
             {
                 string path = Path.Combine(Path.GetDirectoryName(item.MainModule.FileName), snipefilename);
                 if (File.Exists(path))
@@ -209,7 +211,7 @@ namespace MSniper
 
         private static bool isBotUpperThan094(FileVersionInfo fversion)
         {
-            if (new Version(fversion.FileVersion) >= new Version(RequireVersion))
+            if (new Version(fversion.FileVersion) >= new Version(minRequireVersion))
             {
                 return true;
             }
@@ -225,7 +227,7 @@ namespace MSniper
             {
                 double lat = double.Parse(latt, CultureInfo.InvariantCulture);
                 double lon = double.Parse(lonn, CultureInfo.InvariantCulture);
-                foreach (var item in Process.GetProcessesByName(botEXEname))
+                foreach (var item in Process.GetProcessesByName(botEXEName))
                 {
                     string username = item.MainWindowTitle.Split('-').First().Split(' ')[2];
                     if (!isBotUpperThan094(item.MainModule.FileVersionInfo))

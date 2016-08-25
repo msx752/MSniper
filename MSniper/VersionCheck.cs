@@ -36,7 +36,7 @@ namespace MSniper
         {
             using (var wC = new NecroWebClient())
             {
-                return wC.DownloadString(Program.VersionUri);
+                return wC.DownloadString(Program.versionUri);
             }
         }
     }
