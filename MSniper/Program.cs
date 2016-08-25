@@ -16,7 +16,6 @@ namespace MSniper
 {
     internal class Program
     {
-        public static string protocolName = "pokesniper2";
         public static string versionUri = "https://raw.githubusercontent.com/msx752/MSniper/master/MSniper/Properties/AssemblyInfo.cs";
         public static string botEXEName = "necrobot";
         public static string githupProjectLink = "https://github.com/msx752/MSniper";
@@ -29,7 +28,7 @@ namespace MSniper
             ExportReferences();
             Console.Title = string.Format("MSniper v{0}    by msx752", Assembly.GetExecutingAssembly().GetName().Version.ToString().Substring(0, 5));
             Console.Clear();
-            Helper();
+            Helper(args.Length == 0 ? false : true);
             if (Process.GetProcessesByName(botEXEName).Count() == 0)
             {
                 Log.WriteLine("Any running NecroBot not found...", ConsoleColor.Red);
@@ -47,7 +46,7 @@ namespace MSniper
                         break;
 
                     case "-registerp":
-                        ProtocolRegister.RegisterUrl(protocolName);
+                        Protocol.Register();
                         Log.WriteLine("Protocol Successfully REGISTERED:", ConsoleColor.Green);
                         break;
 
@@ -56,7 +55,7 @@ namespace MSniper
                         break;
 
                     case "-removep":
-                        ProtocolRegister.DeleteUrl(protocolName);
+                        Protocol.Delete();
                         Log.WriteLine("Protocol Successfully DELETED:", ConsoleColor.Green);
                         break;
 
@@ -120,12 +119,18 @@ namespace MSniper
             Shutdown(5);
         }
 
-        private static void Helper()
+        private static void Helper(bool withParams)
         {
             Log.WriteLine("");
             Log.WriteLine("MSniper - NecroBot Manual PokemonSniper by msx752");
             Log.WriteLine("GitHub Project " + githupProjectLink, ConsoleColor.Yellow);
             Log.Write("Current Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString().Substring(0, 5), ConsoleColor.White);
+            if (!Protocol.isRegistered() && withParams == false)
+            {
+                Log.WriteLine(" ");
+                Log.WriteLine("Protocol not found - Please run once registerProtocol.bat", ConsoleColor.Red);
+                Shutdown(5);
+            }
             if (VersionCheck.IsLatest())
             {
                 Log.WriteLine("   * Latest Version *", ConsoleColor.White);

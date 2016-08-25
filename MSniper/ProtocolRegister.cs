@@ -4,9 +4,10 @@ using System.Windows.Forms;
 
 namespace MSniper
 {
-    public static class ProtocolRegister
+    public static class Protocol
     {
-        public static void DeleteUrl(string protocolName)
+        public static string protocolName = "pokesniper2";
+        public static void Delete()
         {
             try
             {
@@ -19,6 +20,17 @@ namespace MSniper
             }
         }
 
+        public static bool isRegistered()
+        {
+            if (Registry.ClassesRoot.OpenSubKey(protocolName) == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         //not necessary
         //public static void isProtocolExists(string protocolName)
         //{
@@ -33,7 +45,7 @@ namespace MSniper
         //    }
         //}
 
-        public static void RegisterUrl(string protocolName)
+        public static void Register()
         {
             try
             {
