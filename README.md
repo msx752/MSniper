@@ -9,7 +9,8 @@ Manual Snipe for [NecroBot](https://github.com/NoxxDev/NecroBot)
 - integrated with NecroBot (only communicating on SnipeMS.json)
 - running without username, password and device information
 - Snipe while NecroBot is working
-- program working same protocol pokesiniper2:// 
+- new protocol 'msniper://'
+- also program working same protocol 'pokesiniper2://'
 - program can working multiple NecroBot and same pokemon location will send all working bot at the same time
 
 # Advantage
@@ -21,7 +22,12 @@ Manual Snipe for [NecroBot](https://github.com/NoxxDev/NecroBot)
 # Usage
 - firstly, run NecroBot (doesn't matter how many use bot)
 - secondly, run once registerProtocol.bat (if you change file location, you have to run again)
-- thirdly, use any snipe website
+
+  #### Method 1
+  - thirdly, use any snipe website
+
+  #### Method 2
+  - thirdly, run MSniper.exe normally and paste pokemon location data in console
 
 # Requirements
 - [NecroBot](https://github.com/NoxxDev/NecroBot/releases/latest) **v0.9.5 or Upper**
