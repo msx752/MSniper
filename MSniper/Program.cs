@@ -68,13 +68,19 @@ namespace MSniper
             Log.WriteLine("--------------------------------------------------------");
         }
 
+        private static void ExportDefaultTranslation()
+        {
+            // this method only using for information
+            // \temp\languages\translation.en.json
+            Translation culture = new Translation();
+            culture.Save("en");
+            Process.GetCurrentProcess().Kill();
+            ///////////////////////////////////////
+        }
         [STAThread]
         private static void Main(string[] args)
         {
             ExportReferences();
-            //Translation culture = new Translation();
-            //culture.Save("en");
-            //return;
             Console.Title = culture.GetTranslation(TranslationString.Title,
                 Variables.ProgramName, Variables.CurrentVersion, Variables.By
                 );
@@ -244,15 +250,25 @@ namespace MSniper
         }
         public static void Shutdown(int seconds)
         {
+            Delay(seconds, true);
+            Process.GetCurrentProcess().Kill();
+        }
+        public static void Delay(int seconds, bool isShutdownMsg = false)
+        {
             for (int i = seconds; i >= 0; i--)
             {
-                Log.WriteLine(culture.GetTranslation(TranslationString.ShutdownMsg,
-                   i));
+                TranslationString ts = TranslationString.ShutdownMsg;
+                if (!isShutdownMsg)
+                    ts = TranslationString.SubsequentProcessing;
+                string message = "Subsequent processing passing in {0} seconds or Close the Program";
+                if (culture != null)
+                    Log.WriteLine(culture.GetTranslation(ts, i));
+                else
+                    Log.WriteLine(string.Format(message, i));
                 setConsoleCursor(Log.lastLineCount, Console.CursorTop - 1);
                 Thread.Sleep(1000);
                 setDefaultConsoleCursor();
             }
-            Process.GetCurrentProcess().Kill();
         }
 
         private static void setConsoleCursor(int left, int top)
@@ -313,13 +329,13 @@ namespace MSniper
                     }
                     else
                     {
-                        Log.WriteLine(culture.GetTranslation(TranslationString.AlreadySnipped, newPokemon), ConsoleColor.DarkRed);
+                        Log.WriteLine(culture.GetTranslation(TranslationString.AlreadySnipped, newPokemon), ConsoleColor.Red);
                     }
                 }
             }
             catch (Exception ex)
             {
-                Log.WriteLine(ex.Message, ConsoleColor.DarkRed);
+                Log.WriteLine(ex.Message, ConsoleColor.Red);
             }
         }
 
@@ -338,11 +354,22 @@ namespace MSniper
             if (!File.Exists(path))
                 File.WriteAllText(path, Properties.Resources.resetSnipeList);
 
-            //if (Directory.Exists(Variables.TempPath))//deleting temp
-            //    Directory.Delete(Variables.TempPath, true);
+            if (Directory.Exists(Variables.TempPath))//deleting temp
+            {
+                try
+                {
+                    Directory.Delete(Variables.TempPath, true);
+                }
+                catch
+                {
+                    Directory.Delete(Variables.TempPath, true);
+                }
+            }
 
             config = LoadConfigs();
             culture = LoadCulture(config);
+
+            ////ExportDefaultTranslation(); //needs for translation information 
         }
 
         private static string GetSnipeMSLocation(string NecroBotEXEPath)

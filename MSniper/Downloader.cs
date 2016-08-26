@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MSniper.Settings.Localization;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -21,7 +22,7 @@ namespace MSniper
             }
             catch (Exception ex)
             {
-                Log.WriteLine(ex.Message, ConsoleColor.DarkRed);
+                Log.WriteLine(ex.Message, ConsoleColor.Red);
                 return null;
             }
         }
@@ -61,13 +62,13 @@ namespace MSniper
 
         public static void DownloadNewVersion()
         {
-            Log.WriteLine(string.Format("starting to download {0} please wait...", VersionCheck.NameWithVersion), ConsoleColor.Green);
+            Log.WriteLine(Program.culture.GetTranslation(TranslationString.DownloadingNewVersion, VersionCheck.NameWithVersion), ConsoleColor.Green);
             byte[] downloaded = GetFile(VersionCheck.RemoteVersion);
-            Log.WriteLine("download finished...", ConsoleColor.Green);
+            Log.WriteLine(Program.culture.GetTranslation(TranslationString.DownloadFinished), ConsoleColor.Green);
             WriteFile(downloaded, Variables.TempRarFile);
-            Log.WriteLine("decompressing now...", ConsoleColor.Green);
+            Log.WriteLine(Program.culture.GetTranslation(TranslationString.DecompressingNewFile), ConsoleColor.Green);
             DecompressZip(Variables.TempRarFile);
-            Log.WriteLine("files changing now...", ConsoleColor.Green);
+            Log.WriteLine(Program.culture.GetTranslation(TranslationString.OldFilesChangingWithNews), ConsoleColor.Green);
             ChangeWithOldFiles(CreateUpdaterBatch());
         }
 

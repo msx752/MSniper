@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MSniper.Settings.Localization
@@ -49,17 +50,17 @@ namespace MSniper.Settings.Localization
         IncompatibleVersionMsg,
         SendingPokemonToNecroBot,
         AlreadySnipped,
+        DownloadingNewVersion,
+        DownloadFinished,
+        DecompressingNewFile,
+        OldFilesChangingWithNews,
+        SubsequentProcessing,
     }
     /// <summary>
     /// default language: english
     /// </summary>
     public class Translation : ITranslation
     {
-        public static List<string> SupportedLanguages => new List<string>()
-        {
-            "en"
-        };
-
         [JsonProperty("TranslationStrings",
               ItemTypeNameHandling = TypeNameHandling.Arrays,
               ItemConverterType = typeof(KeyValuePairConverter),
@@ -95,6 +96,11 @@ namespace MSniper.Settings.Localization
             new KeyValuePair<TranslationString, string>(TranslationString.IncompatibleVersionMsg, "Incompatible NecroBot version for {0}"),
             new KeyValuePair<TranslationString, string>(TranslationString.SendingPokemonToNecroBot, "Sending to {3}: {0} {1},{2}"),
             new KeyValuePair<TranslationString, string>(TranslationString.AlreadySnipped, "{0}\t\tAlready Snipped..."),
+            new KeyValuePair<TranslationString, string>(TranslationString.DownloadingNewVersion, "starting to download {0} please wait..."),
+            new KeyValuePair<TranslationString, string>(TranslationString.DownloadFinished, "download finished..."),
+            new KeyValuePair<TranslationString, string>(TranslationString.DecompressingNewFile,"decompressing now..."),
+            new KeyValuePair<TranslationString, string>(TranslationString.OldFilesChangingWithNews,"files changing now..."),
+            new KeyValuePair<TranslationString, string>(TranslationString.SubsequentProcessing, "Subsequent processing passing in {0} seconds or Close the Program"),
         };
 
         public string GetTranslation(TranslationString translationString, params object[] data)
@@ -108,7 +114,9 @@ namespace MSniper.Settings.Localization
         public string GetTranslation(TranslationString translationString)
         {
             var translation = _translationStrings.FirstOrDefault(t => t.Key.Equals(translationString)).Value;
-            return translation != default(string) ? translation : $"Translation for {translationString} is missing";
+            return translation != default(string) 
+                ? translation 
+                : $"Translation for {translationString} is missing";
         }
 
         public static Translation Load(ISettings logicSettings)
@@ -118,19 +126,21 @@ namespace MSniper.Settings.Localization
 
         public static Translation Load(ISettings logicSettings, Translation translations)
         {
-            var translationsLanguageCode = logicSettings.LanguageCode.Replace("-", "_");
-
-            if (SupportedLanguages.FindIndex(p => p.ToLower() == translationsLanguageCode) == -1)
-            {
-                Log.WriteLine($"{logicSettings.LanguageCode} language not found in program", ConsoleColor.Red);
-                Log.WriteLine($"now using default language..", ConsoleColor.Red);
-                translationsLanguageCode = new Configs().LanguageCode;
-            }
-
-            string translationFile = $"translation_{translationsLanguageCode}";
-
             try
             {
+                var translationsLanguageCode = logicSettings.TranslationLanguageCode.Replace("-", "_");
+
+                if (Variables.SupportedLanguages.FindIndex(p => p.ToLower() == translationsLanguageCode) == -1)
+                {
+                    Log.WriteLine($"[ {logicSettings.TranslationLanguageCode} ] language not found in program", ConsoleColor.Red);
+                    Thread.Sleep(1000);
+                    Log.WriteLine($"now using default language [ {new Configs().TranslationLanguageCode} ]..", ConsoleColor.Green);
+                    translationsLanguageCode = new Configs().TranslationLanguageCode;
+                    Program.Delay(3);
+                }
+
+                string translationFile = $"translation_{translationsLanguageCode}";
+
                 string input = Resources.ResourceManager.GetString(translationFile);
                 var jsonSettings = new JsonSerializerSettings();
                 jsonSettings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
@@ -147,7 +157,9 @@ namespace MSniper.Settings.Localization
             }
             catch (Exception ex)
             {
-                Log.WriteLine($"[ERROR] Issue loading translations: {ex.ToString()}", ConsoleColor.DarkRed);
+                Log.WriteLine("");
+                Log.WriteLine($"[ERROR] Issue loading translations: {ex.ToString()}", ConsoleColor.Red);
+                Program.Delay(7);
             }
 
             return translations;

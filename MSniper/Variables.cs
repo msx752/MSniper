@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -21,5 +22,10 @@ namespace MSniper
         public static string TempPath => Path.Combine(Application.StartupPath, "temp");
         public static string SettingPath => Path.Combine(Application.StartupPath, "Settings.json");
         public static string TranslationsPath => Path.Combine(Variables.TempPath, "Languages");
+
+        public static List<string> SupportedLanguages => new List<string>()
+        {
+            "en"
+        };
     }
 }

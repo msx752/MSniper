@@ -14,13 +14,13 @@ namespace MSniper.Settings
     public interface ISettings
     {
         int CloseDelaySec { get; }
-        string LanguageCode { get; }
+        string TranslationLanguageCode { get; }
     }
     public class Configs : ISettings
     {
         public int CloseDelaySec { get; set; } = 5;
 
-        public string LanguageCode { get; set; } = "en";
+        public string TranslationLanguageCode { get; set; } = "en";
 
 
         public static Configs Load(string configFile)
@@ -49,7 +49,7 @@ namespace MSniper.Settings
                             if (count > 10)
                             {
                                 //sometimes we have to wait close to config.json for access
-                                Log.WriteLine("configFile: " + exception.Message, ConsoleColor.DarkRed);
+                                Log.WriteLine("configFile: " + exception.Message, ConsoleColor.Red);
                             }
                             count++;
                             Thread.Sleep(1000);
@@ -67,13 +67,13 @@ namespace MSniper.Settings
                     }
                     catch (Newtonsoft.Json.JsonSerializationException exception)
                     {
-                        Log.WriteLine("Settings.json WRONG FORMAT: " + exception.Message, ConsoleColor.DarkRed);
-                        Program.Shutdown(30);
+                        Log.WriteLine("Settings.json WRONG FORMAT: " + exception.Message, ConsoleColor.Red);
+                        Program.Delay(30);
                     }
                 }
                 catch (JsonReaderException exception)
                 {
-                    Log.WriteLine("JSON Exception: " + exception.Message, ConsoleColor.DarkRed);
+                    Log.WriteLine("JSON Exception: " + exception.Message, ConsoleColor.Red);
                     return settings;
                 }
             }

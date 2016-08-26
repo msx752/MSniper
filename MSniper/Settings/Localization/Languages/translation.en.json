@@ -1,8 +1,132 @@
 {
   "TranslationStrings": [
     {
+      "Key": "title",
+      "Value": "[{0} v{1}]  -  by {2}"
+    },
+    {
       "Key": "description",
-      "Value": "{0} v{1} - Manual Pokemon Sniper - by {2}"
+      "Value": "{0} - {1} Manual Pokemon Sniper - by {2}"
+    },
+    {
+      "Key": "gitHubProject",
+      "Value": "GitHub Project {0}"
+    },
+    {
+      "Key": "currentVersion",
+      "Value": "Current Version: {0}"
+    },
+    {
+      "Key": "protocolNotFound",
+      "Value": "Protocol not found - Please run once {0}"
+    },
+    {
+      "Key": "shutdownMsg",
+      "Value": "Program is closing in {0} seconds"
+    },
+    {
+      "Key": "latestVersion",
+      "Value": "Latest Version"
+    },
+    {
+      "Key": "newVersion",
+      "Value": "NEW VERSION"
+    },
+    {
+      "Key": "downloadLink",
+      "Value": "DOWNLOAD LINK"
+    },
+    {
+      "Key": "autoDownloadMsg",
+      "Value": "PRESS 'D' TO AUTOMATIC DOWNLOAD NEW VERSION OR PRESS ANY KEY FOR EXIT.."
+    },
+    {
+      "Key": "warning",
+      "Value": "WARNING"
+    },
+    {
+      "Key": "warningShutdownProcess",
+      "Value": "All MSniper.exe will shutdown while downloading"
+    },
+    {
+      "Key": "integrateMsg",
+      "Value": "{0} integrated NecroBot v{1} or upper"
+    },
+    {
+      "Key": "anyNecroBotNotFound",
+      "Value": "Any running NecroBot not found..."
+    },
+    {
+      "Key": "runBeforeMSniper",
+      "Value": "Necrobot must be running before MSniper"
+    },
+    {
+      "Key": "protocolRegistered",
+      "Value": "Protocol Successfully REGISTERED:"
+    },
+    {
+      "Key": "protocolDeleted",
+      "Value": "Protocol Successfully DELETED:"
+    },
+    {
+      "Key": "removeAllSnipe",
+      "Value": "deleted for {0}"
+    },
+    {
+      "Key": "removeAllSnipeFinished",
+      "Value": "deleting finished process count:{0}.."
+    },
+    {
+      "Key": "unknownLinkFormat",
+      "Value": "unknown link format"
+    },
+    {
+      "Key": "customPasteDesc",
+      "Value": "\t\tCUSTOM PASTE ACTIVE"
+    },
+    {
+      "Key": "customPasteFormat",
+      "Value": "format: PokemonName Latitude,Longitude"
+    },
+    {
+      "Key": "waitingDataMsg",
+      "Value": "waiting data.."
+    },
+    {
+      "Key": "customPasteWrongFormat",
+      "Value": "wrong format retry or write 'E' for quit.."
+    },
+    {
+      "Key": "incompatibleVersionMsg",
+      "Value": "Incompatible NecroBot version for {0}"
+    },
+    {
+      "Key": "sendingPokemonToNecroBot",
+      "Value": "Sending to {3}: {0} {1},{2}"
+    },
+    {
+      "Key": "alreadySnipped",
+      "Value": "{0}\t\tAlready Snipped..."
+    },
+    {
+      "Key": "downloadingNewVersion",
+      "Value": "starting to download {0} please wait..."
+    },
+    {
+      "Key": "downloadFinished",
+      "Value": "download finished..."
+    },
+    {
+      "Key": "decompressingNewFile",
+      "Value": "decompressing now..."
+    },
+    {
+      "Key": "oldFilesChangingWithNews",
+      "Value": "files changing now..."
+    },
+    {
+      "Key": "subsequentProcessing",
+      "Value": "Subsequent processing passing in {0} seconds or Close the Program"
     }
   ]
 }
