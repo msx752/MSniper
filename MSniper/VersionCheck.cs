@@ -7,7 +7,7 @@ namespace MSniper
 {
     public static class VersionCheck
     {
-        public static Version RemoteVersion;
+        public static Version RemoteVersion = null;
 
         public static bool IsLatest()
         {
@@ -36,20 +36,10 @@ namespace MSniper
 
         private static string DownloadServerVersion()
         {
-            using (var wC = new NecroWebClient())
+            using (var wC = new MSniperClient())
             {
-                return wC.DownloadString(Program.versionUri);
+                return wC.DownloadString(FConfig.versionUri);
             }
-        }
-    }
-
-    public class NecroWebClient : WebClient
-    {
-        protected override WebRequest GetWebRequest(Uri uri)
-        {
-            WebRequest w = base.GetWebRequest(uri);
-            w.Timeout = 10000;
-            return w;
         }
     }
 }

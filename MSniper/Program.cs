@@ -16,12 +16,6 @@ namespace MSniper
 {
     internal class Program
     {
-        public static string versionUri = "https://raw.githubusercontent.com/msx752/MSniper/master/MSniper/Properties/AssemblyInfo.cs";
-        public static string botEXEName = "necrobot";
-        public static string githupProjectLink = "https://github.com/msx752/MSniper";
-        public static string snipefilename = "SnipeMS.json";
-        public static string minRequireVersion = "0.9.5";
-
         [STAThread]
         private static void Main(string[] args)
         {
@@ -117,7 +111,7 @@ namespace MSniper
 
         private static void CheckNecroBots(bool shutdownMSniper)
         {
-            if (Process.GetProcessesByName(botEXEName).Count() == 0)
+            if (Process.GetProcessesByName(FConfig.botEXEName).Count() == 0)
             {
                 Log.WriteLine("Any running NecroBot not found...", ConsoleColor.Red);
                 Log.WriteLine(" *Necrobot must be running before MSniper*", ConsoleColor.Red);
@@ -130,7 +124,7 @@ namespace MSniper
         {
             Log.WriteLine("");
             Log.WriteLine("MSniper - NecroBot Manual PokemonSniper by msx752");
-            Log.WriteLine("GitHub Project " + githupProjectLink, ConsoleColor.Yellow);
+            Log.WriteLine("GitHub Project " + FConfig.githupProjectLink, ConsoleColor.Yellow);
             Log.Write("Current Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString().Substring(0, 5), ConsoleColor.White);
             if (Protocol.isRegistered() == false && withParams == false)
             {
@@ -145,7 +139,7 @@ namespace MSniper
             else
             {
                 Log.WriteLine(string.Format("   * NEW VERSION: {0} *", VersionCheck.RemoteVersion.ToString().Substring(0, 5)), ConsoleColor.Green);
-                string downloadlink = githupProjectLink + "/releases/latest";
+                string downloadlink = FConfig.githupProjectLink + "/releases/latest";
                 Log.WriteLine(string.Format("* DOWNLOAD LINK:  {0} *", downloadlink), ConsoleColor.Yellow);
                 Log.WriteLine(string.Format("PRESS 'C' TO COPY LINK OR PRESS ANY KEY FOR EXIT.."), ConsoleColor.DarkCyan);
                 char c = Console.ReadKey().KeyChar;
@@ -157,13 +151,13 @@ namespace MSniper
                 }
                 Shutdown(5);
             }
-            Log.WriteLine(string.Format("MSniper integrated NecroBot v{0} or upper", minRequireVersion), ConsoleColor.DarkCyan);
+            Log.WriteLine(string.Format("MSniper integrated NecroBot v{0} or upper", FConfig.minRequireVersion), ConsoleColor.DarkCyan);
             Log.WriteLine("--------------------------------------------------------");
         }
 
         private static void RemoveAllSnipeMSJSON()
         {
-            Process[] plist = Process.GetProcessesByName(botEXEName);
+            Process[] plist = Process.GetProcessesByName(FConfig.botEXEName);
             foreach (var item in plist)
             {
                 string pathRemote = GetSnipeMSLocation(Path.GetDirectoryName(item.MainModule.FileName));
@@ -171,7 +165,7 @@ namespace MSniper
                 {
                     FileDelete(pathRemote);
                     string val = item.MainWindowTitle.Split('-').First().Split(' ')[2];
-                    Log.WriteLine(string.Format("deleted {0} for {1}", snipefilename, val), ConsoleColor.Green);
+                    Log.WriteLine(string.Format("deleted {0} for {1}", FConfig.snipefilename, val), ConsoleColor.Green);
                 }
             }
             Log.WriteLine(string.Format("deleting finished process count:{0}..", plist.Count()), ConsoleColor.Green);
@@ -224,7 +218,7 @@ namespace MSniper
 
         private static bool isBotUpperThan094(FileVersionInfo fversion)
         {
-            if (new Version(fversion.FileVersion) >= new Version(minRequireVersion))
+            if (new Version(fversion.FileVersion) >= new Version(FConfig.minRequireVersion))
             {
                 return true;
             }
@@ -240,7 +234,7 @@ namespace MSniper
             {
                 double lat = double.Parse(latt, CultureInfo.InvariantCulture);
                 double lon = double.Parse(lonn, CultureInfo.InvariantCulture);
-                foreach (var item in Process.GetProcessesByName(botEXEName))
+                foreach (var item in Process.GetProcessesByName(FConfig.botEXEName))
                 {
                     string username = item.MainWindowTitle.Split('-').First().Split(' ')[2];
                     if (!isBotUpperThan094(item.MainModule.FileVersionInfo))
@@ -298,7 +292,7 @@ namespace MSniper
 
         private static string GetSnipeMSLocation(string NecroBotEXEPath)
         {
-            return Path.Combine(NecroBotEXEPath, snipefilename);
+            return Path.Combine(NecroBotEXEPath, FConfig.snipefilename);
         }
 
         private static List<MSniperInfo> ReadSnipeMS(string path)
