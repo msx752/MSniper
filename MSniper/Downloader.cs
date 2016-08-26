@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MSniper
 {
-    public static class VersionDownloader
+    public static class Downloader
     {
         private static byte[] GetFile(string fileVersion)
         {
             try
             {
-                string url = string.Format(FConfig.FileLink, fileVersion);
+                string url = string.Format(Variables.FileLink, fileVersion);
                 using (MSniperClient w = new MSniperClient())
                 {
                     byte[] downloadedFile = w.DownloadData(url);
@@ -28,11 +25,13 @@ namespace MSniper
                 return null;
             }
         }
+
         private static void WriteFile(byte[] bytes, string fullpath)
         {
             CreateEmptyFile(fullpath);
             File.WriteAllBytes(fullpath, bytes);
         }
+
         private static void CreateEmptyFile(string fullpath)
         {
             if (!Directory.Exists(Path.GetDirectoryName(fullpath)))
@@ -46,13 +45,14 @@ namespace MSniper
                 sw.Close();
             }
         }
+
         private static void DecompressZip(string zipFullPath)
         {
             using (ZipArchive archive = ZipFile.OpenRead(zipFullPath))
             {
                 foreach (ZipArchiveEntry entry in archive.Entries)
                 {
-                    string path = Path.Combine(FConfig.TempPath, VersionCheck.NameWithVersion, entry.FullName);
+                    string path = Path.Combine(Variables.TempPath, VersionCheck.NameWithVersion, entry.FullName);
                     CreateEmptyFile(path);
                     entry.ExtractToFile(path, true);
                 }
@@ -64,20 +64,21 @@ namespace MSniper
             Log.WriteLine(string.Format("starting to download {0} please wait...", VersionCheck.NameWithVersion), ConsoleColor.Green);
             byte[] downloaded = GetFile(VersionCheck.RemoteVersion);
             Log.WriteLine("download finished...", ConsoleColor.Green);
-            WriteFile(downloaded, FConfig.TempRarFile);
+            WriteFile(downloaded, Variables.TempRarFile);
             Log.WriteLine("decompressing now...", ConsoleColor.Green);
-            DecompressZip(FConfig.TempRarFile);
+            DecompressZip(Variables.TempRarFile);
             Log.WriteLine("files changing now...", ConsoleColor.Green);
             ChangeWithOldFiles(CreateUpdaterBatch());
         }
 
         /// <summary>
-        /// returns fileupdater.bat full path
+        /// returns fileupdater.bat full path 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// </returns>
         private static string CreateUpdaterBatch()
         {
-            string path = Path.Combine(FConfig.TempPath, "FileUpdater.bat");
+            string path = Path.Combine(Variables.TempPath, "FileUpdater.bat");
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("@echo off");
             sb.AppendLine("ECHO ### FILES CHANGING ###");
@@ -85,11 +86,11 @@ namespace MSniper
             sb.AppendLine("ECHO .");
             sb.AppendLine("taskkill /F /IM \"MSniper.exe\"");
             sb.AppendLine("timeout /t 2");
-            sb.AppendLine(string.Format("xcopy /s/y/e/q/r \"{0}\\{1}\" \"{2}\"", FConfig.TempPath, VersionCheck.NameWithVersion, FConfig.StartupPath));
-            sb.AppendLine(string.Format("del /S \"{0}\\{1}\"", FConfig.StartupPath, "registerProtocol.bat"));
-            sb.AppendLine(string.Format("del /S \"{0}\\{1}\"", FConfig.StartupPath, "removeProtocol.bat"));
-            sb.AppendLine(string.Format("del /S \"{0}\\{1}\"", FConfig.StartupPath, "resetSnipeList.bat"));
-            sb.AppendLine(string.Format("del /S \"{0}\\{1}\"", FConfig.StartupPath, "Newtonsoft.Json.dll"));
+            sb.AppendLine(string.Format("xcopy /s/y/e/q/r \"{0}\\{1}\" \"{2}\"", Variables.TempPath, VersionCheck.NameWithVersion, Variables.StartupPath));
+            sb.AppendLine(string.Format("del /S \"{0}\\{1}\"", Variables.StartupPath, "registerProtocol.bat"));
+            sb.AppendLine(string.Format("del /S \"{0}\\{1}\"", Variables.StartupPath, "removeProtocol.bat"));
+            sb.AppendLine(string.Format("del /S \"{0}\\{1}\"", Variables.StartupPath, "resetSnipeList.bat"));
+            sb.AppendLine(string.Format("del /S \"{0}\\{1}\"", Variables.StartupPath, "Newtonsoft.Json.dll"));
             sb.AppendLine(string.Format("start \"\" \"{0}\"", Process.GetCurrentProcess().MainModule.FileName));
             sb.AppendLine("ECHO ### FINISHED ###");
             File.WriteAllText(path, sb.ToString());
@@ -97,9 +98,10 @@ namespace MSniper
         }
 
         /// <summary>
-        /// running batch
+        /// running batch 
         /// </summary>
-        /// <param name="BatchPath"></param>
+        /// <param name="BatchPath">
+        /// </param>
         private static void ChangeWithOldFiles(string BatchPath)
         {
             ProcessStartInfo psi = new ProcessStartInfo(BatchPath);
@@ -109,6 +111,5 @@ namespace MSniper
             proc.WaitForExit();
             Process.GetCurrentProcess().Kill();
         }
-
     }
 }

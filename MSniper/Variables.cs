@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows.Forms;
 
 namespace MSniper
 {
-    public static class FConfig
+    public static class Variables
     {
         public static string GithupProjectLink => "https://github.com/msx752/MSniper";
         public static string FileLink => GithupProjectLink + "/releases/download/{0}/MSniper.v{0}.zip";

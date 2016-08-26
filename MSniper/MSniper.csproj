@@ -59,7 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FConfig.cs" />
+    <Compile Include="Variables.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MSniper.cs" />
     <Compile Include="MSniperClient.cs">
@@ -74,7 +74,7 @@
     </Compile>
     <Compile Include="ProtocolRegister.cs" />
     <Compile Include="VersionCheck.cs" />
-    <Compile Include="VersionDownloader.cs" />
+    <Compile Include="Downloader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
