@@ -108,30 +108,7 @@ namespace MSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {
-        ///  &quot;TranslationStrings&quot;: [
-        ///    {
-        ///      &quot;Key&quot;: &quot;title&quot;,
-        ///      &quot;Value&quot;: &quot;[{0} v{1}]  -  by {2}&quot;
-        ///    },
-        ///    {
-        ///      &quot;Key&quot;: &quot;description&quot;,
-        ///      &quot;Value&quot;: &quot;{0} - {1} Manual Pokemon Sniper - by {2}&quot;
-        ///    },
-        ///    {
-        ///      &quot;Key&quot;: &quot;gitHubProject&quot;,
-        ///      &quot;Value&quot;: &quot;GitHub Project {0}&quot;
-        ///    },
-        ///    {
-        ///      &quot;Key&quot;: &quot;currentVersion&quot;,
-        ///      &quot;Value&quot;: &quot;Current Version: {0}&quot;
-        ///    },
-        ///    {
-        ///      &quot;Key&quot;: &quot;protocolNotFound&quot;,
-        ///      &quot;Value&quot;: &quot;Protocol not found - Please run once {0}&quot;
-        ///    },
-        ///    {
-        ///      &quot;Key&quot;: &quot;shu [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to ൻ ∠牔湡汳瑡潩卮牴湩獧㨢嬠਍††ൻ ††∠敋≹›琢瑩敬Ⱒ਍†††嘢污敵㨢∠筛細瘠ㅻ嵽†‭戠⁹㉻≽਍††ⱽ਍††ൻ ††∠敋≹›搢獥牣灩楴湯Ⱒ਍†††嘢污敵㨢∠ほ⁽‭ㅻ⁽慍畮污倠歯浥湯匠楮数⁲‭祢笠紲ഢ †素ബ †笠਍†††䬢祥㨢∠楧䡴扵牐橯捥≴ബ ††∠慖畬≥›䜢瑩畈⁢牐橯捥⁴ほ≽਍††ⱽ਍††ൻ ††∠敋≹›挢牵敲瑮敖獲潩≮ബ ††∠慖畬≥›䌢牵敲瑮嘠牥楳湯›ほ≽਍††ⱽ਍††ൻ ††∠敋≹›瀢潲潴潣乬瑯潆湵≤ബ ††∠慖畬≥›倢潲潴潣⁬潮⁴潦湵⁤‭汐慥敳爠湵漠据⁥ほ≽਍††ⱽ਍††ൻ ††∠敋≹›猢畨摴睯䵮杳Ⱒ਍†††嘢污敵㨢∠牐杯慲⁭獩挠潬楳杮椠⁮ほ⁽敳潣摮≳਍††ⱽ਍††ൻ ††∠敋≹›氢瑡獥噴牥楳湯Ⱒ਍†††嘢污敵㨢∠慌整瑳嘠牥楳湯ഢ †素ബ †笠਍†††䬢祥㨢∠敮噷牥楳湯Ⱒ਍†††嘢污敵㨢∠䕎⁗䕖卒佉≎਍††ⱽ਍††ൻ ††∠敋≹›搢睯汮慯䱤湩≫ബ ††∠慖畬≥›䐢坏䱎䅏⁄䥌䭎ഢ †素ബ †笠਍†††䬢祥㨢∠畡潴潄湷潬摡獍≧ബ ††∠慖畬≥›倢䕒卓✠❄吠⁏啁佔䅍䥔⁃佄乗佌䑁丠坅嘠剅䥓乏传⁒剐卅⁓乁⁙䕋⁙但⁒塅呉⸮ഢ †素ബ †笠਍†††䬢祥㨢∠慷湲湩≧ബ ††∠慖畬≥›圢剁䥎䝎ഢ †素ബ †笠਍ [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string translation_en {
             get {
@@ -148,22 +125,22 @@ namespace MSniper.Properties {
         ///    },
         ///    {
         ///      &quot;Key&quot;: &quot;description&quot;,
-        ///      &quot;Value&quot;: &quot;{0} - {1} Manual Pokemon Sniper - by {2}&quot;
+        ///      &quot;Value&quot;: &quot;{0} - {1} Manuel Pokemon Avcı - by {2}&quot;
         ///    },
         ///    {
         ///      &quot;Key&quot;: &quot;gitHubProject&quot;,
-        ///      &quot;Value&quot;: &quot;GitHub Project {0}&quot;
+        ///      &quot;Value&quot;: &quot;GitHub Projesi {0}&quot;
         ///    },
         ///    {
         ///      &quot;Key&quot;: &quot;currentVersion&quot;,
-        ///      &quot;Value&quot;: &quot;Current Version: {0}&quot;
+        ///      &quot;Value&quot;: &quot;Şuanki Versiyon: {0}&quot;
         ///    },
         ///    {
         ///      &quot;Key&quot;: &quot;protocolNotFound&quot;,
-        ///      &quot;Value&quot;: &quot;Protocol not found - Please run once {0}&quot;
+        ///      &quot;Value&quot;: &quot;Protokol bulunamadı - Lütfen bir kere {0} &apos;yi çalıştırın&quot;
         ///    },
         ///    {
-        ///      &quot;Key&quot;: &quot;shu [rest of string was truncated]&quot;;.
+        ///    [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string translation_tr {
             get {
