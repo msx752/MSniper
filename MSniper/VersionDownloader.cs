@@ -24,6 +24,7 @@ namespace MSniper
             }
             catch (Exception ex)
             {
+                Log.WriteLine(ex.Message, ConsoleColor.DarkRed);
                 return null;
             }
         }
