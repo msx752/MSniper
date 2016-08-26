@@ -7,7 +7,9 @@ namespace MSniper
 {
     public static class VersionCheck
     {
-        public static Version RemoteVersion = null;
+        private static Version RVersion = null;
+        public static string RemoteVersion => RVersion.ToString().Substring(0, 5);
+        public static string NameWithVersion => "MSniper.v" + RemoteVersion;
 
         public static bool IsLatest()
         {
@@ -20,7 +22,7 @@ namespace MSniper
                     return false;
 
                 var gitVersion = new Version($"{match.Groups[1]}.{match.Groups[2]}.{match.Groups[3]}");
-                RemoteVersion = gitVersion;
+                RVersion = gitVersion;
                 if (gitVersion > Assembly.GetExecutingAssembly().GetName().Version)
                 {
                     return false;

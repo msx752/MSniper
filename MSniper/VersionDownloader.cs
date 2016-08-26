@@ -8,14 +8,14 @@ namespace MSniper
 {
     public static class VersionDownloader
     {
-        public static byte[] GetFile(Version fileVersion)
+        public static byte[] GetFile(string fileVersion)
         {
             try
             {
+                string url = string.Format(FConfig.FileLink, fileVersion.ToString().Substring(0, 5));
                 using (MSniperClient w = new MSniperClient())
                 {
-                    w.Encoding = Encoding.UTF8;
-                    byte[] downloadedFile = w.DownloadData(string.Format(FConfig.FileLink, fileVersion.ToString().Substring(0, 5)));
+                    byte[] downloadedFile = w.DownloadData(url);
                     return downloadedFile;
                 }
             }

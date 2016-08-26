@@ -138,16 +138,19 @@ namespace MSniper
             }
             else
             {
-                Log.WriteLine(string.Format("   * NEW VERSION: {0} *", VersionCheck.RemoteVersion.ToString().Substring(0, 5)), ConsoleColor.Green);
+                Log.WriteLine(string.Format("   * NEW VERSION: {0} *", VersionCheck.RemoteVersion), ConsoleColor.Green);
                 string downloadlink = FConfig.GithupProjectLink + "/releases/latest";
                 Log.WriteLine(string.Format("* DOWNLOAD LINK:  {0} *", downloadlink), ConsoleColor.Yellow);
-                Log.WriteLine(string.Format("PRESS 'C' TO COPY LINK OR PRESS ANY KEY FOR EXIT.."), ConsoleColor.DarkCyan);
+                Log.WriteLine(string.Format("PRESS 'D' TO AUTOMATIC DOWNLOAD NEW VERSION OR PRESS ANY KEY FOR EXIT.."), ConsoleColor.DarkCyan);
                 char c = Console.ReadKey().KeyChar;
                 Console.SetCursorPosition(0, Console.CursorTop);
-                if (c == 'c' || c == 'C')
+                if (c == 'd' || c == 'D')
                 {
-                    Clipboard.SetText(downloadlink);
-                    Log.WriteLine(string.Format("link successfully copied.."), ConsoleColor.Green);
+                    Log.WriteLine(string.Format("starting to download v{0} please wait...", VersionCheck.RemoteVersion), ConsoleColor.Green);
+                    byte[] downloaded = VersionDownloader.GetFile(VersionCheck.RemoteVersion);
+                    File.WriteAllBytes(Path.Combine(FConfig.TempPath, VersionCheck.NameWithVersion, ".rar"), downloaded);
+                    Log.WriteLine("file downloaded look at under '\\FOLDER\\temp\\' folder", ConsoleColor.Green);
+                    //Clipboard.SetText(downloadlink);
                 }
                 Shutdown(5);
             }
