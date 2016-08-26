@@ -15,11 +15,11 @@ namespace MSniper
                 using (MSniperClient w = new MSniperClient())
                 {
                     w.Encoding = Encoding.UTF8;
-                    byte[] downloadedFile = w.DownloadData(string.Format(FConfig.fileLink, fileVersion.ToString().Substring(0, 5)));
+                    byte[] downloadedFile = w.DownloadData(string.Format(FConfig.FileLink, fileVersion.ToString().Substring(0, 5)));
                     return downloadedFile;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }

@@ -38,7 +38,7 @@ namespace MSniper
         {
             using (var wC = new MSniperClient())
             {
-                return wC.DownloadString(FConfig.versionUri);
+                return wC.DownloadString(FConfig.VersionUri);
             }
         }
     }
