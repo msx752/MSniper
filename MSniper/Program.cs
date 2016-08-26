@@ -148,10 +148,7 @@ namespace MSniper
                 Console.SetCursorPosition(0, Console.CursorTop);
                 if (c == 'd' || c == 'D')
                 {
-                    Log.WriteLine(string.Format("starting to download {0} please wait...", VersionCheck.NameWithVersion), ConsoleColor.Green);
-                    VersionDownloader.GetNewVersion();
-                    Log.WriteLine("file downloaded look at under '\\FOLDER\\temp\\' folder", ConsoleColor.Green);
-                    //Clipboard.SetText(downloadlink);
+                    VersionDownloader.DownloadNewVersion();
                 }
                 Shutdown(5);
             }
@@ -292,6 +289,10 @@ namespace MSniper
             path = Path.Combine(Application.StartupPath, "resetSnipeList.bat");
             if (!File.Exists(path))
                 File.WriteAllText(path, Properties.Resources.resetSnipeList);
+
+
+            if (Directory.Exists(FConfig.TempPath))//deleting temp
+                Directory.Delete(FConfig.TempPath, true);
         }
 
         private static string GetSnipeMSLocation(string NecroBotEXEPath)
