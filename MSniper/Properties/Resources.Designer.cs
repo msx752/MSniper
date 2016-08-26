@@ -106,5 +106,21 @@ namespace MSniper.Properties {
                 return ResourceManager.GetString("resetSnipeList", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;TranslationStrings&quot;: [
+        ///    {
+        ///      &quot;Key&quot;: &quot;description&quot;,
+        ///      &quot;Value&quot;: &quot;{0} - {1} Manual Pokemon Sniper - by {2}&quot;
+        ///    }
+        ///  ]
+        ///}.
+        /// </summary>
+        internal static string translation_en {
+            get {
+                return ResourceManager.GetString("translation_en", resourceCulture);
+            }
+        }
     }
 }

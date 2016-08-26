@@ -59,6 +59,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Settings\Localization\Translations.cs" />
+    <Compile Include="Settings\Settings.cs" />
     <Compile Include="Variables.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MSniper.cs" />
@@ -82,6 +84,7 @@
     <EmbeddedResource Include="Resources\registerProtocol.bat" />
     <EmbeddedResource Include="Resources\removeProtocol.bat" />
     <EmbeddedResource Include="Resources\resetSnipeList.bat" />
+    <EmbeddedResource Include="Settings\Localization\Languages\translation.en.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -95,6 +98,7 @@
   <ItemGroup>
     <None Include="Resources\Newtonsoft.Json.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

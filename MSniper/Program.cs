@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿
+using MSniper.Settings;
+using MSniper.Settings.Localization;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
@@ -16,11 +19,19 @@ namespace MSniper
 {
     internal class Program
     {
+        public static Translation culture { get; set; }
+        public static Configs config { get; set; }
+
         [STAThread]
         private static void Main(string[] args)
         {
             ExportReferences();
-            Console.Title = string.Format("MSniper v{0}    by msx752", Assembly.GetExecutingAssembly().GetName().Version.ToString().Substring(0, 5));
+            config = LoadConfigs();
+            culture = LoadCulture(config);
+
+            Console.Title = culture.GetTranslation(TranslationString.Description,
+                Variables.ProgramName, Variables.CurrentVersion, Variables.By
+                );
             Console.Clear();
             Helper(args.Length == 0 ? false : true);
             CheckNecroBots(args.Length != 1);
@@ -106,9 +117,31 @@ namespace MSniper
                 }
                 while (true);
             }
-            Shutdown(5);
+            Shutdown();
         }
 
+        private static Configs LoadConfigs()
+        {
+            string strCulture = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+            var culture = CultureInfo.CreateSpecificCulture("en");
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            Thread.CurrentThread.CurrentCulture = culture;
+
+            Configs _settings = new Configs();
+            if (File.Exists(Variables.SettingPath))
+            {
+                _settings = Configs.Load(Variables.SettingPath);
+            }
+            else
+            {
+                Configs.SaveFiles(_settings, Variables.SettingPath);
+            }
+            return _settings;
+        }
+        private static Translation LoadCulture(Configs _settings)
+        {
+            return Translation.Load(_settings);
+        }
         private static void CheckNecroBots(bool shutdownMSniper)
         {
             if (Process.GetProcessesByName(Variables.BotEXEName).Count() == 0)
@@ -116,7 +149,7 @@ namespace MSniper
                 Log.WriteLine("Any running NecroBot not found...", ConsoleColor.Red);
                 Log.WriteLine(" *Necrobot must be running before MSniper*", ConsoleColor.Red);
                 if (shutdownMSniper)
-                    Shutdown(5);
+                    Shutdown();
             }
         }
 
@@ -130,7 +163,7 @@ namespace MSniper
             {
                 Log.WriteLine(" ");
                 Log.WriteLine("Protocol not found - Please run once registerProtocol.bat", ConsoleColor.Red);
-                Shutdown(5);
+                Shutdown();
             }
             if (VersionCheck.IsLatest())
             {
@@ -150,7 +183,7 @@ namespace MSniper
                 {
                     Downloader.DownloadNewVersion();
                 }
-                Shutdown(5);
+                Shutdown();
             }
             Log.WriteLine(string.Format("MSniper integrated NecroBot v{0} or upper", Variables.MinRequireVersion), ConsoleColor.DarkCyan);
             Log.WriteLine("--------------------------------------------------------");
@@ -194,12 +227,15 @@ namespace MSniper
                 catch { }
             } while (true);//waiting access
         }
-
-        private static void Shutdown(int seconds)
+        public static void Shutdown()
+        {
+            Shutdown(config.CloseDelaySec);
+        }
+        public static void Shutdown(int seconds)
         {
             for (int i = seconds; i >= 0; i--)
             {
-                Log.WriteLine("Program is closing in " + (i + 1) + "sec");
+                Log.WriteLine($"Program is closing in {i} sec");
                 setConsoleCursor(Log.lastLineCount, Console.CursorTop - 1);
                 Thread.Sleep(1000);
                 setDefaultConsoleCursor();
@@ -290,8 +326,8 @@ namespace MSniper
             if (!File.Exists(path))
                 File.WriteAllText(path, Properties.Resources.resetSnipeList);
 
-            if (Directory.Exists(Variables.TempPath))//deleting temp
-                Directory.Delete(Variables.TempPath, true);
+            //if (Directory.Exists(Variables.TempPath))//deleting temp
+            //    Directory.Delete(Variables.TempPath, true);
         }
 
         private static string GetSnipeMSLocation(string NecroBotEXEPath)
