@@ -6,35 +6,35 @@
     },
     {
       "Key": "description",
-      "Value": "{0} - {1} Manual Pokemon Sniper - by {2}"
+      "Value": "{0} - {1} Manuel Pokemon Avcý - by {2}"
     },
     {
       "Key": "gitHubProject",
-      "Value": "GitHub Project {0}"
+      "Value": "GitHub Projesi {0}"
     },
     {
       "Key": "currentVersion",
-      "Value": "Current Version: {0}"
+      "Value": "Þuanki Versiyon: {0}"
     },
     {
       "Key": "protocolNotFound",
-      "Value": "Protocol not found - Please run once {0}"
+      "Value": "Protokol bulunamadý - Lütfen bir kere {0} 'yi çalýþtýrýn"
     },
     {
       "Key": "shutdownMsg",
-      "Value": "Program is closing in {0} seconds"
+      "Value": "Uygulama {0} saniye sonra kapatýlýcak"
     },
     {
       "Key": "latestVersion",
-      "Value": "Latest Version"
+      "Value": "Son Versiyon"
     },
     {
       "Key": "newVersion",
-      "Value": "NEW VERSION"
+      "Value": "YENÝ VERSÝYON"
     },
     {
       "Key": "downloadLink",
-      "Value": "DOWNLOAD LINK"
+      "Value": "ÝNDÝRME LÝNKÝ"
     },
     {
       "Key": "autoDownloadMsg",
@@ -42,91 +42,91 @@
     },
     {
       "Key": "warning",
-      "Value": "WARNING"
+      "Value": "UYARI"
     },
     {
       "Key": "warningShutdownProcess",
-      "Value": "All MSniper.exe will shutdown while downloading"
+      "Value": "Tüm MSniper.exe 'ler indirme esnasýnda otomatik sonlandýrýlýr."
     },
     {
       "Key": "integrateMsg",
-      "Value": "{0} integrated NecroBot v{1} or upper"
+      "Value": "{0} NecroBot v{1} veya üstü ile entegredir"
     },
     {
       "Key": "anyNecroBotNotFound",
-      "Value": "Any running NecroBot not found..."
+      "Value": "Çalýþan herhangi NecroBot bulunamadý..."
     },
     {
       "Key": "runBeforeMSniper",
-      "Value": "Necrobot must be running before MSniper"
+      "Value": "Necrobot MSniper 'dan önce çalýþtýrýlmalýdýr"
     },
     {
       "Key": "protocolRegistered",
-      "Value": "Protocol Successfully REGISTERED:"
+      "Value": "Protokol baþarýyla KAYDEDÝLDÝ:"
     },
     {
       "Key": "protocolDeleted",
-      "Value": "Protocol Successfully DELETED:"
+      "Value": "Protokol baþarýyla SÝLÝNDÝ:"
     },
     {
       "Key": "removeAllSnipe",
-      "Value": "deleted for {0}"
+      "Value": "{0} için silindi"
     },
     {
       "Key": "removeAllSnipeFinished",
-      "Value": "deleting finished process count:{0}.."
+      "Value": "Silme iþlemi tamamlandý adet:{0}.."
     },
     {
       "Key": "unknownLinkFormat",
-      "Value": "unknown link format"
+      "Value": "tanýmlanmayan link formatý"
     },
     {
       "Key": "customPasteDesc",
-      "Value": "\t\tMANUALLY PASTE ACTIVE"
+      "Value": "\t\tELLE EKLEME AKTÝF"
     },
     {
       "Key": "customPasteFormat",
-      "Value": "format: PokemonName Latitude,Longitude"
+      "Value": "format: PokemonÝsmi Latitude,Longitude"
     },
     {
       "Key": "waitingDataMsg",
-      "Value": "waiting data.."
+      "Value": "veri bekleniyor.."
     },
     {
       "Key": "customPasteWrongFormat",
-      "Value": "wrong format retry or write 'E' for quit.."
+      "Value": "hatalý format tekrar dene veya çýkmak için 'E' ye bas.."
     },
     {
       "Key": "incompatibleVersionMsg",
-      "Value": "Incompatible NecroBot version for {0}"
+      "Value": "{0} için Uyumsuz NecroBot versiyonu"
     },
     {
       "Key": "sendingPokemonToNecroBot",
-      "Value": "Sending to {3}: {0} {1},{2}"
+      "Value": "{3} 'e Gönderiliyor: {0} {1},{2}"
     },
     {
       "Key": "alreadySnipped",
-      "Value": "{0}\t\tAlready Snipped..."
+      "Value": "{0}\t\tZaten Gönderilmiþ..."
     },
     {
       "Key": "downloadingNewVersion",
-      "Value": "starting to download {0} please wait..."
+      "Value": "{0} indirilmeye baþlanýyor lütfen bekleyiniz..."
     },
     {
       "Key": "downloadFinished",
-      "Value": "download finished..."
+      "Value": "Ýndirme tamamlandý..."
     },
     {
       "Key": "decompressingNewFile",
-      "Value": "decompressing now..."
+      "Value": "dosyalar çýkartýlýyor..."
     },
     {
       "Key": "oldFilesChangingWithNews",
-      "Value": "files changing now..."
+      "Value": "dosyalar yenileriyle deðiþtiriliyor..."
     },
     {
       "Key": "subsequentProcessing",
-      "Value": "Subsequent processing passing in {0} seconds or Close the Program"
+      "Value": "{0} saniye içinde sonraki iþleme geçilecek yada uygulamayý sonlandýrýn"
     }
   ]
 }

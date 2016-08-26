@@ -85,6 +85,7 @@
     <EmbeddedResource Include="Resources\removeProtocol.bat" />
     <EmbeddedResource Include="Resources\resetSnipeList.bat" />
     <EmbeddedResource Include="Settings\Localization\Languages\translation.en.json" />
+    <None Include="Settings\Localization\Languages\translation.tr.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

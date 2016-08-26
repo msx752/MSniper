@@ -25,7 +25,7 @@ namespace MSniper
 
         public static List<string> SupportedLanguages => new List<string>()
         {
-            "en"
+            "en","tr"
         };
     }
 }

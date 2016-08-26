@@ -134,6 +134,9 @@
     <value>..\Resources\resetSnipeList.bat;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1254</value>
   </data>
   <data name="translation_en" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Settings\Localization\Languages\translation.en.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Settings\Localization\Languages\translation.en.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="translation_tr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\settings\localization\languages\translation.tr.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

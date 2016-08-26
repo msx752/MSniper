@@ -111,15 +111,63 @@ namespace MSniper.Properties {
         ///   Looks up a localized string similar to {
         ///  &quot;TranslationStrings&quot;: [
         ///    {
+        ///      &quot;Key&quot;: &quot;title&quot;,
+        ///      &quot;Value&quot;: &quot;[{0} v{1}]  -  by {2}&quot;
+        ///    },
+        ///    {
         ///      &quot;Key&quot;: &quot;description&quot;,
         ///      &quot;Value&quot;: &quot;{0} - {1} Manual Pokemon Sniper - by {2}&quot;
-        ///    }
-        ///  ]
-        ///}.
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;gitHubProject&quot;,
+        ///      &quot;Value&quot;: &quot;GitHub Project {0}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;currentVersion&quot;,
+        ///      &quot;Value&quot;: &quot;Current Version: {0}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;protocolNotFound&quot;,
+        ///      &quot;Value&quot;: &quot;Protocol not found - Please run once {0}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;shu [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string translation_en {
             get {
                 return ResourceManager.GetString("translation_en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;TranslationStrings&quot;: [
+        ///    {
+        ///      &quot;Key&quot;: &quot;title&quot;,
+        ///      &quot;Value&quot;: &quot;[{0} v{1}]  -  by {2}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;description&quot;,
+        ///      &quot;Value&quot;: &quot;{0} - {1} Manual Pokemon Sniper - by {2}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;gitHubProject&quot;,
+        ///      &quot;Value&quot;: &quot;GitHub Project {0}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;currentVersion&quot;,
+        ///      &quot;Value&quot;: &quot;Current Version: {0}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;protocolNotFound&quot;,
+        ///      &quot;Value&quot;: &quot;Protocol not found - Please run once {0}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;shu [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string translation_tr {
+            get {
+                return ResourceManager.GetString("translation_tr", resourceCulture);
             }
         }
     }
