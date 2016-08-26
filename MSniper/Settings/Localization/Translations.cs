@@ -1,4 +1,5 @@
-﻿using MSniper.Properties;
+﻿using MSniper;
+using MSniper.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -16,18 +17,28 @@ namespace MSniper.Settings.Localization
     public interface ITranslation
     {
         string GetTranslation(TranslationString translationString, params object[] data);
+        string GetTranslation(TranslationString translationString);
     }
 
     public enum TranslationString
     {
+        Title,
         Description,
-
+        GitHubProject,
+        CurrentVersion,
+        ProtocolNotFound,
+        ShutdownMessage,
     }
     /// <summary>
     /// default language: english
     /// </summary>
-    public class Translation
+    public class Translation : ITranslation
     {
+        public static List<string> SupportedLanguages => new List<string>()
+        {
+            "en"
+        };
+
         [JsonProperty("TranslationStrings",
               ItemTypeNameHandling = TypeNameHandling.Arrays,
               ItemConverterType = typeof(KeyValuePairConverter),
@@ -36,7 +47,12 @@ namespace MSniper.Settings.Localization
         private readonly List<KeyValuePair<TranslationString, string>> _translationStrings = new List
             <KeyValuePair<TranslationString, string>>
         {
-            new KeyValuePair<TranslationString, string>(TranslationString.Description, "{0} - {1} Manual Pokemon Sniper - by {2}")
+            new KeyValuePair<TranslationString, string>(TranslationString.Title, "[{0} v{1}]  -  by {2}"),
+            new KeyValuePair<TranslationString, string>(TranslationString.Description, "{0} - {1} Manual Pokemon Sniper - by {2}"),
+            new KeyValuePair<TranslationString, string>(TranslationString.GitHubProject, "GitHub Project {0}"),
+            new KeyValuePair<TranslationString, string>(TranslationString.CurrentVersion, "Current Version: {0}"),
+            new KeyValuePair<TranslationString, string>(TranslationString.ProtocolNotFound, "Protocol not found - Please run once {0}"),
+            new KeyValuePair<TranslationString, string>(TranslationString.ShutdownMessage, "Program is closing in {0} seconds")
         };
 
         public string GetTranslation(TranslationString translationString, params object[] data)
@@ -69,7 +85,7 @@ namespace MSniper.Settings.Localization
                 translationsLanguageCode = new Configs().LanguageCode;
             }
 
-            string translationFile = "translation_" + translationsLanguageCode + "";
+            string translationFile = $"translation_{translationsLanguageCode}";
 
             try
             {
@@ -95,8 +111,9 @@ namespace MSniper.Settings.Localization
             return translations;
         }
 
-        public void Save(string fullPath)
+        public void Save(string languageCode)
         {
+            string fullPath = $"{Variables.TranslationsPath}\\translation.{languageCode}.json";
             var output = JsonConvert.SerializeObject(this, Formatting.Indented,
                 new StringEnumConverter { CamelCaseText = true });
 
@@ -109,9 +126,5 @@ namespace MSniper.Settings.Localization
             File.WriteAllText(fullPath, output);
         }
 
-        public static readonly List<string> SupportedLanguages = new List<string>()
-        {
-            "en"
-        };
     }
 }

@@ -22,14 +22,57 @@ namespace MSniper
         public static Translation culture { get; set; }
         public static Configs config { get; set; }
 
+        private static void Helper(bool withParams)
+        {
+            Log.WriteLine("");
+            Log.WriteLine(culture.GetTranslation(TranslationString.Description,
+                Variables.ProgramName, Variables.CurrentVersion, Variables.By));
+            Log.WriteLine(culture.GetTranslation(TranslationString.GitHubProject,
+                Variables.GithupProjectLink), 
+                ConsoleColor.Yellow);
+            Log.Write(culture.GetTranslation(TranslationString.CurrentVersion,
+                Assembly.GetEntryAssembly().GetName().Version.ToString().Substring(0, 5)),
+                ConsoleColor.White);
+            if (Protocol.isRegistered() == false && withParams == false)
+            {
+                Log.WriteLine(" ");
+                Log.WriteLine(culture.GetTranslation(TranslationString.ProtocolNotFound,
+                "registerProtocol.bat"),
+                ConsoleColor.Red);
+                Shutdown();
+            }
+            if (VersionCheck.IsLatest())
+            {
+                Log.WriteLine("   * Latest Version *", ConsoleColor.White);
+            }
+            else
+            {
+                Log.WriteLine(string.Format("   * NEW VERSION: {0} *", VersionCheck.RemoteVersion), ConsoleColor.Green);
+                string downloadlink = Variables.GithupProjectLink + "/releases/latest";
+                Log.WriteLine(string.Format("* DOWNLOAD LINK:  {0} *", downloadlink), ConsoleColor.Yellow);
+                Log.WriteLine(string.Format("PRESS 'D' TO AUTOMATIC DOWNLOAD NEW VERSION OR PRESS ANY KEY FOR EXIT.."), ConsoleColor.DarkCyan);
+                Log.Write("WARNING:", ConsoleColor.Red);
+                Log.WriteLine("All MSniper.exe will shutdown while downloading", ConsoleColor.White);
+                char c = Console.ReadKey().KeyChar;
+                Console.SetCursorPosition(0, Console.CursorTop);
+                if (c == 'd' || c == 'D')
+                {
+                    Downloader.DownloadNewVersion();
+                }
+                Shutdown();
+            }
+            Log.WriteLine(string.Format("MSniper integrated NecroBot v{0} or upper", Variables.MinRequireVersion), ConsoleColor.DarkCyan);
+            Log.WriteLine("--------------------------------------------------------");
+        }
+
         [STAThread]
         private static void Main(string[] args)
         {
             ExportReferences();
-            config = LoadConfigs();
-            culture = LoadCulture(config);
-
-            Console.Title = culture.GetTranslation(TranslationString.Description,
+            //Translation culture = new Translation();
+            //culture.Save("en");
+            //return;
+            Console.Title = culture.GetTranslation(TranslationString.Title,
                 Variables.ProgramName, Variables.CurrentVersion, Variables.By
                 );
             Console.Clear();
@@ -153,42 +196,6 @@ namespace MSniper
             }
         }
 
-        private static void Helper(bool withParams)
-        {
-            Log.WriteLine("");
-            Log.WriteLine("MSniper - NecroBot Manual PokemonSniper by msx752");
-            Log.WriteLine("GitHub Project " + Variables.GithupProjectLink, ConsoleColor.Yellow);
-            Log.Write("Current Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString().Substring(0, 5), ConsoleColor.White);
-            if (Protocol.isRegistered() == false && withParams == false)
-            {
-                Log.WriteLine(" ");
-                Log.WriteLine("Protocol not found - Please run once registerProtocol.bat", ConsoleColor.Red);
-                Shutdown();
-            }
-            if (VersionCheck.IsLatest())
-            {
-                Log.WriteLine("   * Latest Version *", ConsoleColor.White);
-            }
-            else
-            {
-                Log.WriteLine(string.Format("   * NEW VERSION: {0} *", VersionCheck.RemoteVersion), ConsoleColor.Green);
-                string downloadlink = Variables.GithupProjectLink + "/releases/latest";
-                Log.WriteLine(string.Format("* DOWNLOAD LINK:  {0} *", downloadlink), ConsoleColor.Yellow);
-                Log.WriteLine(string.Format("PRESS 'D' TO AUTOMATIC DOWNLOAD NEW VERSION OR PRESS ANY KEY FOR EXIT.."), ConsoleColor.DarkCyan);
-                Log.Write("WARNING:", ConsoleColor.Red);
-                Log.WriteLine("All MSniper.exe will shutdown while downloading", ConsoleColor.White);
-                char c = Console.ReadKey().KeyChar;
-                Console.SetCursorPosition(0, Console.CursorTop);
-                if (c == 'd' || c == 'D')
-                {
-                    Downloader.DownloadNewVersion();
-                }
-                Shutdown();
-            }
-            Log.WriteLine(string.Format("MSniper integrated NecroBot v{0} or upper", Variables.MinRequireVersion), ConsoleColor.DarkCyan);
-            Log.WriteLine("--------------------------------------------------------");
-        }
-
         private static void RemoveAllSnipeMSJSON()
         {
             Process[] plist = Process.GetProcessesByName(Variables.BotEXEName);
@@ -235,7 +242,8 @@ namespace MSniper
         {
             for (int i = seconds; i >= 0; i--)
             {
-                Log.WriteLine($"Program is closing in {i} sec");
+                Log.WriteLine(culture.GetTranslation(TranslationString.ShutdownMessage,
+                   i));
                 setConsoleCursor(Log.lastLineCount, Console.CursorTop - 1);
                 Thread.Sleep(1000);
                 setDefaultConsoleCursor();
@@ -328,6 +336,9 @@ namespace MSniper
 
             //if (Directory.Exists(Variables.TempPath))//deleting temp
             //    Directory.Delete(Variables.TempPath, true);
+
+            config = LoadConfigs();
+            culture = LoadCulture(config);
         }
 
         private static string GetSnipeMSLocation(string NecroBotEXEPath)
