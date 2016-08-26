@@ -28,6 +28,13 @@ namespace MSniper.Settings.Localization
         CurrentVersion,
         ProtocolNotFound,
         ShutdownMessage,
+        LatestVersion,
+        NewVersion,
+        DownloadLink,
+        AutoDownloadMessage,
+        Warning,
+        WarningShutdownProcess,
+        IntegrateMessage,
     }
     /// <summary>
     /// default language: english
@@ -52,7 +59,14 @@ namespace MSniper.Settings.Localization
             new KeyValuePair<TranslationString, string>(TranslationString.GitHubProject, "GitHub Project {0}"),
             new KeyValuePair<TranslationString, string>(TranslationString.CurrentVersion, "Current Version: {0}"),
             new KeyValuePair<TranslationString, string>(TranslationString.ProtocolNotFound, "Protocol not found - Please run once {0}"),
-            new KeyValuePair<TranslationString, string>(TranslationString.ShutdownMessage, "Program is closing in {0} seconds")
+            new KeyValuePair<TranslationString, string>(TranslationString.ShutdownMessage, "Program is closing in {0} seconds"),
+            new KeyValuePair<TranslationString, string>(TranslationString.LatestVersion, "Latest Version"),
+            new KeyValuePair<TranslationString, string>(TranslationString.NewVersion, "NEW VERSION"),
+            new KeyValuePair<TranslationString, string>(TranslationString.DownloadLink, "DOWNLOAD LINK"),
+            new KeyValuePair<TranslationString, string>(TranslationString.AutoDownloadMessage, "PRESS 'D' TO AUTOMATIC DOWNLOAD NEW VERSION OR PRESS ANY KEY FOR EXIT.."),
+            new KeyValuePair<TranslationString, string>(TranslationString.Warning, "WARNING"),
+            new KeyValuePair<TranslationString, string>(TranslationString.WarningShutdownProcess, "All MSniper.exe will shutdown while downloading"),
+            new KeyValuePair<TranslationString, string>(TranslationString.IntegrateMessage, "{0} integrated NecroBot v{1} or upper"),
         };
 
         public string GetTranslation(TranslationString translationString, params object[] data)

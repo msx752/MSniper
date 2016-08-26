@@ -28,7 +28,7 @@ namespace MSniper
             Log.WriteLine(culture.GetTranslation(TranslationString.Description,
                 Variables.ProgramName, Variables.CurrentVersion, Variables.By));
             Log.WriteLine(culture.GetTranslation(TranslationString.GitHubProject,
-                Variables.GithupProjectLink), 
+                Variables.GithupProjectLink),
                 ConsoleColor.Yellow);
             Log.Write(culture.GetTranslation(TranslationString.CurrentVersion,
                 Assembly.GetEntryAssembly().GetName().Version.ToString().Substring(0, 5)),
@@ -43,16 +43,18 @@ namespace MSniper
             }
             if (VersionCheck.IsLatest())
             {
-                Log.WriteLine("   * Latest Version *", ConsoleColor.White);
+                Log.WriteLine($"\t* {culture.GetTranslation(TranslationString.LatestVersion)} *", ConsoleColor.White);
             }
             else
             {
-                Log.WriteLine(string.Format("   * NEW VERSION: {0} *", VersionCheck.RemoteVersion), ConsoleColor.Green);
+
+                Log.WriteLine(string.Format($"\t * {culture.GetTranslation(TranslationString.NewVersion)}: {{0}} *", VersionCheck.RemoteVersion), ConsoleColor.Green);
+
                 string downloadlink = Variables.GithupProjectLink + "/releases/latest";
-                Log.WriteLine(string.Format("* DOWNLOAD LINK:  {0} *", downloadlink), ConsoleColor.Yellow);
-                Log.WriteLine(string.Format("PRESS 'D' TO AUTOMATIC DOWNLOAD NEW VERSION OR PRESS ANY KEY FOR EXIT.."), ConsoleColor.DarkCyan);
-                Log.Write("WARNING:", ConsoleColor.Red);
-                Log.WriteLine("All MSniper.exe will shutdown while downloading", ConsoleColor.White);
+                Log.WriteLine(string.Format($"* {culture.GetTranslation(TranslationString.DownloadLink)}:  {{0}} *", downloadlink), ConsoleColor.Yellow);
+                Log.WriteLine(culture.GetTranslation(TranslationString.AutoDownloadMessage), ConsoleColor.DarkCyan);
+                Log.Write($"{culture.GetTranslation(TranslationString.Warning)}:", ConsoleColor.Red);
+                Log.WriteLine(culture.GetTranslation(TranslationString.WarningShutdownProcess), ConsoleColor.White);
                 char c = Console.ReadKey().KeyChar;
                 Console.SetCursorPosition(0, Console.CursorTop);
                 if (c == 'd' || c == 'D')
@@ -61,7 +63,7 @@ namespace MSniper
                 }
                 Shutdown();
             }
-            Log.WriteLine(string.Format("MSniper integrated NecroBot v{0} or upper", Variables.MinRequireVersion), ConsoleColor.DarkCyan);
+            Log.WriteLine(culture.GetTranslation(TranslationString.IntegrateMessage, Variables.ProgramName, Variables.MinRequireVersion), ConsoleColor.DarkCyan);
             Log.WriteLine("--------------------------------------------------------");
         }
 
