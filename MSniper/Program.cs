@@ -91,13 +91,13 @@ namespace MSniper
                     string snipping = Console.ReadLine();
                     CheckNecroBots(true);
                     Console.ForegroundColor = ConsoleColor.DarkGray;
-                    //snipping = "Dragonite 37.766627,-122.403677";//for debug mode
+                    snipping = "dragonite 37.766627 , -122.403677";//for debug mode (spaces are ignored)
                     if (snipping.ToLower() == "e")
                         break;
                     string re1 = "((?:\\w+))";//pokemon name
                     string re2 = "( )";//separator
                     string re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
-                    string re4 = "(,)";//separator
+                    string re4 = "(\\s*,\\s*)";//separator
                     string re5 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
                     Regex r = new Regex(re1 + re2 + re3 + re4 + re5, RegexOptions.IgnoreCase | RegexOptions.Singleline);
                     Match m = r.Match(snipping);
