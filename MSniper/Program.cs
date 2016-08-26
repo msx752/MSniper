@@ -143,7 +143,8 @@ namespace MSniper
                 string downloadlink = FConfig.GithupProjectLink + "/releases/latest";
                 Log.WriteLine(string.Format("* DOWNLOAD LINK:  {0} *", downloadlink), ConsoleColor.Yellow);
                 Log.WriteLine(string.Format("PRESS 'D' TO AUTOMATIC DOWNLOAD NEW VERSION OR PRESS ANY KEY FOR EXIT.."), ConsoleColor.DarkCyan);
-                Log.WriteLine(string.Format("IMPORTANT: All MSniper.exe will shutdown while downloading"), ConsoleColor.White);
+                Log.Write("WARNING:", ConsoleColor.Red);
+                Log.WriteLine("All MSniper.exe will shutdown while downloading", ConsoleColor.White);
                 char c = Console.ReadKey().KeyChar;
                 Console.SetCursorPosition(0, Console.CursorTop);
                 if (c == 'd' || c == 'D')

@@ -83,7 +83,7 @@ namespace MSniper
             sb.AppendLine("ECHO ### FILES CHANGING ###");
             sb.AppendLine(string.Format("ECHO ### {0}.exe  ###", VersionCheck.NameWithVersion));
             sb.AppendLine("ECHO .");
-            sb.AppendLine("taskkill /F /IM \"" + new FileInfo(Process.GetCurrentProcess().MainModule.FileName).Name + "\"");
+            sb.AppendLine("taskkill /F /IM \"MSniper.exe\"");
             sb.AppendLine("timeout /t 2");
             sb.AppendLine(string.Format("xcopy /s/y/e/q/r \"{0}\\{1}\" \"{2}\"", FConfig.TempPath, VersionCheck.NameWithVersion, FConfig.StartupPath));
             sb.AppendLine(string.Format("del /S \"{0}\\{1}\"", FConfig.StartupPath, "registerProtocol.bat"));
@@ -107,7 +107,7 @@ namespace MSniper
             proc.StartInfo = psi;
             proc.Start();
             proc.WaitForExit();
-            //Process.GetCurrentProcess().Kill();
+            Process.GetCurrentProcess().Kill();
         }
 
     }
