@@ -133,7 +133,7 @@ namespace MSniper
                 Log.WriteLine("Protocol not found - Please run once registerProtocol.bat", ConsoleColor.Red);
                 Shutdown(5);
             }
-            if (!VersionCheck.IsLatest())
+            if (VersionCheck.IsLatest())
             {
                 Log.WriteLine("   * Latest Version *", ConsoleColor.White);
             }
@@ -143,11 +143,12 @@ namespace MSniper
                 string downloadlink = FConfig.GithupProjectLink + "/releases/latest";
                 Log.WriteLine(string.Format("* DOWNLOAD LINK:  {0} *", downloadlink), ConsoleColor.Yellow);
                 Log.WriteLine(string.Format("PRESS 'D' TO AUTOMATIC DOWNLOAD NEW VERSION OR PRESS ANY KEY FOR EXIT.."), ConsoleColor.DarkCyan);
+                Log.WriteLine(string.Format("IMPORTANT: All MSniper.exe will shutdown while downloading"), ConsoleColor.White);
                 char c = Console.ReadKey().KeyChar;
                 Console.SetCursorPosition(0, Console.CursorTop);
                 if (c == 'd' || c == 'D')
                 {
-                    Log.WriteLine(string.Format("starting to download v{0} please wait...", VersionCheck.RemoteVersion), ConsoleColor.Green);
+                    Log.WriteLine(string.Format("starting to download {0} please wait...", VersionCheck.NameWithVersion), ConsoleColor.Green);
                     VersionDownloader.GetNewVersion();
                     Log.WriteLine("file downloaded look at under '\\FOLDER\\temp\\' folder", ConsoleColor.Green);
                     //Clipboard.SetText(downloadlink);

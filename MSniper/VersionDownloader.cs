@@ -28,18 +28,40 @@ namespace MSniper
         }
         private static void WriteFile(byte[] bytes, string fullpath)
         {
+            CreateEmptyFile(fullpath);
             File.WriteAllBytes(fullpath, bytes);
         }
-        private static void DecompressRar(string zipFullPath)
+        private static void CreateEmptyFile(string fullpath)
         {
-            ZipFile.ExtractToDirectory(zipFullPath, FConfig.TempPath + "\\test\\");
+            if (!Directory.Exists(Path.GetDirectoryName(fullpath)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(fullpath));
+            }
+            if (!File.Exists(fullpath))
+            {
+                StreamWriter sw = new StreamWriter(fullpath, false);
+                sw.Write(' ');
+                sw.Close();
+            }
+        }
+        private static void DecompressZip(string zipFullPath)
+        {
+            using (ZipArchive archive = ZipFile.OpenRead(zipFullPath))
+            {
+                foreach (ZipArchiveEntry entry in archive.Entries)
+                {
+                    string path = Path.Combine(FConfig.StartupPath, entry.FullName);
+                    CreateEmptyFile(path);
+                    entry.ExtractToFile(path, true);
+                }
+            }
         }
 
         public static void GetNewVersion()
         {
             byte[] downloaded = GetFile(VersionCheck.RemoteVersion);
             WriteFile(downloaded, FConfig.TempRarFile);
-            DecompressRar(FConfig.TempRarFile);
+            DecompressZip(FConfig.TempRarFile);
         }
 
     }
