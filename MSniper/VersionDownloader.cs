@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -64,5 +65,15 @@ namespace MSniper
             DecompressZip(FConfig.TempRarFile);
         }
 
+        public static void CreateBatch()
+        {
+            string path = Path.Combine(FConfig.StartupPath, "FileUpdater.bat");
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("@echo off");
+            sb.AppendLine("taskkill /F /IM \"" + new FileInfo(Process.GetCurrentProcess().MainModule.FileName).Name.Replace(".vshost", "")+"\"");
+            sb.AppendLine("timeout /t 2");
+            sb.AppendLine(string.Format("xcopy /s/y/e/q/r \"{0}\\{1}\" \"{2}\"", FConfig.TempPath, VersionCheck.NameWithVersion, FConfig.StartupPath));
+            File.WriteAllText(path, sb.ToString());
+        }
     }
 }
