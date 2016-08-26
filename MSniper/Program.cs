@@ -48,11 +48,11 @@ namespace MSniper
             else
             {
 
-                Log.WriteLine(string.Format($"\t * {culture.GetTranslation(TranslationString.NewVersion)}: {{0}} *", VersionCheck.RemoteVersion), ConsoleColor.Green);
+                Log.WriteLine(string.Format($"\t* {culture.GetTranslation(TranslationString.NewVersion)}: {{0}} *", VersionCheck.RemoteVersion), ConsoleColor.Green);
 
                 string downloadlink = Variables.GithupProjectLink + "/releases/latest";
                 Log.WriteLine(string.Format($"* {culture.GetTranslation(TranslationString.DownloadLink)}:  {{0}} *", downloadlink), ConsoleColor.Yellow);
-                Log.WriteLine(culture.GetTranslation(TranslationString.AutoDownloadMessage), ConsoleColor.DarkCyan);
+                Log.WriteLine(culture.GetTranslation(TranslationString.AutoDownloadMsg), ConsoleColor.DarkCyan);
                 Log.Write($"{culture.GetTranslation(TranslationString.Warning)}:", ConsoleColor.Red);
                 Log.WriteLine(culture.GetTranslation(TranslationString.WarningShutdownProcess), ConsoleColor.White);
                 char c = Console.ReadKey().KeyChar;
@@ -63,7 +63,8 @@ namespace MSniper
                 }
                 Shutdown();
             }
-            Log.WriteLine(culture.GetTranslation(TranslationString.IntegrateMessage, Variables.ProgramName, Variables.MinRequireVersion), ConsoleColor.DarkCyan);
+            Log.WriteLine(culture.GetTranslation(TranslationString.IntegrateMsg,
+                Variables.ProgramName, Variables.MinRequireVersion), ConsoleColor.DarkCyan);
             Log.WriteLine("--------------------------------------------------------");
         }
 
@@ -92,7 +93,7 @@ namespace MSniper
 
                     case "-registerp":
                         Protocol.Register();
-                        Log.WriteLine("Protocol Successfully REGISTERED:", ConsoleColor.Green);
+                        Log.WriteLine(culture.GetTranslation(TranslationString.ProtocolRegistered), ConsoleColor.Green);
                         break;
 
                     case "-remove":
@@ -101,7 +102,7 @@ namespace MSniper
 
                     case "-removep":
                         Protocol.Delete();
-                        Log.WriteLine("Protocol Successfully DELETED:", ConsoleColor.Green);
+                        Log.WriteLine(culture.GetTranslation(TranslationString.ProtocolDeleted), ConsoleColor.Green);
                         break;
 
                     case "-resetallsnipelist":
@@ -124,19 +125,19 @@ namespace MSniper
                         }
                         else
                         {
-                            Log.WriteLine("unknown link format", ConsoleColor.Red);
+                            Log.WriteLine(culture.GetTranslation(TranslationString.UnknownLinkFormat), ConsoleColor.Red);
                         }
                         break;
                 }
             }
             else if (args.Length == 0)
             {
-                Log.WriteLine("\t\tCUSTOM PASTE ACTIVE", ConsoleColor.DarkGray);
-                Log.WriteLine("format: PokemonName Latitude,Longitude", ConsoleColor.DarkGray);
+                Log.WriteLine(culture.GetTranslation(TranslationString.CustomPasteDesc), ConsoleColor.DarkGray);
+                Log.WriteLine(culture.GetTranslation(TranslationString.CustomPasteFormat), ConsoleColor.DarkGray);
                 Log.WriteLine("--------------------------------------------------------");
                 do
                 {
-                    Log.WriteLine("waiting data..", ConsoleColor.White);
+                    Log.WriteLine(culture.GetTranslation(TranslationString.WaitingDataMsg), ConsoleColor.White);
                     Console.ForegroundColor = ConsoleColor.DarkCyan;
                     string snipping = Console.ReadLine();
                     CheckNecroBots(true);
@@ -191,8 +192,8 @@ namespace MSniper
         {
             if (Process.GetProcessesByName(Variables.BotEXEName).Count() == 0)
             {
-                Log.WriteLine("Any running NecroBot not found...", ConsoleColor.Red);
-                Log.WriteLine(" *Necrobot must be running before MSniper*", ConsoleColor.Red);
+                Log.WriteLine(culture.GetTranslation(TranslationString.AnyNecroBotNotFound), ConsoleColor.Red);
+                Log.WriteLine($" *{culture.GetTranslation(TranslationString.RunBeforeMSniper)}*", ConsoleColor.Red);
                 if (shutdownMSniper)
                     Shutdown();
             }
@@ -208,10 +209,11 @@ namespace MSniper
                 {
                     FileDelete(pathRemote);
                     string val = item.MainWindowTitle.Split('-').First().Split(' ')[2];
-                    Log.WriteLine(string.Format("deleted {0} for {1}", Variables.Snipefilename, val), ConsoleColor.Green);
+                    Log.WriteLine(culture.GetTranslation(TranslationString.RemoveAllSnipe, val), ConsoleColor.Green);
                 }
             }
-            Log.WriteLine(string.Format("deleting finished process count:{0}..", plist.Count()), ConsoleColor.Green);
+
+            Log.WriteLine(culture.GetTranslation(TranslationString.RemoveAllSnipeFinished, plist.Count()), ConsoleColor.Green);
         }
 
         private static void Runas(string executablepath, string parameters, bool afterKillSelf = true)
@@ -244,7 +246,7 @@ namespace MSniper
         {
             for (int i = seconds; i >= 0; i--)
             {
-                Log.WriteLine(culture.GetTranslation(TranslationString.ShutdownMessage,
+                Log.WriteLine(culture.GetTranslation(TranslationString.ShutdownMsg,
                    i));
                 setConsoleCursor(Log.lastLineCount, Console.CursorTop - 1);
                 Thread.Sleep(1000);
