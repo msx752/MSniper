@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -132,7 +133,7 @@ namespace MSniper
                 Log.WriteLine("Protocol not found - Please run once registerProtocol.bat", ConsoleColor.Red);
                 Shutdown(5);
             }
-            if (VersionCheck.IsLatest())
+            if (!VersionCheck.IsLatest())
             {
                 Log.WriteLine("   * Latest Version *", ConsoleColor.White);
             }
@@ -147,8 +148,7 @@ namespace MSniper
                 if (c == 'd' || c == 'D')
                 {
                     Log.WriteLine(string.Format("starting to download v{0} please wait...", VersionCheck.RemoteVersion), ConsoleColor.Green);
-                    byte[] downloaded = VersionDownloader.GetFile(VersionCheck.RemoteVersion);
-                    File.WriteAllBytes(Path.Combine(FConfig.TempPath, VersionCheck.NameWithVersion, ".rar"), downloaded);
+                    VersionDownloader.GetNewVersion();
                     Log.WriteLine("file downloaded look at under '\\FOLDER\\temp\\' folder", ConsoleColor.Green);
                     //Clipboard.SetText(downloadlink);
                 }
