@@ -45,6 +45,10 @@ namespace MSniper.Settings.Localization
         CustomPasteDesc,
         CustomPasteFormat,
         WaitingDataMsg,
+        CustomPasteWrongFormat,
+        IncompatibleVersionMsg,
+        SendingPokemonToNecroBot,
+        AlreadySnipped,
     }
     /// <summary>
     /// default language: english
@@ -87,6 +91,10 @@ namespace MSniper.Settings.Localization
             new KeyValuePair<TranslationString, string>(TranslationString.CustomPasteDesc, "\t\tCUSTOM PASTE ACTIVE"),
             new KeyValuePair<TranslationString, string>(TranslationString.CustomPasteFormat, "format: PokemonName Latitude,Longitude"),
             new KeyValuePair<TranslationString, string>(TranslationString.WaitingDataMsg, "waiting data.."),
+            new KeyValuePair<TranslationString, string>(TranslationString.CustomPasteWrongFormat, "wrong format retry or write 'E' for quit.."),
+            new KeyValuePair<TranslationString, string>(TranslationString.IncompatibleVersionMsg, "Incompatible NecroBot version for {0}"),
+            new KeyValuePair<TranslationString, string>(TranslationString.SendingPokemonToNecroBot, "Sending to {3}: {0} {1},{2}"),
+            new KeyValuePair<TranslationString, string>(TranslationString.AlreadySnipped, "{0}\t\tAlready Snipped..."),
         };
 
         public string GetTranslation(TranslationString translationString, params object[] data)

@@ -142,7 +142,7 @@ namespace MSniper
                     string snipping = Console.ReadLine();
                     CheckNecroBots(true);
                     Console.ForegroundColor = ConsoleColor.DarkGray;
-                    snipping = "dragonite 37.766627 , -122.403677";//for debug mode (spaces are ignored)
+                    //snipping = "dragonite 37.766627 , -122.403677";//for debug mode (spaces are ignored)
                     if (snipping.ToLower() == "e")
                         break;
                     string re1 = "((?:\\w+))";//pokemon name
@@ -158,7 +158,7 @@ namespace MSniper
                     }
                     else
                     {
-                        Log.WriteLine("wrong format retry or write 'E' for quit..", ConsoleColor.Red);
+                        Log.WriteLine(culture.GetTranslation(TranslationString.CustomPasteWrongFormat), ConsoleColor.Red);
                     }
                 }
                 while (true);
@@ -288,7 +288,7 @@ namespace MSniper
                     string username = item.MainWindowTitle.Split('-').First().Split(' ')[2];
                     if (!isBotUpperThan094(item.MainModule.FileVersionInfo))
                     {
-                        Log.WriteLine(string.Format("Incompatible NecroBot version for {0}", username), ConsoleColor.Red);
+                        Log.WriteLine(culture.GetTranslation(TranslationString.IncompatibleVersionMsg, username), ConsoleColor.Red);
                         continue;
                     }
                     string pathRemote = GetSnipeMSLocation(Path.GetDirectoryName(item.MainModule.FileName));
@@ -304,7 +304,7 @@ namespace MSniper
                         MSniperLocation.Add(newPokemon);
                         if (WriteSnipeMS(MSniperLocation, newPokemon, pathRemote))
                         {
-                            Log.WriteLine(string.Format("Sending to {3}: {0} {1},{2}",
+                            Log.WriteLine(culture.GetTranslation(TranslationString.SendingPokemonToNecroBot,
                                 newPokemon.Id.ToLower(),
                                 newPokemon.Latitude,
                                 newPokemon.Longitude,
@@ -313,7 +313,7 @@ namespace MSniper
                     }
                     else
                     {
-                        Log.WriteLine(string.Format("{0}\t\tAlready Snipped...", newPokemon), ConsoleColor.DarkRed);
+                        Log.WriteLine(culture.GetTranslation(TranslationString.AlreadySnipped, newPokemon), ConsoleColor.DarkRed);
                     }
                 }
             }
