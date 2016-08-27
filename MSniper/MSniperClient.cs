@@ -12,7 +12,7 @@ namespace MSniper
         protected override WebRequest GetWebRequest(Uri uri)
         {
             WebRequest w = base.GetWebRequest(uri);
-            w.Timeout = 5000;
+            w.Timeout = 12345;
             return w;
         }
     }
