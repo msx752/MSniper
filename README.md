@@ -46,3 +46,6 @@ Manual Snipe for [NecroBot](https://github.com/NoxxDev/NecroBot)
 
 # Download Latest Version
 - [MSniper Latest](https://github.com/msx752/MSniper/releases/latest)
+
+# Supported Languages
+- [Translation List](https://github.com/msx752/MSniper/tree/master/MSniper/Settings/Localization/Languages)
