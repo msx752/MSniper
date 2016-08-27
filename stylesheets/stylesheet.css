@@ -524,7 +524,7 @@ a.button {
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
   font-size: 23px;
   line-height: 1.2;
-  color: #fff;
+  color: #e9e9e9;
 }
 a.button small {
   display: block;
@@ -539,9 +539,9 @@ header a.button {
 aside a.button {
   display: block;
   width: 138px;
-  padding-left: 64px;
+  padding-left: 60px;
   margin-bottom: 20px;
-  font-size: 21px;
+  font-size: 16px;
   background: transparent url(../images/download-button.png) 0 0 no-repeat;
 }
 
