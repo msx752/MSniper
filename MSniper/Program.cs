@@ -41,6 +41,7 @@ namespace MSniper
                 ConsoleColor.Red);
                 Shutdown();
             }
+
             if (VersionCheck.IsLatest())
             {
                 Log.WriteLine($"\t* {culture.GetTranslation(TranslationString.LatestVersion)} *", ConsoleColor.White);
@@ -51,7 +52,7 @@ namespace MSniper
 
                 string downloadlink = Variables.GithupProjectUri + "/releases/latest";
                 Log.WriteLine(string.Format($"* {culture.GetTranslation(TranslationString.DownloadLink)}:  {{0}} *", downloadlink), ConsoleColor.Yellow);
-                if (config.DownloadNewVersion)
+                if (config.DownloadNewVersion && withParams == false)
                 {
                     Log.WriteLine(culture.GetTranslation(TranslationString.AutoDownloadMsg), ConsoleColor.DarkCyan);
                     Log.Write($"{culture.GetTranslation(TranslationString.Warning)}:", ConsoleColor.Red);
