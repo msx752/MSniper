@@ -1,63 +1,73 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html>
   <head>
-    <meta charset="UTF-8">
-    <title>MSniper by msx752</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-    <link rel="icon" type="image/x-icon" href="https://github.com/msx752/MSniper/raw/master/MSniper/Resources/msniper.ico">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>MSniper by msx752</title>
   </head>
+
   <body>
-    <section class="page-header" style="padding-top:40px;padding-bottom:40px;">
-      <h1 class="project-name">MSniper</h1>
-      <h2 class="project-tagline">MSniper, NecroBot manual pokemon sniper</h2>
-      <br>
-      <h2 class="project-tagline" style="margin:0;">Only download the file from the official site for your safety</h2>
-      <a href="https://github.com/msx752/MSniper" class="btn">View on GitHub</a>
-      <a href="https://github.com/msx752/MSniper/releases/latest" class="btn">Download Latest MSniper.exe</a>
-      <a href="https://github.com/msx752/MSniper/zipball/master" class="btn">Download[Master] Branch .zip</a>
-      <a href="https://github.com/NoxxDev/NecroBot" class="btn">Go NecroBot</a>
-    </section>
+    <header>
+      <div class="inner">
+        <h1>MSniper</h1>
+        <h2>MSniper, NecroBot manual pokemon sniper</h2>
+        <a href="https://github.com/msx752/MSniper" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
 
-    <section class="main-content">
-      <h2>
-<a id="description" class="anchor" href="#description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h3>
+<a id="only-download-the-file-from-the-official-site-for-your-safety" class="anchor" href="#only-download-the-file-from-the-official-site-for-your-safety" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Only download the file from the official site for your safety</h3>
 
-<p>MSniper working with <strong>NecroBotv0.9.5 or upper</strong> .You can use everytime because program communicating with NecroBot and it will send pokemon location,so catch doing NecroBot.MSniper can working multiple NecroBot and same pokemon location will send all working bot at the same time.</p>
+<h1>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h1>
 
-<h2>
-<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration</h2>
+<ul>
+<li>MSniper working with <code>NecroBotv0.9.5 or upper</code> .You can use everytime because program communicating with NecroBot and it will send pokemon location,so catch doing NecroBot.MSniper can working multiple NecroBot and same pokemon location will send all working bot at the same time.</li>
+</ul>
+
+<h1>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration</h1>
 
 <ul>
 <li>
-<code>"CatchPokemon": true</code> of course <strong>TRUE</strong>
+<code>"CatchPokemon": true</code> of course <code>TRUE</code>
 </li>
 <li>
-<code>"Enable": false</code> set <strong>FALSE</strong> for security</li>
+<code>"Enable": false</code> set <code>FALSE</code> for security  (<code>It may cause confusion your choice</code>)</li>
 <li>
-<code>"SnipeAtPokestops": false</code> set <strong>FALSE</strong> we don't need anymore
-You don't need another configuring, program will work (if it TRUE MSniper will now work).</li>
+<code>"SnipeAtPokestops": false</code> set <code>FALSE</code> we don't need anymore
+You don't need another configuring, program will work (<code>if it TRUE MSniper will now work</code>).</li>
 <li>
-<code>"DisableHumanWalking": true</code> (<strong>if snipping doesn't work try it but your own risk</strong>)</li>
+<code>"DisableHumanWalking": true</code> (<code>if snipping doesn't work try it but your own risk</code>)</li>
 </ul>
 
-<h2>
-<a id="file-information" class="anchor" href="#file-information" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>File Information</h2>
+<h1>
+<a id="file-information" class="anchor" href="#file-information" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>File Information</h1>
 
 <ul>
 <li>
-<strong>registerProtocol.bat:</strong> registering <strong>msniper://</strong> and <strong>pokesniper2://</strong> protocols  (if you change file location, you have to run again. maybe first you need run removeProtocol.bat)</li>
+<code>registerProtocol.bat:</code> registers <code>msniper://</code> and <code>pokesniper2://</code> protocols  (<code>if you change file location, you have to run again. maybe first you need run removeProtocol.bat</code>)</li>
 <li>
-<strong>removeProtocol.bat:</strong> removing pokesniper2:// protocols</li>
+<code>removeProtocol.bat:</code> removes msniper:// and  pokesniper2:// protocols</li>
 <li>
-<strong>resetSnipeList.bat:</strong> reseting all working bot's snipping queues</li>
+<code>resetSnipeList.bat:</code> resets all working bot's snipping queues</li>
 </ul>
 
-<h2>
-<a id="protocols" class="anchor" href="#protocols" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Protocols</h2>
+<h1>
+<a id="protocols" class="anchor" href="#protocols" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Protocols</h1>
 
 <ul>
 <li>msniper://</li>
@@ -68,7 +78,7 @@ You don't need another configuring, program will work (if it TRUE MSniper will n
 <a id="protocol-example" class="anchor" href="#protocol-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Protocol Example</h4>
 
 <ul>
-<li>msniper://Dragonite 12.193245,-120.352751</li>
+<li><code>msniper://Dragonite 12.193245,-120.352751</code></li>
 </ul>
 </li>
 </ul>
@@ -76,13 +86,38 @@ You don't need another configuring, program will work (if it TRUE MSniper will n
 <h2>
 <a id="features" class="anchor" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features</h2>
 
+<h3>
+<a id="v100--v102" class="anchor" href="#v100--v102" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>v1.0.0 &gt; v1.0.2</h3>
+
 <ul>
-<li>integrated with NecroBot (only communicating on SnipeMS.json)</li>
+<li>integrated with NecroBot (<code>do not delete SnipeMS.json in NecroBot folder</code>)</li>
 <li>running without username, password and device information</li>
-<li>Snipe while NecroBot is working</li>
-<li>new protocol 'msniper://'</li>
-<li>also program working same protocol 'pokesiniper2://'</li>
-<li>program can working multiple NecroBot and same pokemon location will send all working bot at the same time</li>
+<li>Snipping while NecroBot is working</li>
+<li>new protocol <code>msniper://</code>
+</li>
+<li>program working old protocol <code>pokesiniper2://</code>
+</li>
+<li>program can working multiple NecroBot and same pokemon location will send all working NecroBot at the same time</li>
+</ul>
+
+<h3>
+<a id="v103" class="anchor" href="#v103" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>v1.0.3</h3>
+
+<ul>
+<li>
+<code>Settings.json</code> included
+
+<ul>
+<li>
+<code>CloseDelaySec</code>  is duration time</li>
+<li>
+<code>TranslationLanguageCode</code> everyone know what is this</li>
+<li>
+<code>DownloadNewVersion</code> new version download checker</li>
+</ul>
+</li>
+<li>multi-language support</li>
+<li>automatic new version downloader</li>
 </ul>
 
 <h2>
@@ -98,15 +133,8 @@ You don't need another configuring, program will work (if it TRUE MSniper will n
 <a id="important" class="anchor" href="#important" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Important</h2>
 
 <ul>
-<li>MSniper doesn't cause ban, only using NecroBot will cause ban because every catching is controlling on NecroBot. <strong>using bot your own risk</strong>
+<li>MSniper doesn't cause ban, only using NecroBot will cause ban because every catching is controlling on NecroBot. <code>using bot your own risk</code>
 </li>
-</ul>
-
-<h2>
-<a id="guide" class="anchor" href="#guide" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Guide</h2>
-
-<ul>
-<li>Look Up :)</li>
 </ul>
 
 <h2>
@@ -121,9 +149,9 @@ You don't need another configuring, program will work (if it TRUE MSniper will n
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
 
 <ul>
-<li>firstly, run NecroBot (doesn't matter how many use bot)</li>
+<li>firstly, run NecroBot (<code>doesn't matter how many use bot</code>)</li>
 <li>
-<p>secondly, run once registerProtocol.bat (if you change file location, you have to run again)</p>
+<p>secondly, run once registerProtocol.bat (<code>if you change file location, you have to run again</code>)</p>
 
 <h4>
 <a id="method-1" class="anchor" href="#method-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Method 1</h4>
@@ -146,7 +174,7 @@ You don't need another configuring, program will work (if it TRUE MSniper will n
 
 <ul>
 <li>
-<a href="https://github.com/NoxxDev/NecroBot/releases/latest">NecroBot</a> <strong>v0.9.5 or Upper</strong>
+<a href="https://github.com/NoxxDev/NecroBot/releases/latest">NecroBot</a> <code>v0.9.5 or Upper</code>
 </li>
 </ul>
 
@@ -156,14 +184,24 @@ You don't need another configuring, program will work (if it TRUE MSniper will n
 <ul>
 <li><a href="https://github.com/msx752/MSniper/releases/latest">MSniper Latest</a></li>
 </ul>
+        </section>
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/msx752/MSniper">MSniper</a> is maintained by <a href="https://github.com/msx752">msx752</a>.</span>
+        <aside id="sidebar">
+          <a href="https://github.com/msx752/MSniper/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/msx752/MSniper/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
+          <p class="repo-owner"><a href="https://github.com/msx752/MSniper"></a> is maintained by <a href="https://github.com/msx752">msx752</a>.</p>
 
-    </section>
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
 
   
   </body>
