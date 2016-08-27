@@ -26,10 +26,10 @@ namespace MSniper.Settings
 
         public bool DownloadNewVersion { get; set; } = true;
 
-        public static Configs Load(string configFile)
+        public static Configs Load()
         {
-            Configs settings = new Configs();
-
+            Configs _settings = new Configs();
+            string configFile = Variables.SettingPath;
             if (File.Exists(configFile))
             {
                 try
@@ -42,8 +42,6 @@ namespace MSniper.Settings
                         try
                         {
                             input = File.ReadAllText(configFile);
-                            //if (!input.Contains("DeprecatedMoves"))
-                            //    input = input.Replace("\"Moves\"", $"\"DeprecatedMoves\"");
 
                             break;
                         }
@@ -62,13 +60,13 @@ namespace MSniper.Settings
                     var jsonSettings = new JsonSerializerSettings();
                     jsonSettings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
                     jsonSettings.ObjectCreationHandling = ObjectCreationHandling.Replace;
-                    jsonSettings.DefaultValueHandling = DefaultValueHandling.Populate;
 
                     try
                     {
-                        settings = JsonConvert.DeserializeObject<Configs>(input, jsonSettings);
+                        _settings = JsonConvert.DeserializeObject<Configs>(input, jsonSettings);
+                        SaveFiles(_settings);
                     }
-                    catch (Newtonsoft.Json.JsonSerializationException exception)
+                    catch (JsonSerializationException exception)
                     {
                         Log.WriteLine("Settings.json WRONG FORMAT: " + exception.Message, ConsoleColor.Red);
                         Program.Delay(30);
@@ -77,16 +75,16 @@ namespace MSniper.Settings
                 catch (JsonReaderException exception)
                 {
                     Log.WriteLine("JSON Exception: " + exception.Message, ConsoleColor.Red);
-                    return settings;
+                    return _settings;
                 }
             }
 
-            return settings;
+            return _settings;
         }
 
-        public static void SaveFiles(Configs settings, String configFile)
+        public static void SaveFiles(Configs settings)
         {
-            settings.Save(configFile);
+            settings.Save(Variables.SettingPath);
         }
 
         public void Save(string fullPath)

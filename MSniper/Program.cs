@@ -184,11 +184,11 @@ namespace MSniper
             Configs _settings = new Configs();
             if (File.Exists(Variables.SettingPath))
             {
-                _settings = Configs.Load(Variables.SettingPath);
+                _settings = Configs.Load();
             }
             else
             {
-                Configs.SaveFiles(_settings, Variables.SettingPath);
+                Configs.SaveFiles(_settings);
             }
             return _settings;
         }
