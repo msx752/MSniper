@@ -139,4 +139,7 @@
   <data name="translation_tr" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\settings\localization\languages\translation.tr.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
   </data>
+  <data name="translation_es" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\settings\localization\languages\translation.es.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
+  </data>
 </root>
