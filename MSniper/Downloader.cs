@@ -17,6 +17,18 @@ namespace MSniper
             }
         }
 
+        public static void DownloadNewVersion()
+        {
+            Log.WriteLine(Program.culture.GetTranslation(TranslationString.DownloadingNewVersion, VersionCheck.NameWithVersion), ConsoleColor.Green);
+            byte[] downloaded = GetFile(VersionCheck.RemoteVersion);
+            Log.WriteLine(Program.culture.GetTranslation(TranslationString.DownloadFinished), ConsoleColor.Green);
+            WriteFile(downloaded, Variables.TempRarFileUri);
+            Log.WriteLine(Program.culture.GetTranslation(TranslationString.DecompressingNewFile), ConsoleColor.Green);
+            DecompressZip(Variables.TempRarFileUri);
+            Log.WriteLine(Program.culture.GetTranslation(TranslationString.OldFilesChangingWithNews), ConsoleColor.Green);
+            ChangeWithOldFiles(CreateUpdaterBatch());
+        }
+
         public static string DownloadString(string url)
         {
             using (MSniperClient w = new MSniperClient())
@@ -25,25 +37,19 @@ namespace MSniper
             }
         }
 
-        private static byte[] GetFile(string fileVersion)
+        /// <summary>
+        /// running batch 
+        /// </summary>
+        /// <param name="BatchPath">
+        /// </param>
+        private static void ChangeWithOldFiles(string BatchPath)
         {
-            try
-            {
-                string url = string.Format(Variables.FileLink, fileVersion);
-                byte[] downloadedFile = DownloadData(url);
-                return downloadedFile;
-            }
-            catch (Exception ex)
-            {
-                Log.WriteLine(ex.Message, ConsoleColor.Red);
-                return null;
-            }
-        }
-
-        private static void WriteFile(byte[] bytes, string fullpath)
-        {
-            CreateEmptyFile(fullpath);
-            File.WriteAllBytes(fullpath, bytes);
+            ProcessStartInfo psi = new ProcessStartInfo(BatchPath);
+            Process proc = new Process();
+            proc.StartInfo = psi;
+            proc.Start();
+            proc.WaitForExit();
+            Process.GetCurrentProcess().Kill();
         }
 
         private static void CreateEmptyFile(string fullpath)
@@ -58,31 +64,6 @@ namespace MSniper
                 sw.Write(' ');
                 sw.Close();
             }
-        }
-
-        private static void DecompressZip(string zipFullPath)
-        {
-            using (ZipArchive archive = ZipFile.OpenRead(zipFullPath))
-            {
-                foreach (ZipArchiveEntry entry in archive.Entries)
-                {
-                    string path = Path.Combine(Variables.TempPath, VersionCheck.NameWithVersion, entry.FullName);
-                    CreateEmptyFile(path);
-                    entry.ExtractToFile(path, true);
-                }
-            }
-        }
-
-        public static void DownloadNewVersion()
-        {
-            Log.WriteLine(Program.culture.GetTranslation(TranslationString.DownloadingNewVersion, VersionCheck.NameWithVersion), ConsoleColor.Green);
-            byte[] downloaded = GetFile(VersionCheck.RemoteVersion);
-            Log.WriteLine(Program.culture.GetTranslation(TranslationString.DownloadFinished), ConsoleColor.Green);
-            WriteFile(downloaded, Variables.TempRarFileUri);
-            Log.WriteLine(Program.culture.GetTranslation(TranslationString.DecompressingNewFile), ConsoleColor.Green);
-            DecompressZip(Variables.TempRarFileUri);
-            Log.WriteLine(Program.culture.GetTranslation(TranslationString.OldFilesChangingWithNews), ConsoleColor.Green);
-            ChangeWithOldFiles(CreateUpdaterBatch());
         }
 
         /// <summary>
@@ -111,19 +92,38 @@ namespace MSniper
             return path;
         }
 
-        /// <summary>
-        /// running batch 
-        /// </summary>
-        /// <param name="BatchPath">
-        /// </param>
-        private static void ChangeWithOldFiles(string BatchPath)
+        private static void DecompressZip(string zipFullPath)
         {
-            ProcessStartInfo psi = new ProcessStartInfo(BatchPath);
-            Process proc = new Process();
-            proc.StartInfo = psi;
-            proc.Start();
-            proc.WaitForExit();
-            Process.GetCurrentProcess().Kill();
+            using (ZipArchive archive = ZipFile.OpenRead(zipFullPath))
+            {
+                foreach (ZipArchiveEntry entry in archive.Entries)
+                {
+                    string path = Path.Combine(Variables.TempPath, VersionCheck.NameWithVersion, entry.FullName);
+                    CreateEmptyFile(path);
+                    entry.ExtractToFile(path, true);
+                }
+            }
+        }
+
+        private static byte[] GetFile(string fileVersion)
+        {
+            try
+            {
+                string url = string.Format(Variables.FileLink, fileVersion);
+                byte[] downloadedFile = DownloadData(url);
+                return downloadedFile;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLine(ex.Message, ConsoleColor.Red);
+                return null;
+            }
+        }
+
+        private static void WriteFile(byte[] bytes, string fullpath)
+        {
+            CreateEmptyFile(fullpath);
+            File.WriteAllBytes(fullpath, bytes);
         }
     }
 }

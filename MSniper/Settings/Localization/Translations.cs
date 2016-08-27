@@ -114,8 +114,8 @@ namespace MSniper.Settings.Localization
         public string GetTranslation(TranslationString translationString)
         {
             var translation = _translationStrings.FirstOrDefault(t => t.Key.Equals(translationString)).Value;
-            return translation != default(string) 
-                ? translation 
+            return translation != default(string)
+                ? translation
                 : $"Translation for {translationString} is missing";
         }
 
@@ -129,19 +129,22 @@ namespace MSniper.Settings.Localization
             try
             {
                 var translationsLanguageCode = logicSettings.TranslationLanguageCode.Replace("-", "_");
-
+                string input = "";
                 if (Variables.SupportedLanguages.FindIndex(p => p.ToLower() == translationsLanguageCode) == -1)
                 {
-                    Log.WriteLine($"[ {logicSettings.TranslationLanguageCode} ] language not found in program", ConsoleColor.Red);
-                    Thread.Sleep(1000);
-                    Log.WriteLine($"now using default language [ {new Configs().TranslationLanguageCode} ]..", ConsoleColor.Green);
-                    translationsLanguageCode = new Configs().TranslationLanguageCode;
-                    Program.Delay(3);
+                    input = GetTranslationFromServer(logicSettings.TranslationLanguageCode);//developer mode
+                    if (input == null)
+                    {
+                        Log.WriteLine($"[ {logicSettings.TranslationLanguageCode} ] language not found in program", ConsoleColor.Red);
+                        Thread.Sleep(1000);
+                        Log.WriteLine($"now using default language [ {new Configs().TranslationLanguageCode} ]..", ConsoleColor.Green);
+                        translationsLanguageCode = new Configs().TranslationLanguageCode;
+                        Program.Delay(3);
+                    }
                 }
+                if (string.IsNullOrEmpty(input))
+                    input = Resources.ResourceManager.GetString($"translation_{translationsLanguageCode}");
 
-                string translationFile = $"translation_{translationsLanguageCode}";
-
-                string input = Resources.ResourceManager.GetString(translationFile);
                 var jsonSettings = new JsonSerializerSettings();
                 jsonSettings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
                 jsonSettings.ObjectCreationHandling = ObjectCreationHandling.Replace;
@@ -165,6 +168,17 @@ namespace MSniper.Settings.Localization
             return translations;
         }
 
+        public static string GetTranslationFromServer(string languageCode)
+        {
+            try
+            {
+                return Downloader.DownloadString(string.Format(Variables.TranslationUri, languageCode));
+            }
+            catch
+            {
+                return null;
+            }
+        }
         public void Save(string languageCode)
         {
             string fullPath = $"{Variables.TranslationsPath}\\translation.{languageCode}.json";

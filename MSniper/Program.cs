@@ -28,7 +28,7 @@ namespace MSniper
             Log.WriteLine(culture.GetTranslation(TranslationString.Description,
                 Variables.ProgramName, Variables.CurrentVersion, Variables.By));
             Log.WriteLine(culture.GetTranslation(TranslationString.GitHubProject,
-                Variables.GithupProjectLink),
+                Variables.GithupProjectUri),
                 ConsoleColor.Yellow);
             Log.Write(culture.GetTranslation(TranslationString.CurrentVersion,
                 Assembly.GetEntryAssembly().GetName().Version.ToString().Substring(0, 5)),
@@ -49,7 +49,7 @@ namespace MSniper
             {
                 Log.WriteLine(string.Format($"\t* {culture.GetTranslation(TranslationString.NewVersion)}: {{0}} *", VersionCheck.RemoteVersion), ConsoleColor.Green);
 
-                string downloadlink = Variables.GithupProjectLink + "/releases/latest";
+                string downloadlink = Variables.GithupProjectUri + "/releases/latest";
                 Log.WriteLine(string.Format($"* {culture.GetTranslation(TranslationString.DownloadLink)}:  {{0}} *", downloadlink), ConsoleColor.Yellow);
                 if (config.DownloadNewVersion)
                 {
