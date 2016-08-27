@@ -81,12 +81,12 @@ namespace MSniper
             sb.AppendLine("ECHO .");
             sb.AppendLine("taskkill /F /IM \"MSniper.exe\"");
             sb.AppendLine("timeout /t 2");
-            sb.AppendLine(string.Format("xcopy /s/y/e/q/r \"{0}\\{1}\" \"{2}\"", Variables.TempPath, VersionCheck.NameWithVersion, Variables.StartupPath));
-            sb.AppendLine(string.Format("del /S \"{0}\\{1}\"", Variables.StartupPath, "registerProtocol.bat"));
-            sb.AppendLine(string.Format("del /S \"{0}\\{1}\"", Variables.StartupPath, "removeProtocol.bat"));
-            sb.AppendLine(string.Format("del /S \"{0}\\{1}\"", Variables.StartupPath, "resetSnipeList.bat"));
-            sb.AppendLine(string.Format("del /S \"{0}\\{1}\"", Variables.StartupPath, "Newtonsoft.Json.dll"));
-            sb.AppendLine(string.Format("start \"\" \"{0}\"", Process.GetCurrentProcess().MainModule.FileName));
+            sb.AppendLine(string.Format("xcopy /s/y/e/q/r \"..\\{0}\" \"..\\\"",VersionCheck.NameWithVersion));
+            sb.AppendLine(string.Format("del /S \"..\\{0}\"", "registerProtocol.bat"));
+            sb.AppendLine(string.Format("del /S \"..\\{0}\"", "removeProtocol.bat"));
+            sb.AppendLine(string.Format("del /S \"..\\{0}\"", "resetSnipeList.bat"));
+            sb.AppendLine(string.Format("del /S \"..\\{0}\"", "Newtonsoft.Json.dll"));
+            sb.AppendLine("start \"\" \"%cd%\\MSniper.exe\"");
             sb.AppendLine("ECHO ### FINISHED ###");
             File.WriteAllText(path, sb.ToString());
             return path;
