@@ -15,13 +15,16 @@ namespace MSniper.Settings
     {
         int CloseDelaySec { get; }
         string TranslationLanguageCode { get; }
+        bool DownloadNewVersion { get; set; }
     }
+
     public class Configs : ISettings
     {
         public int CloseDelaySec { get; set; } = 5;
 
         public string TranslationLanguageCode { get; set; } = "en";
 
+        public bool DownloadNewVersion { get; set; } = true;
 
         public static Configs Load(string configFile)
         {
@@ -85,6 +88,7 @@ namespace MSniper.Settings
         {
             settings.Save(configFile);
         }
+
         public void Save(string fullPath)
         {
             var output = JsonConvert.SerializeObject(this, Formatting.Indented,

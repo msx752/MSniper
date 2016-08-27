@@ -47,21 +47,23 @@ namespace MSniper
             }
             else
             {
-
                 Log.WriteLine(string.Format($"\t* {culture.GetTranslation(TranslationString.NewVersion)}: {{0}} *", VersionCheck.RemoteVersion), ConsoleColor.Green);
 
                 string downloadlink = Variables.GithupProjectLink + "/releases/latest";
                 Log.WriteLine(string.Format($"* {culture.GetTranslation(TranslationString.DownloadLink)}:  {{0}} *", downloadlink), ConsoleColor.Yellow);
-                Log.WriteLine(culture.GetTranslation(TranslationString.AutoDownloadMsg), ConsoleColor.DarkCyan);
-                Log.Write($"{culture.GetTranslation(TranslationString.Warning)}:", ConsoleColor.Red);
-                Log.WriteLine(culture.GetTranslation(TranslationString.WarningShutdownProcess), ConsoleColor.White);
-                char c = Console.ReadKey().KeyChar;
-                Console.SetCursorPosition(0, Console.CursorTop);
-                if (c == 'd' || c == 'D')
+                if (config.DownloadNewVersion)
                 {
-                    Downloader.DownloadNewVersion();
+                    Log.WriteLine(culture.GetTranslation(TranslationString.AutoDownloadMsg), ConsoleColor.DarkCyan);
+                    Log.Write($"{culture.GetTranslation(TranslationString.Warning)}:", ConsoleColor.Red);
+                    Log.WriteLine(culture.GetTranslation(TranslationString.WarningShutdownProcess), ConsoleColor.White);
+                    char c = Console.ReadKey().KeyChar;
+                    Console.SetCursorPosition(0, Console.CursorTop);
+                    if (c == 'd' || c == 'D')
+                    {
+                        Downloader.DownloadNewVersion();
+                    }
+                    Shutdown();
                 }
-                Shutdown();
             }
             Log.WriteLine(culture.GetTranslation(TranslationString.IntegrateMsg,
                 Variables.ProgramName, Variables.MinRequireVersion), ConsoleColor.DarkCyan);
