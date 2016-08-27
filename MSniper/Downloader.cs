@@ -9,16 +9,29 @@ namespace MSniper
 {
     public static class Downloader
     {
+        public static byte[] DownloadData(string url)
+        {
+            using (MSniperClient w = new MSniperClient())
+            {
+                return w.DownloadData(url);
+            }
+        }
+
+        public static string DownloadString(string url)
+        {
+            using (MSniperClient w = new MSniperClient())
+            {
+                return w.DownloadString(url);
+            }
+        }
+
         private static byte[] GetFile(string fileVersion)
         {
             try
             {
                 string url = string.Format(Variables.FileLink, fileVersion);
-                using (MSniperClient w = new MSniperClient())
-                {
-                    byte[] downloadedFile = w.DownloadData(url);
-                    return downloadedFile;
-                }
+                byte[] downloadedFile = DownloadData(url);
+                return downloadedFile;
             }
             catch (Exception ex)
             {
@@ -65,9 +78,9 @@ namespace MSniper
             Log.WriteLine(Program.culture.GetTranslation(TranslationString.DownloadingNewVersion, VersionCheck.NameWithVersion), ConsoleColor.Green);
             byte[] downloaded = GetFile(VersionCheck.RemoteVersion);
             Log.WriteLine(Program.culture.GetTranslation(TranslationString.DownloadFinished), ConsoleColor.Green);
-            WriteFile(downloaded, Variables.TempRarFile);
+            WriteFile(downloaded, Variables.TempRarFileUri);
             Log.WriteLine(Program.culture.GetTranslation(TranslationString.DecompressingNewFile), ConsoleColor.Green);
-            DecompressZip(Variables.TempRarFile);
+            DecompressZip(Variables.TempRarFileUri);
             Log.WriteLine(Program.culture.GetTranslation(TranslationString.OldFilesChangingWithNews), ConsoleColor.Green);
             ChangeWithOldFiles(CreateUpdaterBatch());
         }

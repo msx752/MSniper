@@ -79,6 +79,7 @@ namespace MSniper
             Process.GetCurrentProcess().Kill();
             ///////////////////////////////////////
         }
+
         [STAThread]
         private static void Main(string[] args)
         {
@@ -376,7 +377,7 @@ namespace MSniper
 
         private static string GetSnipeMSLocation(string NecroBotEXEPath)
         {
-            return Path.Combine(NecroBotEXEPath, Variables.Snipefilename);
+            return Path.Combine(NecroBotEXEPath, Variables.SnipeFileName);
         }
 
         private static List<MSniperInfo> ReadSnipeMS(string path)

@@ -39,10 +39,7 @@ namespace MSniper
 
         private static string DownloadServerVersion()
         {
-            using (var wC = new MSniperClient())
-            {
-                return wC.DownloadString(Variables.VersionUri);
-            }
+           return Downloader.DownloadString(Variables.VersionUri);
         }
     }
 }
