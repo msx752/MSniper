@@ -13,9 +13,9 @@ Manual Snipe for [NecroBot](https://github.com/NoxxDev/NecroBot)
 
 # Configuration
 - `"CatchPokemon": true` of course `TRUE`
-- `"Enable": false` set `FALSE` for security  (`It may cause confusion your choice`)
+- `"Enable": false` set `FALSE` (`It may cause confusion`)
 - `"SnipeAtPokestops": false` set `FALSE` we don't need anymore
-You don't need another configuring, program will work (`if it TRUE MSniper will now work`).
+You don't need another configuring, program will work (`if it TRUE MSniper will not work`).
 - `"DisableHumanWalking": true` (`if snipping doesn't work try it but your own risk`)
 
 # File Information
