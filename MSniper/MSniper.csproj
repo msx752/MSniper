@@ -87,6 +87,7 @@
     <EmbeddedResource Include="Settings\Localization\Languages\translation.en.json" />
     <EmbeddedResource Include="Settings\Localization\Languages\translation.tr.json" />
     <EmbeddedResource Include="Settings\Localization\Languages\translation.es.json" />
+    <None Include="Settings\Localization\Languages\translation.tw.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

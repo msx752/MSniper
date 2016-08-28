@@ -140,7 +140,28 @@ namespace MSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ൻ ∠牔湡汳瑡潩卮牴湩獧㨢嬠਍††ൻ ††∠敋≹›琢瑩敬Ⱒ਍†††嘢污敵㨢∠筛細瘠ㅻ嵽†‭倠牯笠紲ഢ †素ബ †笠਍†††䬢祥㨢∠敤捳楲瑰潩≮ബ ††∠慖畬≥›笢細ⴠ笠紱匠楮数⁲慍畮污倠歯浥湯ⴠ倠牯笠紲ഢ †素ബ †笠਍†††䬢祥㨢∠楧䡴扵牐橯捥≴ബ ††∠慖畬≥›䜢瑩畈⁢牐橯捥⁴ほ≽਍††ⱽ਍††ൻ ††∠敋≹›挢牵敲瑮敖獲潩≮ബ ††∠慖畬≥›嘢牥楳湯䄠瑣慵㩬笠細ഢ †素ബ †笠਍†††䬢祥㨢∠牰瑯捯汯潎䙴畯摮Ⱒ਍†††嘢污敵㨢∠牐瑯捯汯⁯潮攠据湯牴摡⁯‭潐晲癡牯‬湩捩敩攠⁬牰瑯捯汯⁯湵⁡敶⁺ほ≽਍††ⱽ਍††ൻ ††∠敋≹›猢畨摴睯䵮杳Ⱒ਍†††嘢污敵㨢∠汅瀠潲牧浡⁡敳挠牥慲慲攠⁮ほ⁽敳畧摮獯ഢ †素ബ †笠਍†††䬢祥㨢∠慬整瑳敖獲潩≮ബ ††∠慖畬≥›唢瑬浩⁡敖獲潩≮਍††ⱽ਍††ൻ ††∠敋≹›渢睥敖獲潩≮ബ ††∠慖畬≥›丢䕕䅖嘠剅䥓乏ഢ †素ബ †笠਍†††䬢祥㨢∠潤湷潬摡楌歮Ⱒ਍†††嘢污敵㨢∠久䅌䕃䐠⁅䕄䍓剁䅇ഢ †素ബ †笠਍†††䬢祥㨢∠畡潴潄湷潬摡獍≧ബ ††∠慖畬≥›倢䕒䥓乏⁅䐧‧䅐䅒䄠呕䑏卅䅃䝒剁䰠⁁䍁啔䱁婉䍁佉⹎传䌠䅕兌䥕剅传剔⁁䕔䱃⁁䅐䅒匠䱁剉⸮ഢ †素ബ †笠਍†††䬢祥㨢 [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to {
+        ///  &quot;TranslationStrings&quot;: [
+        ///    {
+        ///      &quot;Key&quot;: &quot;title&quot;,
+        ///      &quot;Value&quot;: &quot;[{0} v{1}]  -  Por {2}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;description&quot;,
+        ///      &quot;Value&quot;: &quot;{0} - {1} Sniper Manual Pokemon - Por {2}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;gitHubProject&quot;,
+        ///      &quot;Value&quot;: &quot;GitHub Project {0}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;currentVersion&quot;,
+        ///      &quot;Value&quot;: &quot;Version Actual: {0}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;protocolNotFound&quot;,
+        ///      &quot;Value&quot;: &quot;Protocolo no encontrado - Porfavor, inicie el protocolo una vez {0}&quot;
+        ///     [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string translation_es {
             get {
@@ -177,6 +198,40 @@ namespace MSniper.Properties {
         internal static string translation_tr {
             get {
                 return ResourceManager.GetString("translation_tr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;TranslationStrings&quot;: [
+        ///    {
+        ///      &quot;Key&quot;: &quot;title&quot;,
+        ///      &quot;Value&quot;: &quot;[{0} v{1}]  -  by {2}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;description&quot;,
+        ///      &quot;Value&quot;: &quot;{0} - {1} 手動狙擊器 - by {2}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;gitHubProject&quot;,
+        ///      &quot;Value&quot;: &quot;GitHub 專案連結 {0}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;currentVersion&quot;,
+        ///      &quot;Value&quot;: &quot;目前版本: {0}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;protocolNotFound&quot;,
+        ///      &quot;Value&quot;: &quot;Protocol 未被找到 - 請先執行一次 {0}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;shutdownMsg&quot;,
+        ///      &quot;Value&quot;: &quot;程序將關閉於 {0} 秒&quot;
+        ///  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string translation_tw {
+            get {
+                return ResourceManager.GetString("translation_tw", resourceCulture);
             }
         }
     }
