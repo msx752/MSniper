@@ -303,15 +303,17 @@ namespace MSniper
             {
                 double lat = double.Parse(latt, CultureInfo.InvariantCulture);
                 double lon = double.Parse(lonn, CultureInfo.InvariantCulture);
-                foreach (var item in Process.GetProcessesByName(Variables.BotEXEName))
+                Process[] pList = Process.GetProcessesByName(Variables.BotEXEName);
+                for (int i = 0; i < pList.Length; i++)
                 {
-                    string username = item.MainWindowTitle.Split('-').First().Split(' ')[2];
-                    if (!isBotUpperThan094(item.MainModule.FileVersionInfo))
+                    pList[i] = GetProcess(pList[i]);
+                    string username = pList[i].MainWindowTitle.Split('-').First().Split(' ')[2];
+                    if (!isBotUpperThan094(pList[i].MainModule.FileVersionInfo))
                     {
                         Log.WriteLine(culture.GetTranslation(TranslationString.IncompatibleVersionMsg, username), ConsoleColor.Red);
                         continue;
                     }
-                    string pathRemote = GetSnipeMSLocation(Path.GetDirectoryName(item.MainModule.FileName));
+                    string pathRemote = GetSnipeMSLocation(Path.GetDirectoryName(pList[i].MainModule.FileName));
                     List<MSniperInfo> MSniperLocation = ReadSnipeMS(pathRemote);
                     MSniperInfo newPokemon = new MSniperInfo()
                     {
@@ -343,6 +345,19 @@ namespace MSniper
             }
         }
 
+        private static Process GetProcess(Process p)
+        {
+            int x = 1;
+            do
+            {
+                p = Process.GetProcessById(p.Id);
+                Thread.Sleep(1);
+                x++;
+                if ((x / 1000) > 30)
+                    return null;//waiting long time after that throwing exeption, prevent to stucking
+            } while ((p.MainWindowTitle.Split(' ').Length == 1));
+            return p;
+        }
         private static void ExportReferences()
         {
             string path = Path.Combine(Application.StartupPath, "Newtonsoft.Json.dll");
