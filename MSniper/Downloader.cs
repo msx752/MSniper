@@ -80,12 +80,14 @@ namespace MSniper
             sb.AppendLine(string.Format("ECHO ### {0}.exe  ###", VersionCheck.NameWithVersion));
             sb.AppendLine("ECHO .");
             sb.AppendLine("taskkill /F /IM \"MSniper.exe\"");
-            sb.AppendLine("timeout /t 2");
-            sb.AppendLine(string.Format("xcopy /s/y/e/q/r \"..\\{0}\" \"..\\\"",VersionCheck.NameWithVersion));
+            sb.AppendLine("timeout /t 1");
+            sb.AppendLine(string.Format("xcopy /s/y/e/q/r \"%cd%\\temp\\{0}\" \"%cd%\"", VersionCheck.NameWithVersion));
+            sb.AppendLine("timeout /t 1");
             sb.AppendLine(string.Format("del /S \"..\\{0}\"", "registerProtocol.bat"));
             sb.AppendLine(string.Format("del /S \"..\\{0}\"", "removeProtocol.bat"));
             sb.AppendLine(string.Format("del /S \"..\\{0}\"", "resetSnipeList.bat"));
             sb.AppendLine(string.Format("del /S \"..\\{0}\"", "Newtonsoft.Json.dll"));
+            sb.AppendLine("timeout /t 1");
             sb.AppendLine("start \"\" \"%cd%\\MSniper.exe\"");
             sb.AppendLine("ECHO ### FINISHED ###");
             File.WriteAllText(path, sb.ToString());
