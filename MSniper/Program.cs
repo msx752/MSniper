@@ -277,7 +277,11 @@ namespace MSniper
 
         private static void setConsoleCursor(int left, int top)
         {
-            Console.SetCursorPosition(left, top);
+            try
+            {
+                Console.SetCursorPosition(left, top);
+            }
+            catch { }
         }
 
         private static void setDefaultConsoleCursor()
