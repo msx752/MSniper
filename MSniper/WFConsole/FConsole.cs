@@ -44,7 +44,9 @@ namespace MSniper
             LinkClicked += FConsole_LinkClicked;
             TextChanged += FConsole_TextChanged;
             UseHyperlinkStyle = true;
+            HyperlinkColor = Color.Red;
             HyperLinks = new List<Hyperlink>();
+            HideSelection = true;
         }
 
         private void FConsole_KeyDown(object sender, KeyEventArgs e)
@@ -97,9 +99,9 @@ namespace MSniper
                     if (HyperLinks.Where(p => p.ToString() == hpl.ToString()).Count() == 0)
                     {
                         Select(m.Index, m.Length);
-                        SelectionColor = Color.Red;
+                        SelectionColor = HyperlinkColor;
                         Font f = SelectionFont;
-                        Font f2 = new Font(f.FontFamily, f.Size - 1, FontStyle.Underline | FontStyle.Bold);
+                        Font f2 = new Font(f.FontFamily, f.Size - 1.2f, FontStyle.Underline | FontStyle.Bold | FontStyle.Italic);
                         SelectionFont = f2;
                         HyperLinks.Add(hpl);
                         update = true;
@@ -112,19 +114,10 @@ namespace MSniper
 
         public List<Hyperlink> HyperLinks { get; set; }
 
+        public Color HyperlinkColor { get; set; }
+
         private bool hplink;
-        bool UseHyperlinkStyle
-        {
-            get
-            {
-                return hplink;
-            }
-            set
-            {
-                DetectUrls = false;
-                hplink = value;
-            }
-        }
+        bool UseHyperlinkStyle { get { return hplink; } set { DetectUrls = false; hplink = value; } }
 
         bool Pause { get; set; }
 
