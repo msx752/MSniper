@@ -123,15 +123,19 @@ namespace MSniper
                         string re4 = "(\\s*,\\s*)";//separator
                         string re5 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
                         Regex r = new Regex(re1 + re2 + re3 + re4 + re5, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-                        Match m = r.Match(snipping);
-                        if (m.Success)
+
+                        bool error = true;
+                        foreach (Match m in r.Matches(snipping))
                         {
-                            Snipe(m.Groups[1].ToString(), m.Groups[3].ToString(), m.Groups[5].ToString());
+                            if (m.Success)
+                            {
+                                error = false;
+                                Snipe(m.Groups[1].ToString(), m.Groups[3].ToString(), m.Groups[5].ToString());
+                            }
                         }
-                        else
-                        {
+                        if (error)
                             Console.WriteLine(culture.GetTranslation(TranslationString.CustomPasteWrongFormat), Color.Red);
-                        }
+
                     }
                     while (true);
                 }
@@ -284,7 +288,7 @@ namespace MSniper
 
         public void Shutdown(int seconds)
         {
-            Console.Status = ConsoleStatus.Closing;
+            Console.Status = ConsoleState.Closing;
             Delay(seconds, true);
             Process.GetCurrentProcess().Kill();
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MSniper
 {
-    public enum ConsoleStatus
+    public enum ConsoleState
     {
         ReadLine = 0,
         ReadKey = 1,
