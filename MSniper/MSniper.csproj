@@ -80,6 +80,7 @@
       <DependentUpon>FWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="WFConsole\ConsoleStatus.cs" />
+    <Compile Include="WFConsole\Hyperlink.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

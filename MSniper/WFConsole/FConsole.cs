@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -41,7 +42,11 @@ namespace MSniper
             }
             KeyDown += FConsole_KeyDown;
             LinkClicked += FConsole_LinkClicked;
+            TextChanged += FConsole_TextChanged;
+            UseHyperlinkStyle = true;
+            HyperLinks = new List<Hyperlink>();
         }
+
         private void FConsole_KeyDown(object sender, KeyEventArgs e)
         {
             if (Status == ConsoleStatus.Closing)
@@ -78,6 +83,49 @@ namespace MSniper
         {
             Process.Start(e.LinkText);
         }
+
+        private void FConsole_TextChanged(object sender, EventArgs e)
+        {
+            if (UseHyperlinkStyle)
+            {
+                string re1 = "((?:http|https)(?::\\/{2}[\\w]+)(?:[\\/|\\.]?)(?:[^\\s\"]*))";
+                Regex hyperlink = new Regex(re1, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                bool update = false;
+                foreach (Match m in hyperlink.Matches(Text))
+                {
+                    Hyperlink hpl = new Hyperlink(m.Index, m.Length, m.Value);
+                    if (HyperLinks.Where(p => p.ToString() == hpl.ToString()).Count() == 0)
+                    {
+                        Select(m.Index, m.Length);
+                        SelectionColor = Color.Red;
+                        Font f = SelectionFont;
+                        Font f2 = new Font(f.FontFamily, f.Size - 1, FontStyle.Underline | FontStyle.Bold);
+                        SelectionFont = f2;
+                        HyperLinks.Add(hpl);
+                        update = true;
+                    }
+                }
+                if (update)
+                    SelectLastLine();
+            }
+        }
+
+        public List<Hyperlink> HyperLinks { get; set; }
+
+        private bool hplink;
+        bool UseHyperlinkStyle
+        {
+            get
+            {
+                return hplink;
+            }
+            set
+            {
+                DetectUrls = false;
+                hplink = value;
+            }
+        }
+
         bool Pause { get; set; }
 
         bool InputEnable { get; set; }
@@ -103,6 +151,7 @@ namespace MSniper
                 color = ForeColor;
             SelectionColor = color.Value;
             SelectedText = message;
+            DeselectAll();
         }
 
         public void WriteLine(string message, Color? color = null)
@@ -110,19 +159,27 @@ namespace MSniper
             Write(message + "\r\n", color);
         }
 
+        public void SelectLastLine()
+        {
+            if (Lines.Count() > 0)
+            {
+                int line = Lines.Count() - 1;
+                int s1 = GetFirstCharIndexFromLine(line);
+                int s2 = line < Lines.Count() - 1 ?
+                          GetFirstCharIndexFromLine(line + 1) - 1 :
+                          Text.Length;
+                Select(s1, s2 - s1);
+            }
+        }
         public void UpdateLine(int line, string message, Color? color = null)
         {
             ReadOnly = true;
-            int s1 = GetFirstCharIndexFromLine(line);
-            int s2 = line < Lines.Count() - 1 ?
-                      GetFirstCharIndexFromLine(line + 1) - 1 :
-                      Text.Length;
-
             if (!color.HasValue)
                 color = ForeColor;
-            Select(s1, s2 - s1);
+            SelectLastLine();
             SelectionColor = color.Value;
             SelectedText = message;
+            DeselectAll();
         }
 
         public string ReadLine()
