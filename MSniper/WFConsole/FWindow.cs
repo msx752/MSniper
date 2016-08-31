@@ -1,12 +1,10 @@
-﻿
-using MSniper.Settings;
+﻿using MSniper.Settings;
 using MSniper.Settings.Localization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -24,6 +22,7 @@ namespace MSniper
     public partial class FWindow : Form
     {
         #region form
+
         public FWindow()
         {
             InitializeComponent();
@@ -31,6 +30,7 @@ namespace MSniper
             FormClosed += FWindow_FormClosed;
             Console.InitializeFConsole();
         }
+
         private void FWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
             Process.GetCurrentProcess().Kill();
@@ -40,7 +40,122 @@ namespace MSniper
         {
             this.Main();
         }
-        #endregion
+
+        #endregion form
+
+        public Configs config { get; set; }
+
+        public Translation culture { get; set; }
+
+        public void CheckNecroBots(bool shutdownMSniper)
+        {
+            if (Process.GetProcessesByName(Variables.BotEXEName).Count() == 0)
+            {
+                Console.WriteLine(culture.GetTranslation(TranslationString.AnyNecroBotNotFound), Color.Red);
+                Console.WriteLine($" *{culture.GetTranslation(TranslationString.RunBeforeMSniper)}*", Color.Red);
+                if (shutdownMSniper)
+                    Shutdown();
+            }
+        }
+
+        public void Delay(int seconds, bool isShutdownMsg = false)
+        {
+            for (int i = seconds; i >= 0; i--)
+            {
+                TranslationString ts = TranslationString.ShutdownMsg;
+                if (!isShutdownMsg)
+                    ts = TranslationString.SubsequentProcessing;
+                string message = "Subsequent processing passing in {0} seconds or Close the Program";
+                if (culture != null)
+                    Console.UpdateLine(Console.Lines.Count() - 1, culture.GetTranslation(ts, i));
+                else
+                    Console.UpdateLine(Console.Lines.Count() - 1, string.Format(message, i));
+                ;
+                Thread.Sleep(1000);
+            }
+        }
+
+        public void ExportReferences()
+        {
+            string path = Path.Combine(Application.StartupPath, "Newtonsoft.Json.dll");
+            if (!File.Exists(path))
+                File.WriteAllBytes(path, Properties.Resources.Newtonsoft_Json);
+            path = Path.Combine(Application.StartupPath, "registerProtocol.bat");
+            if (!File.Exists(path))
+                File.WriteAllText(path, Properties.Resources.registerProtocol);
+            path = Path.Combine(Application.StartupPath, "removeProtocol.bat");
+            if (!File.Exists(path))
+                File.WriteAllText(path, Properties.Resources.removeProtocol);
+            path = Path.Combine(Application.StartupPath, "resetSnipeList.bat");
+            if (!File.Exists(path))
+                File.WriteAllText(path, Properties.Resources.resetSnipeList);
+
+            if (Directory.Exists(Variables.TempPath))//deleting temp
+            {
+                try
+                {
+                    Directory.Delete(Variables.TempPath, true);
+                }
+                catch
+                {
+                    Directory.Delete(Variables.TempPath, true);
+                }
+            }
+
+            config = LoadConfigs();
+            culture = LoadCulture(config);
+
+            ////ExportDefaultTranslation(); //needs for translation information
+        }
+
+        public void Helper(bool withParams)
+        {
+            Console.WriteLine("");
+            Console.WriteLine(culture.GetTranslation(TranslationString.Description,
+                Variables.ProgramName, Variables.CurrentVersion, Variables.By));
+            Console.WriteLine(culture.GetTranslation(TranslationString.GitHubProject,
+                Variables.GithupProjectUri),
+                Color.Yellow);
+            Console.Write(culture.GetTranslation(TranslationString.CurrentVersion,
+                Assembly.GetEntryAssembly().GetName().Version.ToString().Substring(0, 5)),
+                Color.White);
+            if (Protocol.isRegistered() == false && withParams == false)
+            {
+                Console.WriteLine(" ");
+                Console.WriteLine(culture.GetTranslation(TranslationString.ProtocolNotFound,
+                "registerProtocol.bat"),
+                Color.Red);
+                Shutdown();
+            }
+
+            if (VersionCheck.IsLatest())
+            {
+                Console.WriteLine($"\t* {culture.GetTranslation(TranslationString.LatestVersion)} *", Color.White);
+            }
+            else
+            {
+                Console.WriteLine(string.Format($"\t* {culture.GetTranslation(TranslationString.NewVersion)}: {{0}} *", VersionCheck.RemoteVersion), Color.Green);
+
+                string downloadlink = Variables.GithupProjectUri + "/releases/latest";
+                Console.WriteLine(string.Format($"* {culture.GetTranslation(TranslationString.DownloadLink)}:  {{0}} *", downloadlink), Color.Yellow);
+                if (config.DownloadNewVersion && withParams == false)
+                {
+                    Console.WriteLine(culture.GetTranslation(TranslationString.AutoDownloadMsg), Color.DarkCyan);
+                    Console.Write($"{culture.GetTranslation(TranslationString.Warning)}:", Color.Red);
+                    Console.WriteLine(culture.GetTranslation(TranslationString.WarningShutdownProcess), Color.White);
+                    char c = Console.ReadKey();
+                    //Console.SetCursorPosition(0, Console.CursorTop);
+                    if (c == 'd' || c == 'D')
+                    {
+                        Downloader.DownloadNewVersion();
+                    }
+                    Shutdown();
+                }
+            }
+            Console.WriteLine(culture.GetTranslation(TranslationString.IntegrateMsg,
+                Variables.ProgramName, Variables.MinRequireVersion), Color.DarkCyan);
+            Console.WriteLine("--------------------------------------------------------");
+        }
 
         public void Main()
         {
@@ -110,10 +225,8 @@ namespace MSniper
                     do
                     {
                         Console.WriteLine(culture.GetTranslation(TranslationString.WaitingDataMsg), Color.White);
-                        //Console.ForegroundColor = Color.DarkCyan;
                         string snipping = Console.ReadLine();
                         CheckNecroBots(true);
-                        //Console.ForegroundColor = Color.DarkGray;
                         //snipping = "dragonite 37.766627 , -122.403677";//for debug mode (spaces are ignored)
                         if (snipping.ToLower() == "e")
                             break;
@@ -135,112 +248,12 @@ namespace MSniper
                         }
                         if (error)
                             Console.WriteLine(culture.GetTranslation(TranslationString.CustomPasteWrongFormat), Color.Red);
-
                     }
                     while (true);
                 }
                 Shutdown();
             });
         }
-
-        public Translation culture { get; set; }
-
-        public Configs config { get; set; }
-
-        public void Helper(bool withParams)
-        {
-            Console.WriteLine("");
-            Console.WriteLine(culture.GetTranslation(TranslationString.Description,
-                Variables.ProgramName, Variables.CurrentVersion, Variables.By));
-            Console.WriteLine(culture.GetTranslation(TranslationString.GitHubProject,
-                Variables.GithupProjectUri),
-                Color.Yellow);
-            Console.Write(culture.GetTranslation(TranslationString.CurrentVersion,
-                Assembly.GetEntryAssembly().GetName().Version.ToString().Substring(0, 5)),
-                Color.White);
-            if (Protocol.isRegistered() == false && withParams == false)
-            {
-                Console.WriteLine(" ");
-                Console.WriteLine(culture.GetTranslation(TranslationString.ProtocolNotFound,
-                "registerProtocol.bat"),
-                Color.Red);
-                Shutdown();
-            }
-
-            if (VersionCheck.IsLatest())
-            {
-                Console.WriteLine($"\t* {culture.GetTranslation(TranslationString.LatestVersion)} *", Color.White);
-            }
-            else
-            {
-                Console.WriteLine(string.Format($"\t* {culture.GetTranslation(TranslationString.NewVersion)}: {{0}} *", VersionCheck.RemoteVersion), Color.Green);
-
-                string downloadlink = Variables.GithupProjectUri + "/releases/latest";
-                Console.WriteLine(string.Format($"* {culture.GetTranslation(TranslationString.DownloadLink)}:  {{0}} *", downloadlink), Color.Yellow);
-                if (config.DownloadNewVersion && withParams == false)
-                {
-                    Console.WriteLine(culture.GetTranslation(TranslationString.AutoDownloadMsg), Color.DarkCyan);
-                    Console.Write($"{culture.GetTranslation(TranslationString.Warning)}:", Color.Red);
-                    Console.WriteLine(culture.GetTranslation(TranslationString.WarningShutdownProcess), Color.White);
-                    char c = Console.ReadKey();
-                    //Console.SetCursorPosition(0, Console.CursorTop);
-                    if (c == 'd' || c == 'D')
-                    {
-                        Downloader.DownloadNewVersion();
-                    }
-                    Shutdown();
-                }
-            }
-            Console.WriteLine(culture.GetTranslation(TranslationString.IntegrateMsg,
-                Variables.ProgramName, Variables.MinRequireVersion), Color.DarkCyan);
-            Console.WriteLine("--------------------------------------------------------");
-        }
-
-        private static void ExportDefaultTranslation()
-        {
-            // this method only using for information
-            // \temp\languages\translation.en.json
-            Translation culture = new Translation();
-            culture.Save("en");
-            Process.GetCurrentProcess().Kill();
-            ///////////////////////////////////////
-        }
-
-        private static Configs LoadConfigs()
-        {
-            string strCulture = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
-            var culture = CultureInfo.CreateSpecificCulture("en");
-            CultureInfo.DefaultThreadCurrentCulture = culture;
-            Thread.CurrentThread.CurrentCulture = culture;
-
-            Configs _settings = new Configs();
-            if (File.Exists(Variables.SettingPath))
-            {
-                _settings = Configs.Load();
-            }
-            else
-            {
-                Configs.SaveFiles(_settings);
-            }
-            return _settings;
-        }
-
-        private Translation LoadCulture(Configs _settings)
-        {
-            return Translation.Load(_settings);
-        }
-
-        public void CheckNecroBots(bool shutdownMSniper)
-        {
-            if (Process.GetProcessesByName(Variables.BotEXEName).Count() == 0)
-            {
-                Console.WriteLine(culture.GetTranslation(TranslationString.AnyNecroBotNotFound), Color.Red);
-                Console.WriteLine($" *{culture.GetTranslation(TranslationString.RunBeforeMSniper)}*", Color.Red);
-                if (shutdownMSniper)
-                    Shutdown();
-            }
-        }
-
         public void RemoveAllSnipeMSJSON()
         {
             Process[] plist = Process.GetProcessesByName(Variables.BotEXEName);
@@ -268,19 +281,6 @@ namespace MSniper
                 Process.GetCurrentProcess().Kill();
         }
 
-        private void FileDelete(string path)
-        {
-            do
-            {
-                try
-                {
-                    File.Delete(path);
-                    break;
-                }
-                catch { }
-            } while (true);//waiting access
-        }
-
         public void Shutdown()
         {
             Shutdown(config.CloseDelaySec);
@@ -291,35 +291,6 @@ namespace MSniper
             Console.Status = ConsoleState.Closing;
             Delay(seconds, true);
             Process.GetCurrentProcess().Kill();
-        }
-
-        public void Delay(int seconds, bool isShutdownMsg = false)
-        {
-            for (int i = seconds; i >= 0; i--)
-            {
-                TranslationString ts = TranslationString.ShutdownMsg;
-                if (!isShutdownMsg)
-                    ts = TranslationString.SubsequentProcessing;
-                string message = "Subsequent processing passing in {0} seconds or Close the Program";
-                if (culture != null)
-                    Console.UpdateLine(Console.Lines.Count() - 1, culture.GetTranslation(ts, i));
-                else
-                    Console.UpdateLine(Console.Lines.Count() - 1, string.Format(message, i));
-                ;
-                Thread.Sleep(1000);
-            }
-        }
-
-        private bool isBotUpperThan094(FileVersionInfo fversion)
-        {
-            if (new Version(fversion.FileVersion) >= new Version(Variables.MinRequireVersion))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         public void Snipe(string pokemonName, string latt, string lonn)
@@ -370,56 +341,37 @@ namespace MSniper
             }
         }
 
-        private Process GetProcess(Process p)
+        private static void ExportDefaultTranslation()
         {
-            int x = 1;
-            do
-            {
-                p = Process.GetProcessById(p.Id);
-                Thread.Sleep(1);
-                x++;
-                if ((x / 1000) > 30)
-                    return null;//waiting long time after that throwing exeption, prevent to stucking
-            } while ((p.MainWindowTitle.Split(' ').Length == 1));
-            return p;
-        }
-
-        public void ExportReferences()
-        {
-            string path = Path.Combine(Application.StartupPath, "Newtonsoft.Json.dll");
-            if (!File.Exists(path))
-                File.WriteAllBytes(path, Properties.Resources.Newtonsoft_Json);
-            path = Path.Combine(Application.StartupPath, "registerProtocol.bat");
-            if (!File.Exists(path))
-                File.WriteAllText(path, Properties.Resources.registerProtocol);
-            path = Path.Combine(Application.StartupPath, "removeProtocol.bat");
-            if (!File.Exists(path))
-                File.WriteAllText(path, Properties.Resources.removeProtocol);
-            path = Path.Combine(Application.StartupPath, "resetSnipeList.bat");
-            if (!File.Exists(path))
-                File.WriteAllText(path, Properties.Resources.resetSnipeList);
-
-            if (Directory.Exists(Variables.TempPath))//deleting temp
-            {
-                try
-                {
-                    Directory.Delete(Variables.TempPath, true);
-                }
-                catch
-                {
-                    Directory.Delete(Variables.TempPath, true);
-                }
-            }
-
-            config = LoadConfigs();
-            culture = LoadCulture(config);
-
-            ////ExportDefaultTranslation(); //needs for translation information 
+            // this method only using for information \temp\languages\translation.en.json
+            Translation culture = new Translation();
+            culture.Save("en");
+            Process.GetCurrentProcess().Kill();
+            ///////////////////////////////////////
         }
 
         private static string GetSnipeMSLocation(string NecroBotEXEPath)
         {
             return Path.Combine(NecroBotEXEPath, Variables.SnipeFileName);
+        }
+
+        private static Configs LoadConfigs()
+        {
+            string strCulture = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+            var culture = CultureInfo.CreateSpecificCulture("en");
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            Thread.CurrentThread.CurrentCulture = culture;
+
+            Configs _settings = new Configs();
+            if (File.Exists(Variables.SettingPath))
+            {
+                _settings = Configs.Load();
+            }
+            else
+            {
+                Configs.SaveFiles(_settings);
+            }
+            return _settings;
         }
 
         private static List<MSniperInfo> ReadSnipeMS(string path)
@@ -467,7 +419,50 @@ namespace MSniper
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
+        }
 
+        private void FileDelete(string path)
+        {
+            do
+            {
+                try
+                {
+                    File.Delete(path);
+                    break;
+                }
+                catch { }
+            } while (true);//waiting access
+        }
+
+        private Process GetProcess(Process p)
+        {
+            int x = 1;
+            do
+            {
+                p = Process.GetProcessById(p.Id);
+                Thread.Sleep(1);
+                x++;
+                if ((x / 1000) > 30)
+                    return null;//waiting long time after that throwing exeption, prevent to stucking
+            } while ((p.MainWindowTitle.Split(' ').Length == 1));
+            return p;
+        }
+
+        private bool isBotUpperThan094(FileVersionInfo fversion)
+        {
+            if (new Version(fversion.FileVersion) >= new Version(Variables.MinRequireVersion))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private Translation LoadCulture(Configs _settings)
+        {
+            return Translation.Load(_settings);
         }
     }
 }

@@ -65,7 +65,6 @@ namespace MSniper
             LinkClicked -= FConsole_LinkClicked;
             LinkClicked += FConsole_LinkClicked;
 
-
             MouseDown -= FConsole_MouseDown;
             MouseDown += FConsole_MouseDown;
         }
@@ -133,6 +132,7 @@ namespace MSniper
             SetText(message, color);
             DeselectAll();
         }
+
         public void SetText(string message, Color? color = null)
         {
             if (!color.HasValue)
@@ -140,6 +140,7 @@ namespace MSniper
             SelectionColor = color.Value;
             SelectedText = message;
         }
+
         public void WriteLine(string message, Color? color = null)
         {
             Write(message + Environment.NewLine, color);
