@@ -29,8 +29,7 @@ namespace MSniper
             BorderStyle = BorderStyle.None;
             ReadOnly = true;
             Font = new Font("consolas", 11);
-            MinimumSize = new Size(500, 100);
-            //MaximumSize = new Size(750, 400);
+            MinimumSize = new Size(450, 200);
             ScrollBars = RichTextBoxScrollBars.Vertical;
             Pause = false;
             InputEnable = false;
@@ -79,7 +78,6 @@ namespace MSniper
         {
             Process.Start(e.LinkText);
         }
-
         bool Pause { get; set; }
 
         bool InputEnable { get; set; }

@@ -29,8 +29,8 @@ namespace MSniper
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
             FormClosed += FWindow_FormClosed;
+            Console.InitializeFConsole();
         }
-
         private void FWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
             Process.GetCurrentProcess().Kill();
