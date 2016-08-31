@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -135,11 +136,11 @@ namespace MSniper.Settings.Localization
                     input = GetTranslationFromServer(logicSettings.TranslationLanguageCode);//developer mode
                     if (input == null)
                     {
-                        Log.WriteLine($"[ {logicSettings.TranslationLanguageCode} ] language not found in program", ConsoleColor.Red);
+                        Program.frm.Console.WriteLine($"[ {logicSettings.TranslationLanguageCode} ] language not found in program", Color.Red);
                         Thread.Sleep(1000);
-                        Log.WriteLine($"now using default language [ {new Configs().TranslationLanguageCode} ]..", ConsoleColor.Green);
+                        Program.frm.Console.WriteLine($"now using default language [ {new Configs().TranslationLanguageCode} ]..", Color.Green);
                         translationsLanguageCode = new Configs().TranslationLanguageCode;
-                        Program.Delay(3);
+                        Program.frm.Delay(3);
                     }
                 }
                 if (string.IsNullOrEmpty(input))
@@ -160,9 +161,9 @@ namespace MSniper.Settings.Localization
             }
             catch (Exception ex)
             {
-                Log.WriteLine("");
-                Log.WriteLine($"[ERROR] Issue loading translations: {ex.ToString()}", ConsoleColor.Red);
-                Program.Delay(7);
+                Program.frm.Console.WriteLine("", System.Drawing.Color.DarkGray);
+                Program.frm.Console.WriteLine($"[ERROR] Issue loading translations: {ex.ToString()}", Color.Red);
+                Program.frm.Delay(7);
             }
 
             return translations;

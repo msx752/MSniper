@@ -1,1 +1,1 @@
-MSniper -register
+start MSniper -register

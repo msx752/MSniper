@@ -3,6 +3,7 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -50,7 +51,7 @@ namespace MSniper.Settings
                             if (count > 10)
                             {
                                 //sometimes we have to wait close to config.json for access
-                                Log.WriteLine("configFile: " + exception.Message, ConsoleColor.Red);
+                                Program.frm.Console.WriteLine("configFile: " + exception.Message, Color.Red);
                             }
                             count++;
                             Thread.Sleep(1000);
@@ -68,13 +69,13 @@ namespace MSniper.Settings
                     }
                     catch (JsonSerializationException exception)
                     {
-                        Log.WriteLine("Settings.json WRONG FORMAT: " + exception.Message, ConsoleColor.Red);
-                        Program.Delay(30);
+                        Program.frm.Console.WriteLine("Settings.json WRONG FORMAT: " + exception.Message, Color.Red);
+                        Program.frm.Delay(30);
                     }
                 }
                 catch (JsonReaderException exception)
                 {
-                    Log.WriteLine("JSON Exception: " + exception.Message, ConsoleColor.Red);
+                    Program.frm.Console.WriteLine("JSON Exception: " + exception.Message, Color.Red);
                     return _settings;
                 }
             }

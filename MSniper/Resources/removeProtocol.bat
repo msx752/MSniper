@@ -1,1 +1,1 @@
-MSniper -remove
+start MSniper -remove

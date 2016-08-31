@@ -4,8 +4,8 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C733ABF3-F649-4E70-88CA-FC1835676311}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{24700CAC-B201-4D41-A971-146BDDB28FE8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MSniper</RootNamespace>
     <AssemblyName>MSniper</AssemblyName>
@@ -14,7 +14,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,86 +23,103 @@
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>1</WarningLevel>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup />
-  <PropertyGroup />
   <PropertyGroup>
     <ApplicationIcon>Resources\msniper.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Github_SourceTree\MSniper\master\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Settings\Localization\Translations.cs" />
-    <Compile Include="Settings\Settings.cs" />
-    <Compile Include="Variables.cs" />
-    <Compile Include="Log.cs" />
-    <Compile Include="MSniperInfo.cs" />
+    <Compile Include="Downloader.cs" />
     <Compile Include="MSniperClient.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="MSniperInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="ProtocolRegister.cs" />
+    <Compile Include="Settings\Localization\Translations.cs" />
+    <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Variables.cs" />
     <Compile Include="VersionCheck.cs" />
-    <Compile Include="Downloader.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-    <EmbeddedResource Include="Resources\registerProtocol.bat" />
-    <EmbeddedResource Include="Resources\removeProtocol.bat" />
-    <EmbeddedResource Include="Resources\resetSnipeList.bat" />
-    <EmbeddedResource Include="Settings\Localization\Languages\translation.en.json" />
-    <EmbeddedResource Include="Settings\Localization\Languages\translation.tr.json" />
-    <EmbeddedResource Include="Settings\Localization\Languages\translation.es.json" />
-    <EmbeddedResource Include="Settings\Localization\Languages\translation.tw.json" />
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="WFConsole\FConsole.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WFConsole\FWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WFConsole\FWindow.Designer.cs">
+      <DependentUpon>FWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WFConsole\ConsoleStatus.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="WFConsole\FWindow.resx">
+      <DependentUpon>FWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Resources\registerProtocol.bat" />
+    <EmbeddedResource Include="Resources\removeProtocol.bat" />
+    <EmbeddedResource Include="Resources\resetSnipeList.bat" />
+    <None Include="Settings\Localization\Languages\translation.en.json" />
+    <None Include="Settings\Localization\Languages\translation.es.json" />
+    <None Include="Settings\Localization\Languages\translation.tr.json" />
+    <None Include="Settings\Localization\Languages\translation.tw.json" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\msniper.ico" />
+    <EmbeddedResource Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Newtonsoft.Json.dll" />
+    <EmbeddedResource Include="Resources\msniper.ico" />
+    <EmbeddedResource Include="Resources\Newtonsoft.Json.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -30,7 +31,7 @@ namespace MSniper
             }
             catch (Exception ex)
             {
-                Log.WriteLine(ex.Message, ConsoleColor.Red);
+                Program.frm.Console.WriteLine(ex.Message, Color.Red);
                 return true; //better than just doing nothing when git server down
             }
 

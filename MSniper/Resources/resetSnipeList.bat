@@ -1,1 +1,1 @@
-MSniper -resetallsnipelist
+start MSniper -resetallsnipelist
