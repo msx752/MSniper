@@ -63,7 +63,7 @@
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Variables.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="MSniper.cs" />
+    <Compile Include="MSniperInfo.cs" />
     <Compile Include="MSniperClient.cs">
       <SubType>Component</SubType>
     </Compile>
