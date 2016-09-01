@@ -41,7 +41,7 @@ namespace MSniper
             };
             mSniperLatestToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
             {
-                Process.Start($"{Variables.GithubIOUri}");
+                Process.Start($"{Variables.GithubProjectUri}");
             };
             necroBotLatestToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
             {
