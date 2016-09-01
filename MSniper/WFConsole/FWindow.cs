@@ -28,6 +28,47 @@ namespace MSniper
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
             FormClosed += FWindow_FormClosed;
+
+            mSniperLatestToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            {
+                Process.Start($"{Variables.GithubIOUri}");
+            };
+            necroBotLatestToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            {
+                Process.Start("https://github.com/NoxxDev/NecroBot/releases/latest");
+            };
+            v102ToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            {
+                Process.Start($"{Variables.GithubIOUri}#v100--v102");
+            };
+            v103ToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            {
+                Process.Start($"{Variables.GithubIOUri}#v103");
+            };
+            v104ToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            {
+                Process.Start($"{Variables.GithubIOUri}#v104");
+            };
+            configurationToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            {
+                Process.Start($"{Variables.GithubIOUri}#configuration");
+            };
+            usageToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            {
+                Process.Start($"{Variables.GithubIOUri}#usage");
+            };
+            askedQuestionsToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            {
+                Process.Start($"{Variables.GithubIOUri}#frequently-asked-questions");
+            };
+            advantageToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            {
+                Process.Start($"{Variables.GithubIOUri}#advantage");
+            };
+            fileInformationToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            {
+                Process.Start($"{Variables.GithubIOUri}#file-information");
+            };
             Console.InitializeFConsole();
         }
 
@@ -114,7 +155,7 @@ namespace MSniper
             Console.WriteLine(culture.GetTranslation(TranslationString.Description,
                 Variables.ProgramName, Variables.CurrentVersion, Variables.By));
             Console.WriteLine(culture.GetTranslation(TranslationString.GitHubProject,
-                Variables.GithupProjectUri),
+                Variables.GithubProjectUri),
                 Color.Yellow);
             Console.Write(culture.GetTranslation(TranslationString.CurrentVersion,
                 Assembly.GetEntryAssembly().GetName().Version.ToString().Substring(0, 5)),
@@ -136,7 +177,7 @@ namespace MSniper
             {
                 Console.WriteLine(string.Format($"\t* {culture.GetTranslation(TranslationString.NewVersion)}: {{0}} *", VersionCheck.RemoteVersion), Color.Green);
 
-                string downloadlink = Variables.GithupProjectUri + "/releases/latest";
+                string downloadlink = Variables.GithubProjectUri + "/releases/latest";
                 Console.WriteLine(string.Format($"* {culture.GetTranslation(TranslationString.DownloadLink)}:  {{0}} *", downloadlink), Color.Yellow);
                 if (config.DownloadNewVersion && withParams == false)
                 {
@@ -159,6 +200,56 @@ namespace MSniper
 
         public void Main()
         {
+            Task.Run(() =>
+            {
+                do
+                {
+                    try
+                    {
+                        Process[] plist = Process.GetProcessesByName(Variables.BotEXEName);
+                        if (plist.Length == 0)
+                            activeBotsToolStripMenuItem.DropDownItems.Clear();
+
+                        foreach (Process item in plist)
+                        {
+                            string username = GetProcess(item).MainWindowTitle.Split('-').First().Split(' ')[2];
+                            ToolStripMenuItem btn = new ToolStripMenuItem(username);
+                            btn.Tag = item.MainWindowHandle;
+                            btn.Click += delegate (Object sender, EventArgs e)
+                                         {
+                                             int id = int.Parse(btn.Tag.ToString());
+                                             Dlls.BringToFront(new IntPtr(id));
+                                         };
+                            if (activeBotsToolStripMenuItem.DropDownItems.Count == 0)
+                                activeBotsToolStripMenuItem.DropDownItems.Add(btn);
+
+                            for (int i = 0; i < activeBotsToolStripMenuItem.DropDownItems.Count; i++)
+                            {
+                                var sn = activeBotsToolStripMenuItem.DropDownItems[i];
+                                if (sn != null && sn.Text != username)
+                                {
+                                    activeBotsToolStripMenuItem.DropDownItems.Add(btn);
+                                }
+                                else
+                                {
+                                    Process p2 = plist.Where(p => p.MainWindowTitle.IndexOf(activeBotsToolStripMenuItem.DropDownItems[i].Text) != -1).FirstOrDefault();
+                                    if (p2 == null)
+                                    {
+                                        activeBotsToolStripMenuItem.DropDownItems.RemoveAt(i);
+                                    }
+                                }
+                            }
+
+
+                            //activeBotsToolStripMenuItem.DropDownItems.Contains(new )
+                        }
+                    }
+                    catch { }
+                    Thread.Sleep(1500);
+                } while (true);
+            });
+
+
             Task.Run(() =>
             {
                 Console.Clear();
@@ -254,6 +345,9 @@ namespace MSniper
                 Shutdown();
             });
         }
+
+
+
         public void RemoveAllSnipeMSJSON()
         {
             Process[] plist = Process.GetProcessesByName(Variables.BotEXEName);
@@ -464,5 +558,6 @@ namespace MSniper
         {
             return Translation.Load(_settings);
         }
+        
     }
 }

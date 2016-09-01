@@ -11,6 +11,11 @@ namespace MSniper
     {
         public FConsole()
         {
+            KeyDown += FConsole_KeyDown;
+            TextChanged += FConsole_TextChanged;
+            LinkClicked += FConsole_LinkClicked;
+            MouseDown += FConsole_MouseDown;
+
             InitializeFConsole();
         }
 
@@ -55,36 +60,72 @@ namespace MSniper
                 Parent.BackColor = BackColor;
             }
             DetectUrls = true;
-
-            KeyDown -= FConsole_KeyDown;
-            KeyDown += FConsole_KeyDown;
-
-            TextChanged -= FConsole_TextChanged;
-            TextChanged += FConsole_TextChanged;
-
-            LinkClicked -= FConsole_LinkClicked;
-            LinkClicked += FConsole_LinkClicked;
-
-            MouseDown -= FConsole_MouseDown;
-            MouseDown += FConsole_MouseDown;
         }
 
+        private void FConsole_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (Status == ConsoleState.Closing)
+            {
+                e.SuppressKeyPress = true;
+                return;
+            }
+
+            Select(TextLength, 0);
+            if (e.KeyData == (Keys.Control | Keys.V))
+            {
+                MultiplePaste();
+                e.SuppressKeyPress = true;
+            }
+            else if ((int)e.KeyCode == (int)Keys.Enter && InputEnable == true && Status == ConsoleState.ReadLine)
+            {
+                Cursor = Cursors.WaitCursor;
+                ReadOnly = true;
+                CurrentLine = Lines[Lines.Count() - 1];
+                WriteLine("");
+                InputEnable = false;
+                e.SuppressKeyPress = true;
+            }
+            else if (InputEnable == true && Status == ConsoleState.ReadKey)
+            {
+                ReadOnly = true;
+                CurrentKey = (char)e.KeyCode;
+                InputEnable = false;
+            }
+            else if ((int)e.KeyCode == (int)Keys.Escape && InputEnable == false)//esc exit
+            {
+                Pause = false;
+            }
+            else if ((int)e.KeyCode == (int)Keys.Space && InputEnable == false)//space pause
+            {
+                Pause = !Pause;
+            }
+            else if ((int)e.KeyCode == (int)Keys.Back && ReadOnly == false && InputEnable == true && CurrentPoint + 1 > TextLength)
+            {
+                e.SuppressKeyPress = true;
+            }
+        }
+        
         private void FConsole_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
-                ReadOnly = true;//true
-                CurrentLine = Clipboard.GetText();
-                InputEnable = false;//false
+                MultiplePaste();
             }
+        }
+
+        private void MultiplePaste()
+        {
+            ReadOnly = true;
+            CurrentLine = Clipboard.GetText();
+            InputEnable = false;
         }
 
         public char ReadKey()
         {
             CurrentKey = ' ';
             CurrentPoint = Text.Length;
-            InputEnable = !InputEnable;//true
-            ReadOnly = !ReadOnly;//false
+            InputEnable = true;
+            ReadOnly = false;
             Status = ConsoleState.ReadKey;
             while (InputEnable) Thread.Sleep(1);
 
@@ -95,8 +136,8 @@ namespace MSniper
         {
             CurrentLine = "";
             CurrentPoint = TextLength;
-            InputEnable = !InputEnable;//true
-            ReadOnly = !ReadOnly;//false
+            InputEnable = true;
+            ReadOnly = false;
             Status = ConsoleState.ReadLine;
             while (InputEnable) Thread.Sleep(1);
             Cursor = Cursors.IBeam;
@@ -144,39 +185,6 @@ namespace MSniper
         public void WriteLine(string message, Color? color = null)
         {
             Write(message + Environment.NewLine, color);
-        }
-
-        private void FConsole_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (Status == ConsoleState.Closing)
-                return;
-
-            Select(TextLength, 0);
-            if ((int)e.KeyCode == (int)Keys.Enter && InputEnable == true && Status == ConsoleState.ReadLine)
-            {
-                Cursor = Cursors.WaitCursor;
-                ReadOnly = true;
-                CurrentLine = Lines[Lines.Count() - 1];
-                InputEnable = false;
-            }
-            else if (InputEnable == true && Status == ConsoleState.ReadKey)
-            {
-                ReadOnly = true;
-                CurrentKey = (char)e.KeyCode;
-                InputEnable = false;
-            }
-            else if ((int)e.KeyCode == (int)Keys.Escape && InputEnable == false)//esc exit
-            {
-                Pause = false;
-            }
-            else if ((int)e.KeyCode == (int)Keys.Space && InputEnable == false)//space pause
-            {
-                Pause = !Pause;
-            }
-            else if ((int)e.KeyCode == (int)Keys.Back && ReadOnly == false && InputEnable == true && CurrentPoint + 1 > TextLength)
-            {
-                e.Handled = true;
-            }
         }
 
         private void FConsole_LinkClicked(object sender, LinkClickedEventArgs e)
