@@ -36,15 +36,15 @@ namespace MSniper.Settings
         public bool DownloadNewVersion { get; set; } = true;
         public bool ShowActiveBots { get; set; } = true;
 
-        public string ErrorColor { get; set; } = ColorToHex(Color.Red);
+        public string ErrorColor { get; set; } = ColorToHex(Color.FromArgb(255, 0x20, 0));
 
         public string HighlightColor { get; set; } = ColorToHex(Color.White);
 
-        public string NotificationColor { get; set; } = ColorToHex(Color.DarkCyan);
+        public string NotificationColor { get; set; } = ColorToHex(Color.FromArgb(0, 0xfa, 0xbf));
 
-        public string SuccessColor { get; set; } = ColorToHex(Color.Green);
+        public string SuccessColor { get; set; } = ColorToHex(Color.FromArgb(0, 255, 0));
 
-        public string WarningColor { get; set; } = ColorToHex(Color.Yellow);
+        public string WarningColor { get; set; } = ColorToHex(Color.FromArgb(0xff, 0xc8, 0));
 
 
         [JsonIgnore]

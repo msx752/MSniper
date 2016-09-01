@@ -37,7 +37,7 @@ namespace MSniper
         private List<string> recentlist { get; set; }
 
         private int RecentCount { get; set; }
-        
+
         private bool InputEnable { get; set; }
 
         private bool Pause { get; set; }
@@ -49,7 +49,7 @@ namespace MSniper
             Title = Name;
             Arguments = new string[0];
             BackColor = Color.Black;
-            ForeColor = Color.Silver;
+            ForeColor = Color.FromArgb(0xdf, 0xd8, 0xc2);
             Dock = DockStyle.Fill;
             BorderStyle = BorderStyle.None;
             ReadOnly = true;
