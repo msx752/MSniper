@@ -122,12 +122,12 @@ namespace MSniper.Settings.Localization
                 : $"Translation for {translationString} is missing";
         }
 
-        public static Translation Load(ISettings logicSettings)
+        public static Translation Load(IConfigs logicSettings)
         {
             return Load(logicSettings, new Translation());
         }
 
-        public static Translation Load(ISettings logicSettings, Translation translations)
+        public static Translation Load(IConfigs logicSettings, Translation translations)
         {
             try
             {
@@ -163,7 +163,7 @@ namespace MSniper.Settings.Localization
             }
             catch (Exception ex)
             {
-                Program.frm.Console.WriteLine("", System.Drawing.Color.DarkGray);
+                Program.frm.Console.WriteLine("");
                 Program.frm.Console.WriteLine($"[ERROR] Issue loading translations: {ex.ToString()}", Color.Red);
                 Program.frm.Delay(7);
             }

@@ -20,13 +20,13 @@ namespace MSniper
 
         public static void DownloadNewVersion()
         {
-            Program.frm.Console.WriteLine(Program.frm.culture.GetTranslation(TranslationString.DownloadingNewVersion, VersionCheck.NameWithVersion), Color.Green);
+            Program.frm.Console.WriteLine(Program.frm.culture.GetTranslation(TranslationString.DownloadingNewVersion, VersionCheck.NameWithVersion), Program.frm.config.Success);
             byte[] downloaded = GetFile(VersionCheck.RemoteVersion);
-            Program.frm.Console.WriteLine(Program.frm.culture.GetTranslation(TranslationString.DownloadFinished), Color.Green);
+            Program.frm.Console.WriteLine(Program.frm.culture.GetTranslation(TranslationString.DownloadFinished), Program.frm.config.Success);
             WriteFile(downloaded, Variables.TempRarFileUri);
-            Program.frm.Console.WriteLine(Program.frm.culture.GetTranslation(TranslationString.DecompressingNewFile), Color.Green);
+            Program.frm.Console.WriteLine(Program.frm.culture.GetTranslation(TranslationString.DecompressingNewFile), Program.frm.config.Success);
             DecompressZip(Variables.TempRarFileUri);
-            Program.frm.Console.WriteLine(Program.frm.culture.GetTranslation(TranslationString.OldFilesChangingWithNews), Color.Green);
+            Program.frm.Console.WriteLine(Program.frm.culture.GetTranslation(TranslationString.OldFilesChangingWithNews), Program.frm.config.Success);
             ChangeWithOldFiles(CreateUpdaterBatch());
         }
 
@@ -118,7 +118,7 @@ namespace MSniper
             }
             catch (Exception ex)
             {
-                Program.frm.Console.WriteLine(ex.Message, Color.Red);
+                Program.frm.Console.WriteLine(ex.Message, Program.frm.config.Error);
                 return null;
             }
         }

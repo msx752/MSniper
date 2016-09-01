@@ -31,7 +31,7 @@ namespace MSniper
             }
             catch (Exception ex)
             {
-                Program.frm.Console.WriteLine(ex.Message, Color.Red);
+                Program.frm.Console.WriteLine(ex.Message, Program.frm.config.Error);
                 return true; //better than just doing nothing when git server down
             }
 

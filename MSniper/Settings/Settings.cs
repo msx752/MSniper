@@ -1,37 +1,71 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace MSniper.Settings
 {
-    public interface ISettings
+    public interface IConfigs
     {
-        string TranslationLanguageCode { get; }
-        int CloseDelaySec { get; }
-        bool DownloadNewVersion { get; set; }
+        string TranslationLanguageCode { get; set; }
+        int CloseDelaySec { get; set; }
         bool DeleteTempFolder { get; set; }
+        bool DownloadNewVersion { get; set; }
+        Color Error { get; }
+        string ErrorColor { get; set; }
+        Color Highlight { get; }
+        string HighlightColor { get; set; }
+        Color Notification { get; }
+        string NotificationColor { get; set; }
         bool ShowActiveBots { get; set; }
+        Color Success { get; }
+        string SuccessColor { get; set; }
+        Color Warning { get; }
+        string WarningColor { get; set; }
+        void Save(string fullPath);
     }
 
-    public class Configs : ISettings
+    public class Configs : IConfigs
     {
         public string TranslationLanguageCode { get; set; } = "en";
-
         public int CloseDelaySec { get; set; } = 10;
-        
-        public bool DownloadNewVersion { get; set; } = true;
-
         public bool DeleteTempFolder { get; set; } = true;
-
+        public bool DownloadNewVersion { get; set; } = true;
         public bool ShowActiveBots { get; set; } = true;
+
+        public string ErrorColor { get; set; } = ColorToHex(Color.Red);
+
+        public string HighlightColor { get; set; } = ColorToHex(Color.White);
+
+        public string NotificationColor { get; set; } = ColorToHex(Color.DarkCyan);
+
+        public string SuccessColor { get; set; } = ColorToHex(Color.Green);
+
+        public string WarningColor { get; set; } = ColorToHex(Color.Yellow);
+
+
+        [JsonIgnore]
+        public Color Error { get { return HexToColor(ErrorColor); } }
+        [JsonIgnore]
+        public Color Highlight { get { return HexToColor(HighlightColor); } }
+        [JsonIgnore]
+        public Color Notification { get { return HexToColor(NotificationColor); } }
+        [JsonIgnore]
+        public Color Success { get { return HexToColor(SuccessColor); } }
+        [JsonIgnore]
+        public Color Warning { get { return HexToColor(WarningColor); } }
+
+        public static string ColorToHex(Color c)
+        {
+            return $"#{c.R.ToString("X2")}{c.G.ToString("X2")}{c.B.ToString("X2")}";
+        }
+        public static Color HexToColor(string hex)
+        {
+            return ColorTranslator.FromHtml(hex);
+        }
 
         public static Configs Load()
         {

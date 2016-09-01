@@ -110,8 +110,8 @@ namespace MSniper
         {
             if (GetNecroBotProcesses().Count() == 0)
             {
-                Console.WriteLine(culture.GetTranslation(TranslationString.AnyNecroBotNotFound), Color.Red);
-                Console.WriteLine($" *{culture.GetTranslation(TranslationString.RunBeforeMSniper)}*", Color.Red);
+                Console.WriteLine(culture.GetTranslation(TranslationString.AnyNecroBotNotFound), config.Error);
+                Console.WriteLine($" *{culture.GetTranslation(TranslationString.RunBeforeMSniper)}*", config.Error);
                 if (shutdownMSniper)
                     Shutdown();
             }
@@ -180,34 +180,34 @@ namespace MSniper
                 Variables.ProgramName, Variables.CurrentVersion, Variables.By));
             Console.WriteLine(culture.GetTranslation(TranslationString.GitHubProject,
                 Variables.GithubProjectUri),
-                Color.Yellow);
+                config.Warning);
             Console.Write(culture.GetTranslation(TranslationString.CurrentVersion,
                 Assembly.GetEntryAssembly().GetName().Version.ToString().Substring(0, 5)),
-                Color.White);
+                config.Highlight);
             if (Protocol.isRegistered() == false && withParams == false)
             {
                 Console.WriteLine(" ");
                 Console.WriteLine(culture.GetTranslation(TranslationString.ProtocolNotFound,
                 "registerProtocol.bat"),
-                Color.Red);
+                config.Error);
                 Shutdown();
             }
 
             if (VersionCheck.IsLatest())
             {
-                Console.WriteLine($"\t* {culture.GetTranslation(TranslationString.LatestVersion)} *", Color.White);
+                Console.WriteLine($"\t* {culture.GetTranslation(TranslationString.LatestVersion)} *", config.Highlight);
             }
             else
             {
-                Console.WriteLine(string.Format($"\t* {culture.GetTranslation(TranslationString.NewVersion)}: {{0}} *", VersionCheck.RemoteVersion), Color.Green);
+                Console.WriteLine(string.Format($"\t* {culture.GetTranslation(TranslationString.NewVersion)}: {{0}} *", VersionCheck.RemoteVersion), config.Success);
 
                 string downloadlink = Variables.GithubProjectUri + "/releases/latest";
-                Console.WriteLine(string.Format($"* {culture.GetTranslation(TranslationString.DownloadLink)}:  {{0}} *", downloadlink), Color.Yellow);
+                Console.WriteLine(string.Format($"* {culture.GetTranslation(TranslationString.DownloadLink)}:  {{0}} *", downloadlink), config.Warning);
                 if (config.DownloadNewVersion && withParams == false)
                 {
-                    Console.WriteLine(culture.GetTranslation(TranslationString.AutoDownloadMsg), Color.DarkCyan);
-                    Console.Write($"{culture.GetTranslation(TranslationString.Warning)}:", Color.Red);
-                    Console.WriteLine(culture.GetTranslation(TranslationString.WarningShutdownProcess), Color.White);
+                    Console.WriteLine(culture.GetTranslation(TranslationString.AutoDownloadMsg), config.Notification);
+                    Console.Write($"{culture.GetTranslation(TranslationString.Warning)}:", config.Error);
+                    Console.WriteLine(culture.GetTranslation(TranslationString.WarningShutdownProcess), config.Highlight);
                     char c = Console.ReadKey();
                     //Console.SetCursorPosition(0, Console.CursorTop);
                     if (c == 'd' || c == 'D')
@@ -218,7 +218,7 @@ namespace MSniper
                 }
             }
             Console.WriteLine(culture.GetTranslation(TranslationString.IntegrateMsg,
-                Variables.ProgramName, Variables.MinRequireVersion), Color.DarkCyan);
+                Variables.ProgramName, Variables.MinRequireVersion), config.Notification);
             Console.WriteLine("--------------------------------------------------------");
         }
 
@@ -303,7 +303,7 @@ namespace MSniper
 
                         case "-registerp":
                             Protocol.Register();
-                            Console.WriteLine(culture.GetTranslation(TranslationString.ProtocolRegistered), Color.Green);
+                            Console.WriteLine(culture.GetTranslation(TranslationString.ProtocolRegistered),config.Success);
                             break;
 
                         case "-remove":
@@ -312,7 +312,7 @@ namespace MSniper
 
                         case "-removep":
                             Protocol.Delete();
-                            Console.WriteLine(culture.GetTranslation(TranslationString.ProtocolDeleted), Color.Green);
+                            Console.WriteLine(culture.GetTranslation(TranslationString.ProtocolDeleted), config.Success);
                             break;
 
                         case "-resetallsnipelist":
@@ -335,7 +335,7 @@ namespace MSniper
                             }
                             else
                             {
-                                Console.WriteLine(culture.GetTranslation(TranslationString.UnknownLinkFormat), Color.Red);
+                                Console.WriteLine(culture.GetTranslation(TranslationString.UnknownLinkFormat), config.Error);
                             }
                             break;
                     }
@@ -347,7 +347,7 @@ namespace MSniper
                     Console.WriteLine("--------------------------------------------------------");
                     do
                     {
-                        Console.WriteLine(culture.GetTranslation(TranslationString.WaitingDataMsg), Color.White);
+                        Console.WriteLine(culture.GetTranslation(TranslationString.WaitingDataMsg), config.Highlight);
                         string snipping = Console.ReadLine();
                         CheckNecroBots(true);
                         //snipping = "dragonite 37.766627 , -122.403677";//for debug mode (spaces are ignored)
@@ -372,11 +372,11 @@ namespace MSniper
                                 if (verified)
                                     Snipe(pokemonN, m.Groups[3].ToString(), m.Groups[5].ToString());
                                 else
-                                    Console.WriteLine(culture.GetTranslation(TranslationString.WrongPokemonName, pokemonN), Color.Red);
+                                    Console.WriteLine(culture.GetTranslation(TranslationString.WrongPokemonName, pokemonN), config.Error);
                             }
                         }
                         if (error)
-                            Console.WriteLine(culture.GetTranslation(TranslationString.CustomPasteWrongFormat), Color.Red);
+                            Console.WriteLine(culture.GetTranslation(TranslationString.CustomPasteWrongFormat), config.Error);
                     }
                     while (true);
                 }
@@ -394,11 +394,11 @@ namespace MSniper
                 {
                     FileDelete(pathRemote);
                     string val = item.MainWindowTitle.Split('-').First().Split(' ')[2];
-                    Console.WriteLine(culture.GetTranslation(TranslationString.RemoveAllSnipe, val), Color.Green);
+                    Console.WriteLine(culture.GetTranslation(TranslationString.RemoveAllSnipe, val), config.Success);
                 }
             }
 
-            Console.WriteLine(culture.GetTranslation(TranslationString.RemoveAllSnipeFinished, plist.Count()), Color.Green);
+            Console.WriteLine(culture.GetTranslation(TranslationString.RemoveAllSnipeFinished, plist.Count()), config.Success);
         }
 
         public void Runas(string executablepath, string parameters, bool afterKillSelf = true)
@@ -436,7 +436,7 @@ namespace MSniper
                     string username = pList[i].MainWindowTitle.Split('-').First().Split(' ')[2];
                     if (!isBotUpperThan094(pList[i].MainModule.FileVersionInfo))
                     {
-                        Console.WriteLine(culture.GetTranslation(TranslationString.IncompatibleVersionMsg, username), Color.Red);
+                        Console.WriteLine(culture.GetTranslation(TranslationString.IncompatibleVersionMsg, username), config.Error);
                         continue;
                     }
                     string pathRemote = GetSnipeMSPath(Path.GetDirectoryName(pList[i].MainModule.FileName));
@@ -456,18 +456,18 @@ namespace MSniper
                                 newPokemon.Id.ToLower(),
                                 newPokemon.Latitude,
                                 newPokemon.Longitude,
-                                username), Color.Green);
+                                username), config.Success);
                         }
                     }
                     else
                     {
-                        Console.WriteLine(culture.GetTranslation(TranslationString.AlreadySnipped, newPokemon), Color.Red);
+                        Console.WriteLine(culture.GetTranslation(TranslationString.AlreadySnipped, newPokemon), config.Error);
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message, Color.Red);
+                Console.WriteLine(ex.Message, config.Error);
             }
         }
 
