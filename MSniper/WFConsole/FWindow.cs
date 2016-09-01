@@ -179,7 +179,7 @@ namespace MSniper
             Console.WriteLine(culture.GetTranslation(TranslationString.Description,
                 Variables.ProgramName, Variables.CurrentVersion, Variables.By));
             Console.WriteLine(culture.GetTranslation(TranslationString.GitHubProject,
-                Variables.GithubProjectUri),
+                Variables.GithubIOUri),
                 config.Warning);
             Console.Write(culture.GetTranslation(TranslationString.CurrentVersion,
                 Assembly.GetEntryAssembly().GetName().Version.ToString().Substring(0, 5)),
