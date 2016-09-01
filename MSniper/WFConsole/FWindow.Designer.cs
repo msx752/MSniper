@@ -50,6 +50,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.activeBotsToolStripMenuItem,
             this.linksToolStripMenuItem,
@@ -122,19 +123,19 @@
             // v102ToolStripMenuItem
             // 
             this.v102ToolStripMenuItem.Name = "v102ToolStripMenuItem";
-            this.v102ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.v102ToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.v102ToolStripMenuItem.Text = "v1.0.1~2";
             // 
             // v103ToolStripMenuItem
             // 
             this.v103ToolStripMenuItem.Name = "v103ToolStripMenuItem";
-            this.v103ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.v103ToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.v103ToolStripMenuItem.Text = "v1.0.3";
             // 
             // v104ToolStripMenuItem
             // 
             this.v104ToolStripMenuItem.Name = "v104ToolStripMenuItem";
-            this.v104ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.v104ToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.v104ToolStripMenuItem.Text = "v1.0.4";
             // 
             // projectToolStripMenuItem
@@ -149,14 +150,14 @@
             // mSniperLatestToolStripMenuItem
             // 
             this.mSniperLatestToolStripMenuItem.Name = "mSniperLatestToolStripMenuItem";
-            this.mSniperLatestToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.mSniperLatestToolStripMenuItem.Text = "MSniper Site";
+            this.mSniperLatestToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.mSniperLatestToolStripMenuItem.Text = "MSniper Website";
             // 
             // necroBotLatestToolStripMenuItem
             // 
             this.necroBotLatestToolStripMenuItem.Name = "necroBotLatestToolStripMenuItem";
-            this.necroBotLatestToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.necroBotLatestToolStripMenuItem.Text = "NecroBot Site";
+            this.necroBotLatestToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.necroBotLatestToolStripMenuItem.Text = "NecroBot Website";
             // 
             // Console
             // 
