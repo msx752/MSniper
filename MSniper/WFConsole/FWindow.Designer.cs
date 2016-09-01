@@ -174,7 +174,7 @@
             this.Console.ReadOnly = true;
             this.Console.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.Console.Size = new System.Drawing.Size(634, 287);
-            this.Console.Status = MSniper.ConsoleState.ReadLine;
+            this.Console.State = MSniper.ConsoleState.ReadLine;
             this.Console.TabIndex = 0;
             this.Console.Text = "";
             this.Console.Title = "MSniper";

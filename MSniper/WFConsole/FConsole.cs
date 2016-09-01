@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace MSniper
 
         public Color HyperlinkColor { get; set; }
 
-        public ConsoleState Status { get; set; }
+        public ConsoleState State { get; set; }
 
         public string Title { get { if (Parent != null) return Parent.Text; else return ""; } set { if (Parent != null) Parent.Text = value; } }
 
@@ -31,8 +32,12 @@ namespace MSniper
 
         private string CurrentLine { get; set; }
 
-        private int CurrentPoint { get; set; }
+        private int ReadPoint { get; set; }
 
+        private List<string> recentlist { get; set; }
+
+        private int RecentCount { get; set; }
+        
         private bool InputEnable { get; set; }
 
         private bool Pause { get; set; }
@@ -60,51 +65,111 @@ namespace MSniper
                 Parent.BackColor = BackColor;
             }
             DetectUrls = true;
+            recentlist = new List<string>();
+        }
+
+        public string RecentUndo()
+        {
+            if (recentlist.Count > 0)
+            {
+                RecentCount--;
+                HistoryJumper();
+                return recentlist[RecentCount];
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        public void HistoryJumper()
+        {
+            if (RecentCount >= recentlist.Count)
+                RecentCount = recentlist.Count - 1;
+            else if (RecentCount < 0)
+                RecentCount = 0;
+        }
+
+        public string RecentRedo()
+        {
+            if (recentlist.Count > 0)
+            {
+                RecentCount++;
+                HistoryJumper();
+                return recentlist[RecentCount];
+            }
+            else
+            {
+                return "";
+            }
         }
 
         private void FConsole_KeyDown(object sender, KeyEventArgs e)
         {
-            if (Status == ConsoleState.Closing)
+            if (State == ConsoleState.Closing)
             {
                 e.SuppressKeyPress = true;
                 return;
             }
 
-            Select(TextLength, 0);
-            if (e.KeyData == (Keys.Control | Keys.V))
+            if ((e.KeyCode == Keys.Up || e.KeyCode == Keys.Down) && State == ConsoleState.ReadLine)
             {
-                MultiplePaste();
+                if (recentlist.Count != 0)
+                {
+                    string recentText = string.Empty;
+                    if (e.KeyCode == Keys.Up)
+                    {
+                        recentText = RecentUndo();
+                    }
+                    else if (e.KeyCode == Keys.Down)
+                    {
+                        recentText = RecentRedo();
+                    }
+                    SelectLastLine();
+                    SelectedText = recentText;
+                }
                 e.SuppressKeyPress = true;
+                return;
             }
-            else if ((int)e.KeyCode == (int)Keys.Enter && InputEnable == true && Status == ConsoleState.ReadLine)
+            else
             {
-                Cursor = Cursors.WaitCursor;
-                ReadOnly = true;
-                CurrentLine = Lines[Lines.Count() - 1];
-                WriteLine("");
-                InputEnable = false;
-                e.SuppressKeyPress = true;
-            }
-            else if (InputEnable == true && Status == ConsoleState.ReadKey)
-            {
-                ReadOnly = true;
-                CurrentKey = (char)e.KeyCode;
-                InputEnable = false;
-            }
-            else if ((int)e.KeyCode == (int)Keys.Escape && InputEnable == false)//esc exit
-            {
-                Pause = false;
-            }
-            else if ((int)e.KeyCode == (int)Keys.Space && InputEnable == false)//space pause
-            {
-                Pause = !Pause;
-            }
-            else if ((int)e.KeyCode == (int)Keys.Back && ReadOnly == false && InputEnable == true && CurrentPoint + 1 > TextLength)
-            {
-                e.SuppressKeyPress = true;
+                Select(TextLength, 0);
+                if (e.KeyData == (Keys.Control | Keys.V))
+                {
+                    MultiplePaste();
+                    e.SuppressKeyPress = true;
+                }
+                else if ((int)e.KeyCode == (int)Keys.Enter && InputEnable == true && State == ConsoleState.ReadLine)
+                {
+                    Cursor = Cursors.WaitCursor;
+                    ReadOnly = true;
+                    CurrentLine = Lines[Lines.Count() - 1];
+                    recentlist.Add(CurrentLine);
+                    WriteLine("");
+                    InputEnable = false;
+                    e.SuppressKeyPress = true;
+                }
+                else if (InputEnable == true && State == ConsoleState.ReadKey)
+                {
+                    ReadOnly = true;
+                    CurrentKey = (char)e.KeyCode;
+                    InputEnable = false;
+                }
+                else if ((int)e.KeyCode == (int)Keys.Escape && InputEnable == false)//esc exit
+                {
+                    Pause = false;
+                }
+                else if ((int)e.KeyCode == (int)Keys.Space && InputEnable == false)//space pause
+                {
+                    Pause = !Pause;
+                }
+                else if ((int)e.KeyCode == (int)Keys.Back && InputEnable == true && ReadPoint + 1 > TextLength)
+                {
+                    e.SuppressKeyPress = true;
+                }
             }
         }
-        
+
         private void FConsole_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -123,10 +188,10 @@ namespace MSniper
         public char ReadKey()
         {
             CurrentKey = ' ';
-            CurrentPoint = Text.Length;
+            ReadPoint = Text.Length;
             InputEnable = true;
             ReadOnly = false;
-            Status = ConsoleState.ReadKey;
+            State = ConsoleState.ReadKey;
             while (InputEnable) Thread.Sleep(1);
 
             return CurrentKey;
@@ -135,10 +200,10 @@ namespace MSniper
         public string ReadLine()
         {
             CurrentLine = "";
-            CurrentPoint = TextLength;
+            ReadPoint = TextLength;
             InputEnable = true;
             ReadOnly = false;
-            Status = ConsoleState.ReadLine;
+            State = ConsoleState.ReadLine;
             while (InputEnable) Thread.Sleep(1);
             Cursor = Cursors.IBeam;
             return CurrentLine;

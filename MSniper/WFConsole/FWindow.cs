@@ -411,7 +411,7 @@ namespace MSniper
 
         public void Shutdown(int seconds)
         {
-            Console.Status = ConsoleState.Closing;
+            Console.State = ConsoleState.Closing;
             Delay(seconds, true);
             Process.GetCurrentProcess().Kill();
         }
