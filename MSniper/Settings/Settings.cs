@@ -18,6 +18,7 @@ namespace MSniper.Settings
         int CloseDelaySec { get; }
         bool DownloadNewVersion { get; set; }
         bool DeleteTempFolder { get; set; }
+        bool ShowActiveBots { get; set; }
     }
 
     public class Configs : ISettings
@@ -29,6 +30,8 @@ namespace MSniper.Settings
         public bool DownloadNewVersion { get; set; } = true;
 
         public bool DeleteTempFolder { get; set; } = true;
+
+        public bool ShowActiveBots { get; set; } = true;
 
         public static Configs Load()
         {

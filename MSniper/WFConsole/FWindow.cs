@@ -93,9 +93,14 @@ namespace MSniper
 
         public Translation culture { get; set; }
 
+        public Process[] GetNecroBotProcesses()
+        {
+            Process[] plist = Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith(Variables.BotEXEName)).ToArray();
+            return plist;
+        }
         public void CheckNecroBots(bool shutdownMSniper)
         {
-            if (Process.GetProcessesByName(Variables.BotEXEName).Count() == 0)
+            if (GetNecroBotProcesses().Count() == 0)
             {
                 Console.WriteLine(culture.GetTranslation(TranslationString.AnyNecroBotNotFound), Color.Red);
                 Console.WriteLine($" *{culture.GetTranslation(TranslationString.RunBeforeMSniper)}*", Color.Red);
@@ -116,7 +121,7 @@ namespace MSniper
                     Console.UpdateLine(Console.Lines.Count() - 1, culture.GetTranslation(ts, i));
                 else
                     Console.UpdateLine(Console.Lines.Count() - 1, string.Format("Subsequent processing passing in {0} seconds or Close the Program", i));
-                
+
                 Thread.Sleep(1000);
             }
         }
@@ -150,6 +155,10 @@ namespace MSniper
                     }
                 }
             }
+        }
+
+        public void LoadConfigurations()
+        {
             config = LoadConfigs();
             culture = LoadCulture(config);
 
@@ -205,58 +214,71 @@ namespace MSniper
             Console.WriteLine("--------------------------------------------------------");
         }
 
-        public void Main()
+        public void ShowActiveBots()
         {
-            Task.Run(() =>
+            if (config.ShowActiveBots)
             {
-                do
+                Task.Run(() =>
                 {
-                    try
+                    do
                     {
-                        Process[] plist = Process.GetProcessesByName(Variables.BotEXEName);
-                        if (plist.Length == 0)
-                            activeBotsToolStripMenuItem.DropDownItems.Clear();
-
-                        foreach (Process item in plist)
+                        try
                         {
-                            string username = GetProcess(item).MainWindowTitle.Split('-').First().Split(' ')[2];
-                            ToolStripMenuItem btn = new ToolStripMenuItem(username);
-                            btn.Tag = item.MainWindowHandle;
-                            btn.Click += delegate (Object sender, EventArgs e)
-                                         {
-                                             int id = int.Parse(btn.Tag.ToString());
-                                             Dlls.BringToFront(new IntPtr(id));
-                                         };
-                            if (activeBotsToolStripMenuItem.DropDownItems.Count == 0)
-                                activeBotsToolStripMenuItem.DropDownItems.Add(btn);
+                            Process[] plist = GetNecroBotProcesses();
+                            if (plist.Length == 0)
+                                activeBotsToolStripMenuItem.DropDownItems.Clear();
 
-                            for (int i = 0; i < activeBotsToolStripMenuItem.DropDownItems.Count; i++)
+                            foreach (Process item in plist)
                             {
-                                var sn = activeBotsToolStripMenuItem.DropDownItems[i];
-                                if (sn != null && sn.Text != username)
+                                string username = GetProcess(item).MainWindowTitle.Split('-').First().Split(' ')[2];
+                                ToolStripMenuItem btn = new ToolStripMenuItem(username);
+                                btn.Tag = item.MainWindowHandle;
+                                btn.Click += delegate (Object sender, EventArgs e)
                                 {
+                                    int id = int.Parse(btn.Tag.ToString());
+                                    Dlls.BringToFront(new IntPtr(id));
+                                };
+                                if (activeBotsToolStripMenuItem.DropDownItems.Count == 0)
                                     activeBotsToolStripMenuItem.DropDownItems.Add(btn);
-                                }
-                                else
+
+                                for (int i = 0; i < activeBotsToolStripMenuItem.DropDownItems.Count; i++)
                                 {
-                                    Process p2 = plist.Where(p => p.MainWindowTitle.IndexOf(activeBotsToolStripMenuItem.DropDownItems[i].Text) != -1).FirstOrDefault();
-                                    if (p2 == null)
+                                    var sn = activeBotsToolStripMenuItem.DropDownItems[i];
+                                    if (sn != null && sn.Text != username)
                                     {
-                                        activeBotsToolStripMenuItem.DropDownItems.RemoveAt(i);
+                                        activeBotsToolStripMenuItem.DropDownItems.Add(btn);
+                                    }
+                                    else
+                                    {
+                                        Process p2 = plist.Where(p => p.MainWindowTitle.IndexOf(activeBotsToolStripMenuItem.DropDownItems[i].Text) != -1).FirstOrDefault();
+                                        if (p2 == null)
+                                        {
+                                            activeBotsToolStripMenuItem.DropDownItems.RemoveAt(i);
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                    catch { }
-                    Thread.Sleep(1500);
-                } while (true);
-            });
+                        catch { }
+                        Thread.Sleep(1500);
+                    } while (true);
+                });
+            }
+            else
+            {
+                activeBotsToolStripMenuItem.Visible = false;
+            }
+        }
 
+        public void Main()
+        {
+            GetNecroBotProcesses();
             Task.Run(() =>
             {
                 Console.Clear();
                 ExportReferences();
+                LoadConfigurations();
+                ShowActiveBots();
                 Console.Title = culture.GetTranslation(TranslationString.Title,
                     Variables.ProgramName, Variables.CurrentVersion, Variables.By
                     );
@@ -357,7 +379,7 @@ namespace MSniper
 
         public void RemoveAllSnipeMSJSON()
         {
-            Process[] plist = Process.GetProcessesByName(Variables.BotEXEName);
+            Process[] plist = GetNecroBotProcesses();
             foreach (var item in plist)
             {
                 string pathRemote = GetSnipeMSPath(Path.GetDirectoryName(item.MainModule.FileName));
@@ -400,7 +422,7 @@ namespace MSniper
             {
                 double lat = double.Parse(latt, CultureInfo.InvariantCulture);
                 double lon = double.Parse(lonn, CultureInfo.InvariantCulture);
-                Process[] pList = Process.GetProcessesByName(Variables.BotEXEName);
+                Process[] pList = GetNecroBotProcesses();
                 for (int i = 0; i < pList.Length; i++)
                 {
                     pList[i] = GetProcess(pList[i]);
@@ -517,7 +539,7 @@ namespace MSniper
             }
             while (true);//waiting access
         }
-        
+
         private void FileDelete(string path)
         {
             do
