@@ -234,7 +234,14 @@ namespace MSniper
                         {
                             Process[] plist = GetNecroBotProcesses();
                             if (plist.Length == 0)
+                            {
                                 activeBotsToolStripMenuItem.DropDownItems.Clear();
+                                activeBotsToolStripMenuItem.Visible = false;
+                            }
+                            else
+                            {
+                                activeBotsToolStripMenuItem.Visible = true;
+                            }
 
                             foreach (Process item in plist)
                             {
