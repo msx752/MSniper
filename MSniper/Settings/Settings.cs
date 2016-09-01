@@ -21,7 +21,7 @@ namespace MSniper.Settings
 
     public class Configs : ISettings
     {
-        public int CloseDelaySec { get; set; } = 5;
+        public int CloseDelaySec { get; set; } = 10;
 
         public string TranslationLanguageCode { get; set; } = "en";
 
