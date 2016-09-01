@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Downloader.cs" />
+    <Compile Include="Enums\PokemonName.cs" />
     <Compile Include="MSniperClient.cs">
       <SubType>Component</SubType>
     </Compile>

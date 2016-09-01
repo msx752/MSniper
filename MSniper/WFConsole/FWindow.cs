@@ -239,9 +239,6 @@ namespace MSniper
                                     }
                                 }
                             }
-
-
-                            //activeBotsToolStripMenuItem.DropDownItems.Contains(new )
                         }
                     }
                     catch { }
@@ -333,8 +330,14 @@ namespace MSniper
                         {
                             if (m.Success)
                             {
+                                string pokemonN = m.Groups[1].ToString();
                                 error = false;
-                                Snipe(m.Groups[1].ToString(), m.Groups[3].ToString(), m.Groups[5].ToString());
+                                PokemonId prkmnm = PokemonId.Abra;
+                                bool verified = Enum.TryParse<PokemonId>(pokemonN, true, out prkmnm);
+                                if (verified)
+                                    Snipe(pokemonN, m.Groups[3].ToString(), m.Groups[5].ToString());
+                                else
+                                    Console.WriteLine(culture.GetTranslation(TranslationString.WrongPokemonName, pokemonN), Color.Red);
                             }
                         }
                         if (error)
@@ -558,6 +561,6 @@ namespace MSniper
         {
             return Translation.Load(_settings);
         }
-        
+
     }
 }

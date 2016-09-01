@@ -56,6 +56,7 @@ namespace MSniper.Settings.Localization
         DecompressingNewFile,
         OldFilesChangingWithNews,
         SubsequentProcessing,
+        WrongPokemonName,
     }
     /// <summary>
     /// default language: english
@@ -102,6 +103,7 @@ namespace MSniper.Settings.Localization
             new KeyValuePair<TranslationString, string>(TranslationString.DecompressingNewFile,"decompressing now..."),
             new KeyValuePair<TranslationString, string>(TranslationString.OldFilesChangingWithNews,"files changing now..."),
             new KeyValuePair<TranslationString, string>(TranslationString.SubsequentProcessing, "Subsequent processing passing in {0} seconds or Close the Program"),
+            new KeyValuePair<TranslationString, string>(TranslationString.WrongPokemonName,"Pokemon '{0}' not defined"),
         };
 
         public string GetTranslation(TranslationString translationString, params object[] data)
