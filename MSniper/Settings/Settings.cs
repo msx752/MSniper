@@ -14,18 +14,21 @@ namespace MSniper.Settings
 {
     public interface ISettings
     {
-        int CloseDelaySec { get; }
         string TranslationLanguageCode { get; }
+        int CloseDelaySec { get; }
         bool DownloadNewVersion { get; set; }
+        bool DeleteTempFolder { get; set; }
     }
 
     public class Configs : ISettings
     {
-        public int CloseDelaySec { get; set; } = 10;
-
         public string TranslationLanguageCode { get; set; } = "en";
 
+        public int CloseDelaySec { get; set; } = 10;
+        
         public bool DownloadNewVersion { get; set; } = true;
+
+        public bool DeleteTempFolder { get; set; } = true;
 
         public static Configs Load()
         {

@@ -29,6 +29,8 @@ namespace MSniper
             CheckForIllegalCrossThreadCalls = false;
             FormClosed += FWindow_FormClosed;
 
+            #region menustrip actions
+
             mSniperLatestToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
             {
                 Process.Start($"{Variables.GithubIOUri}");
@@ -69,6 +71,9 @@ namespace MSniper
             {
                 Process.Start($"{Variables.GithubIOUri}#file-information");
             };
+
+            #endregion menustrip actions
+
             Console.InitializeFConsole();
         }
 
@@ -106,12 +111,12 @@ namespace MSniper
                 TranslationString ts = TranslationString.ShutdownMsg;
                 if (!isShutdownMsg)
                     ts = TranslationString.SubsequentProcessing;
-                string message = "Subsequent processing passing in {0} seconds or Close the Program";
+
                 if (culture != null)
                     Console.UpdateLine(Console.Lines.Count() - 1, culture.GetTranslation(ts, i));
                 else
-                    Console.UpdateLine(Console.Lines.Count() - 1, string.Format(message, i));
-                ;
+                    Console.UpdateLine(Console.Lines.Count() - 1, string.Format("Subsequent processing passing in {0} seconds or Close the Program", i));
+                
                 Thread.Sleep(1000);
             }
         }
@@ -131,18 +136,20 @@ namespace MSniper
             if (!File.Exists(path))
                 File.WriteAllText(path, Properties.Resources.resetSnipeList);
 
-            if (Directory.Exists(Variables.TempPath))//deleting temp
+            if (Directory.Exists(Variables.TempPath))
             {
-                try
+                if (config.DeleteTempFolder)//deleting temp folder
                 {
-                    Directory.Delete(Variables.TempPath, true);
-                }
-                catch
-                {
-                    Directory.Delete(Variables.TempPath, true);
+                    try
+                    {
+                        Directory.Delete(Variables.TempPath, true);
+                    }
+                    catch
+                    {
+                        Directory.Delete(Variables.TempPath, true);
+                    }
                 }
             }
-
             config = LoadConfigs();
             culture = LoadCulture(config);
 
@@ -246,7 +253,6 @@ namespace MSniper
                 } while (true);
             });
 
-
             Task.Run(() =>
             {
                 Console.Clear();
@@ -349,14 +355,12 @@ namespace MSniper
             });
         }
 
-
-
         public void RemoveAllSnipeMSJSON()
         {
             Process[] plist = Process.GetProcessesByName(Variables.BotEXEName);
             foreach (var item in plist)
             {
-                string pathRemote = GetSnipeMSLocation(Path.GetDirectoryName(item.MainModule.FileName));
+                string pathRemote = GetSnipeMSPath(Path.GetDirectoryName(item.MainModule.FileName));
                 if (File.Exists(pathRemote))
                 {
                     FileDelete(pathRemote);
@@ -406,7 +410,7 @@ namespace MSniper
                         Console.WriteLine(culture.GetTranslation(TranslationString.IncompatibleVersionMsg, username), Color.Red);
                         continue;
                     }
-                    string pathRemote = GetSnipeMSLocation(Path.GetDirectoryName(pList[i].MainModule.FileName));
+                    string pathRemote = GetSnipeMSPath(Path.GetDirectoryName(pList[i].MainModule.FileName));
                     List<MSniperInfo> MSniperLocation = ReadSnipeMS(pathRemote);
                     MSniperInfo newPokemon = new MSniperInfo()
                     {
@@ -447,7 +451,7 @@ namespace MSniper
             ///////////////////////////////////////
         }
 
-        private static string GetSnipeMSLocation(string NecroBotEXEPath)
+        private static string GetSnipeMSPath(string NecroBotEXEPath)
         {
             return Path.Combine(NecroBotEXEPath, Variables.SnipeFileName);
         }
@@ -513,11 +517,7 @@ namespace MSniper
             }
             while (true);//waiting access
         }
-
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-        }
-
+        
         private void FileDelete(string path)
         {
             do
@@ -561,6 +561,5 @@ namespace MSniper
         {
             return Translation.Load(_settings);
         }
-
     }
 }
