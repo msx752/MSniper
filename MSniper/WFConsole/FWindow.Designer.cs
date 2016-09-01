@@ -44,6 +44,8 @@
             this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mSniperLatestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.necroBotLatestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.getFeedsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.donateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Console = new MSniper.FConsole();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -55,7 +57,9 @@
             this.activeBotsToolStripMenuItem,
             this.linksToolStripMenuItem,
             this.featuresToolStripMenuItem,
-            this.projectToolStripMenuItem});
+            this.projectToolStripMenuItem,
+            this.getFeedsToolStripMenuItem,
+            this.donateToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(634, 24);
@@ -150,14 +154,26 @@
             // mSniperLatestToolStripMenuItem
             // 
             this.mSniperLatestToolStripMenuItem.Name = "mSniperLatestToolStripMenuItem";
-            this.mSniperLatestToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.mSniperLatestToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.mSniperLatestToolStripMenuItem.Text = "MSniper Website";
             // 
             // necroBotLatestToolStripMenuItem
             // 
             this.necroBotLatestToolStripMenuItem.Name = "necroBotLatestToolStripMenuItem";
-            this.necroBotLatestToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-            this.necroBotLatestToolStripMenuItem.Text = "NecroBot Website";
+            this.necroBotLatestToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.necroBotLatestToolStripMenuItem.Text = "NecroBot Latest";
+            // 
+            // getFeedsToolStripMenuItem
+            // 
+            this.getFeedsToolStripMenuItem.Name = "getFeedsToolStripMenuItem";
+            this.getFeedsToolStripMenuItem.Size = new System.Drawing.Size(89, 20);
+            this.getFeedsToolStripMenuItem.Text = "Get Live Feed";
+            // 
+            // donateToolStripMenuItem
+            // 
+            this.donateToolStripMenuItem.Name = "donateToolStripMenuItem";
+            this.donateToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.donateToolStripMenuItem.Text = "Donate";
             // 
             // Console
             // 
@@ -218,5 +234,7 @@
         private System.Windows.Forms.ToolStripMenuItem v104ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem advantageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileInformationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem getFeedsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem donateToolStripMenuItem;
     }
 }

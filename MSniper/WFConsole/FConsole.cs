@@ -54,7 +54,7 @@ namespace MSniper
             BorderStyle = BorderStyle.None;
             ReadOnly = true;
             Font = new Font("consolas", 10);
-            MinimumSize = new Size(410, 200);
+            MinimumSize = new Size(470, 200);
             ScrollBars = RichTextBoxScrollBars.Vertical;
             Pause = false;
             InputEnable = false;

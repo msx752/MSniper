@@ -74,7 +74,7 @@ namespace MSniper
         /// </returns>
         private static string CreateUpdaterBatch()
         {
-            string path = Path.Combine(Variables.TempPath, "FileUpdater.bat");
+            string path = Path.Combine(Variables.TempPath, "fileUpdater.bat");
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("@echo off");
             sb.AppendLine("ECHO ### FILES CHANGING ###");

@@ -31,6 +31,14 @@ namespace MSniper
 
             #region menustrip actions
 
+            getFeedsToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            {
+                MessageBox.Show("Poke Feed - Coming Soon");
+            };
+            donateToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            {
+                Process.Start($"{Variables.GithubIOUri}#donation");
+            };
             mSniperLatestToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
             {
                 Process.Start($"{Variables.GithubIOUri}");
@@ -260,7 +268,7 @@ namespace MSniper
                             }
                         }
                         catch { }
-                        Thread.Sleep(1500);
+                        Thread.Sleep(2000);
                     } while (true);
                 });
             }
@@ -272,7 +280,6 @@ namespace MSniper
 
         public void Main()
         {
-            GetNecroBotProcesses();
             Task.Run(() =>
             {
                 Console.Clear();
@@ -583,5 +590,6 @@ namespace MSniper
         {
             return Translation.Load(_settings);
         }
+        
     }
 }
