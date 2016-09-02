@@ -33,7 +33,15 @@ namespace MSniper
 
             getFeedsToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
             {
-                MessageBox.Show("Poke Feed - Coming Soon");
+                if (RunningNormally && BotCount > 0)
+                {
+                    LFeed = new LiveFeed.LiveFeed();
+                    LFeed.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("necrobot not found or uninitialized normally");
+                }
             };
             donateToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
             {
@@ -97,6 +105,12 @@ namespace MSniper
 
         #endregion form
 
+        public LiveFeed.LiveFeed LFeed { get; set; }
+
+        public int BotCount { get; set; }
+
+        public bool RunningNormally { get; set; }
+
         public Configs config { get; set; }
 
         public Translation culture { get; set; }
@@ -104,6 +118,7 @@ namespace MSniper
         public Process[] GetNecroBotProcesses()
         {
             Process[] plist = Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith(Variables.BotEXEName)).ToArray();
+            BotCount = plist.Count();
             return plist;
         }
         public void CheckNecroBots(bool shutdownMSniper)
@@ -317,6 +332,7 @@ namespace MSniper
                 //args = new string[] { "-registerp" };//for debug mode
                 if (Console.Arguments.Length == 1)
                 {
+                    RunningNormally = false;
                     switch (Console.Arguments.First())
                     {
                         case "-register":
@@ -325,7 +341,7 @@ namespace MSniper
 
                         case "-registerp":
                             Protocol.Register();
-                            Console.WriteLine(culture.GetTranslation(TranslationString.ProtocolRegistered),config.Success);
+                            Console.WriteLine(culture.GetTranslation(TranslationString.ProtocolRegistered), config.Success);
                             break;
 
                         case "-remove":
@@ -364,6 +380,7 @@ namespace MSniper
                 }
                 else if (Console.Arguments.Length == 0)
                 {
+                    RunningNormally = true;
                     Console.WriteLine(culture.GetTranslation(TranslationString.CustomPasteDesc));
                     Console.WriteLine(culture.GetTranslation(TranslationString.CustomPasteFormat));
                     Console.WriteLine("--------------------------------------------------------");
@@ -612,6 +629,6 @@ namespace MSniper
         {
             return Translation.Load(_settings);
         }
-        
+
     }
 }
