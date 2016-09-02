@@ -602,14 +602,18 @@ namespace MSniper
 
         private Process GetProcess(Process p)
         {
-            int x = 1;
+            DateTime start = DateTime.Now;
+            TimeSpan ts;
             do
             {
                 p = Process.GetProcessById(p.Id);
                 Thread.Sleep(1);
-                x++;
-                if ((x / 1000) > 30)
-                    return null;//waiting long time after that throwing exeption, prevent to stucking
+                ts = DateTime.Now - start;
+                if (ts.TotalSeconds > 10)
+                {
+                    throw new Exception(culture.GetTranslation(TranslationString.CanNotAccessProcess, p.ProcessName, p.Id));//waiting long time after that throwing exeption, prevent to stucking
+                    return p;
+                }
             } while ((p.MainWindowTitle.Split(' ').Length == 1));
             return p;
         }

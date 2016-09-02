@@ -80,7 +80,6 @@
             this.listPokemons.GridLines = true;
             this.listPokemons.HoverSelection = true;
             this.listPokemons.Location = new System.Drawing.Point(1, 45);
-            this.listPokemons.MultiSelect = false;
             this.listPokemons.Name = "listPokemons";
             this.listPokemons.Size = new System.Drawing.Size(199, 368);
             this.listPokemons.TabIndex = 3;
