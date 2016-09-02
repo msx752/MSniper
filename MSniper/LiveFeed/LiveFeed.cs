@@ -20,7 +20,8 @@ namespace MSniper.LiveFeed
 
         private void LiveFeed_Load(object sender, EventArgs e)
         {
-            Array lst = Enum.GetValues(typeof(PokemonId));
+
+            List<PokemonId> lst = Enum.GetValues(typeof(PokemonId)).Cast<PokemonId>().ToList();
             foreach (var item in lst)
                 cmbPokemons.Items.Add(item);
 
