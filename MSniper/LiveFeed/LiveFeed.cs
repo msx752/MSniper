@@ -15,20 +15,35 @@ namespace MSniper.LiveFeed
         public LiveFeed()
         {
             InitializeComponent();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Program.frm.Snipe("pidgey", "1.2", "3.4");
+            CheckForIllegalCrossThreadCalls = false;
         }
 
         private void LiveFeed_Load(object sender, EventArgs e)
         {
-            Array list = Enum.GetValues(typeof(PokemonId));
-            foreach (var item in list)
-            {
+            Array lst = Enum.GetValues(typeof(PokemonId));
+            foreach (var item in lst)
                 cmbPokemons.Items.Add(item);
-            }
+
+            for (int i = 0; i <= 100; i++)
+                cmbIv.Items.Add(i);
+
+            //for (int i = 0; i < 100; i++)
+            //{
+            //    ListViewItem item1 = new ListViewItem("Snorlax");
+            //    item1.SubItems.Add("100");
+            //    listPokemons.Items.Add(item1);
+            //}
+            listPokemons.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            int IVPercent = -1;
+            bool success1 = int.TryParse(cmbIv.Text, out IVPercent);
+            //if (!success1)
+            //{ MessageBox.Show("Wrong IV%"); return; }
+            if (!(IVPercent >= 0 && IVPercent <= 100))
+            { MessageBox.Show("IV% min0 max100"); return; }
         }
     }
 }
