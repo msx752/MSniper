@@ -35,6 +35,8 @@
             // 
             // cmbPokemons
             // 
+            this.cmbPokemons.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cmbPokemons.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbPokemons.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbPokemons.FormattingEnabled = true;
             this.cmbPokemons.Location = new System.Drawing.Point(12, 18);
@@ -71,6 +73,7 @@
             this.Controls.Add(this.cmbPokemons);
             this.Name = "LiveFeed";
             this.Text = "LiveFeed";
+            this.Load += new System.EventHandler(this.LiveFeed_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

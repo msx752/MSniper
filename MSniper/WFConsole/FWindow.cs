@@ -33,15 +33,16 @@ namespace MSniper
 
             getFeedsToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
             {
-                if (RunningNormally && BotCount > 0)
-                {
-                    LFeed = new LiveFeed.LiveFeed();
-                    LFeed.ShowDialog();
-                }
-                else
-                {
-                    MessageBox.Show("necrobot not found or uninitialized normally");
-                }
+                //if (RunningNormally && BotCount > 0)
+                //{
+                LFeed = new LiveFeed.LiveFeed();
+                LFeed.ShowDialog();
+                LFeed.Dispose();
+                //}
+                //else
+                //{
+                //    MessageBox.Show("necrobot not found or uninitialized normally");
+                //}
             };
             donateToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
             {
