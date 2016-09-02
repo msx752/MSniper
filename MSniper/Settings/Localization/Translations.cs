@@ -127,7 +127,7 @@ namespace MSniper.Settings.Localization
             new KeyValuePair<TranslationString, string>(TranslationString.ProjectsLink,"Projects Link"),
             new KeyValuePair<TranslationString, string>(TranslationString.GetLiveFeed,"Get Live Feed"),
             new KeyValuePair<TranslationString, string>(TranslationString.Donate,"Donate"),
-            new KeyValuePair<TranslationString, string>(TranslationString.CanNotAccessProcess,"can not access to {0}.exe({1}), you should wait for until necrobot fully opened"),
+            new KeyValuePair<TranslationString, string>(TranslationString.CanNotAccessProcess,"can not access to {0}.exe({1}), killing"),
         };
 
         public string GetTranslation(TranslationString translationString, params object[] data)
