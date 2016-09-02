@@ -611,7 +611,10 @@ namespace MSniper
                 ts = DateTime.Now - start;
                 if (ts.TotalSeconds > 10)
                 {
-                    throw new Exception(culture.GetTranslation(TranslationString.CanNotAccessProcess, p.ProcessName, p.Id));//waiting long time after that throwing exeption, prevent to stucking
+                    string pname = p.ProcessName;
+                    int pid = p.Id;
+                    Process.GetProcessById(p.Id).Kill();
+                    throw new Exception(culture.GetTranslation(TranslationString.CanNotAccessProcess, pname, pid));//waiting long time after that throwing exeption, prevent to stucking
                     return p;
                 }
             } while ((p.MainWindowTitle.Split(' ').Length == 1));
