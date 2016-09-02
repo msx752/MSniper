@@ -57,6 +57,17 @@ namespace MSniper.Settings.Localization
         OldFilesChangingWithNews,
         SubsequentProcessing,
         WrongPokemonName,
+        ActiveBots,
+        HowTo,
+        Configuration,
+        Usage,
+        AskedQuestions,
+        Advantage,
+        FileInformation,
+        Features,
+        ProjectsLink,
+        GetLiveFeed,
+        Donate,
     }
     /// <summary>
     /// default language: english
@@ -72,8 +83,8 @@ namespace MSniper.Settings.Localization
             <KeyValuePair<TranslationString, string>>
         {
             new KeyValuePair<TranslationString, string>(TranslationString.Title, "[{0} v{1}]  -  by {2}"),
-            new KeyValuePair<TranslationString, string>(TranslationString.Description, "{0} - {1} Manual Pokemon Sniper - by {2}"),
-            new KeyValuePair<TranslationString, string>(TranslationString.GitHubProject, "GitHub Project {0}"),
+            new KeyValuePair<TranslationString, string>(TranslationString.Description, "{0} - v{1} Manual Pokemon Sniper - by {2}"),
+            new KeyValuePair<TranslationString, string>(TranslationString.GitHubProject, "Github Project {0}"),
             new KeyValuePair<TranslationString, string>(TranslationString.CurrentVersion, "Current Version: {0}"),
             new KeyValuePair<TranslationString, string>(TranslationString.ProtocolNotFound, "Protocol not found - Please run once {0}"),
             new KeyValuePair<TranslationString, string>(TranslationString.ShutdownMsg, "Program is closing in {0} seconds"),
@@ -104,6 +115,17 @@ namespace MSniper.Settings.Localization
             new KeyValuePair<TranslationString, string>(TranslationString.OldFilesChangingWithNews,"files changing now..."),
             new KeyValuePair<TranslationString, string>(TranslationString.SubsequentProcessing, "Subsequent processing passing in {0} seconds or Close the Program"),
             new KeyValuePair<TranslationString, string>(TranslationString.WrongPokemonName,"Pokemon '{0}' not defined"),
+            new KeyValuePair<TranslationString, string>(TranslationString.ActiveBots,"Active NecroBots"),
+            new KeyValuePair<TranslationString, string>(TranslationString.HowTo,"How To"),
+            new KeyValuePair<TranslationString, string>(TranslationString.Configuration,"Configuration"),
+            new KeyValuePair<TranslationString, string>(TranslationString.Usage,"Usage"),
+            new KeyValuePair<TranslationString, string>(TranslationString.AskedQuestions,"Asked Questions"),
+            new KeyValuePair<TranslationString, string>(TranslationString.Advantage,"Advantage"),
+            new KeyValuePair<TranslationString, string>(TranslationString.FileInformation,"File Information"),
+            new KeyValuePair<TranslationString, string>(TranslationString.Features,"Features"),
+            new KeyValuePair<TranslationString, string>(TranslationString.ProjectsLink,"Projects Link"),
+            new KeyValuePair<TranslationString, string>(TranslationString.GetLiveFeed,"Get Live Feed"),
+            new KeyValuePair<TranslationString, string>(TranslationString.Donate,"Donate"),
         };
 
         public string GetTranslation(TranslationString translationString, params object[] data)

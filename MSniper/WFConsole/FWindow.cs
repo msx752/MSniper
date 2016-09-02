@@ -170,6 +170,21 @@ namespace MSniper
             config = LoadConfigs();
             culture = LoadCulture(config);
 
+            #region controls culture
+            activeBotsToolStripMenuItem.Text = culture.GetTranslation(TranslationString.ActiveBots);
+            linksToolStripMenuItem.Text = culture.GetTranslation(TranslationString.HowTo);
+            configurationToolStripMenuItem.Text = culture.GetTranslation(TranslationString.Configuration);
+            usageToolStripMenuItem.Text = culture.GetTranslation(TranslationString.Usage);
+            askedQuestionsToolStripMenuItem.Text = culture.GetTranslation(TranslationString.AskedQuestions);
+            advantageToolStripMenuItem.Text = culture.GetTranslation(TranslationString.Advantage);
+            fileInformationToolStripMenuItem.Text = culture.GetTranslation(TranslationString.FileInformation);
+            featuresToolStripMenuItem.Text = culture.GetTranslation(TranslationString.Features);
+            projectToolStripMenuItem.Text = culture.GetTranslation(TranslationString.ProjectsLink);
+            getFeedsToolStripMenuItem.Text = culture.GetTranslation(TranslationString.GetLiveFeed);
+            donateToolStripMenuItem.Text = culture.GetTranslation(TranslationString.Donate);
+
+            #endregion
+
             ////ExportDefaultTranslation(); //needs for translation information
         }
 
