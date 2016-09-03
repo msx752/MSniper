@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
+using System.Windows.Forms;
 
 namespace MSniper
 {
@@ -27,7 +28,7 @@ namespace MSniper
             Program.frm.Console.WriteLine(Program.frm.culture.GetTranslation(TranslationString.DecompressingNewFile), Program.frm.config.Success);
             DecompressZip(Variables.TempRarFileUri);
             Program.frm.Console.WriteLine(Program.frm.culture.GetTranslation(TranslationString.OldFilesChangingWithNews), Program.frm.config.Success);
-            ChangeWithOldFiles(CreateUpdaterBatch());
+            ChangeWithOldFiles();
         }
 
         public static string DownloadString(string url)
@@ -43,9 +44,10 @@ namespace MSniper
         /// </summary>
         /// <param name="BatchPath">
         /// </param>
-        private static void ChangeWithOldFiles(string BatchPath)
+        private static void ChangeWithOldFiles()
         {
-            ProcessStartInfo psi = new ProcessStartInfo(BatchPath);
+            string BatchPath = Path.Combine(Application.StartupPath, "msniperupdater.exe");
+            ProcessStartInfo psi = new ProcessStartInfo(BatchPath, VersionCheck.NameWithVersion);
             Process proc = new Process();
             proc.StartInfo = psi;
             proc.Start();

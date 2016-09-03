@@ -153,32 +153,39 @@ namespace MSniper
 
         public void ExportReferences()
         {
-            string path = Path.Combine(Application.StartupPath, "Newtonsoft.Json.dll");
-            if (!File.Exists(path))
-                File.WriteAllBytes(path, Properties.Resources.Newtonsoft_Json);
-            path = Path.Combine(Application.StartupPath, "registerProtocol.bat");
-            if (!File.Exists(path))
-                File.WriteAllText(path, Properties.Resources.registerProtocol);
-            path = Path.Combine(Application.StartupPath, "removeProtocol.bat");
-            if (!File.Exists(path))
-                File.WriteAllText(path, Properties.Resources.removeProtocol);
-            path = Path.Combine(Application.StartupPath, "resetSnipeList.bat");
-            if (!File.Exists(path))
-                File.WriteAllText(path, Properties.Resources.resetSnipeList);
-
-            if (Directory.Exists(Variables.TempPath))
+            try
             {
-                if (config.DeleteTempFolder)//deleting temp folder
-                {
-                    try
-                    {
-                        Directory.Delete(Variables.TempPath, true);
-                    }
-                    catch
-                    {
-                        Directory.Delete(Variables.TempPath, true);
-                    }
-                }
+                string path = Path.Combine(Application.StartupPath, "Newtonsoft.Json.dll");
+                if (!File.Exists(path))
+                    File.WriteAllBytes(path, Properties.Resources.Newtonsoft_Json);
+                path = Path.Combine(Application.StartupPath, "registerProtocol.bat");
+                if (!File.Exists(path))
+                    File.WriteAllText(path, Properties.Resources.registerProtocol);
+                path = Path.Combine(Application.StartupPath, "removeProtocol.bat");
+                if (!File.Exists(path))
+                    File.WriteAllText(path, Properties.Resources.removeProtocol);
+                path = Path.Combine(Application.StartupPath, "resetSnipeList.bat");
+                if (!File.Exists(path))
+                    File.WriteAllText(path, Properties.Resources.resetSnipeList);
+
+                //if (Directory.Exists(Variables.TempPath))
+                //{
+                //    if (config.DeleteTempFolder)//deleting temp folder
+                //    {
+                //        try
+                //        {
+                //            Directory.Delete(Variables.TempPath, true);
+                //        }
+                //        catch
+                //        {
+                //            Directory.Delete(Variables.TempPath, true);
+                //        }
+                //    }
+                //}
+            }
+            catch (Exception)
+            {
+                
             }
         }
 
@@ -341,7 +348,7 @@ namespace MSniper
         {
             Task.Run(() =>
             {
-                Console.Clear();
+                //Console.Clear();
                 ExportReferences();
                 LoadConfigurations();
                 ShowActiveBots();
