@@ -122,6 +122,7 @@ namespace MSniper
             BotCount = plist.Count();
             return plist;
         }
+
         public void CheckNecroBots(bool shutdownMSniper)
         {
             if (GetNecroBotProcesses().Count() == 0)
@@ -266,17 +267,19 @@ namespace MSniper
                             Process[] plist = GetNecroBotProcesses();
                             if (plist.Length == 0)
                             {
-                                activeBotsToolStripMenuItem.DropDownItems.Clear();
                                 activeBotsToolStripMenuItem.Visible = false;
                             }
                             else
                             {
                                 activeBotsToolStripMenuItem.Visible = true;
                             }
-
+                            isActiveBotsAlive();
                             foreach (Process item in plist)
                             {
-                                string username = GetProcess(item).MainWindowTitle.Split('-').First().Split(' ')[2];
+                                string username = item.GetWindowTitle();
+                                if (string.IsNullOrEmpty(username))
+                                    continue;
+
                                 ToolStripMenuItem btn = new ToolStripMenuItem(username);
                                 btn.Tag = item.MainWindowHandle;
                                 btn.Click += delegate (Object sender, EventArgs e)
@@ -284,29 +287,23 @@ namespace MSniper
                                     int id = int.Parse(btn.Tag.ToString());
                                     Dlls.BringToFront(new IntPtr(id));
                                 };
-                                if (activeBotsToolStripMenuItem.DropDownItems.Count == 0)
-                                    activeBotsToolStripMenuItem.DropDownItems.Add(btn);
-
-                                for (int i = 0; i < activeBotsToolStripMenuItem.DropDownItems.Count; i++)
+                                int isExists = ActiveBotsContains(btn.Tag as IntPtr?);
+                                if (isExists == -1)
                                 {
-                                    var sn = activeBotsToolStripMenuItem.DropDownItems[i];
-                                    if (sn != null && sn.Text != username)
+                                    activeBotsToolStripMenuItem.DropDownItems.Add(btn);
+                                }
+                                else
+                                {
+                                    if (btn.Text != activeBotsToolStripMenuItem.DropDownItems[isExists].Text)
                                     {
+                                        activeBotsToolStripMenuItem.DropDownItems.RemoveAt(isExists);
                                         activeBotsToolStripMenuItem.DropDownItems.Add(btn);
-                                    }
-                                    else
-                                    {
-                                        Process p2 = plist.Where(p => p.MainWindowTitle.IndexOf(activeBotsToolStripMenuItem.DropDownItems[i].Text) != -1).FirstOrDefault();
-                                        if (p2 == null)
-                                        {
-                                            activeBotsToolStripMenuItem.DropDownItems.RemoveAt(i);
-                                        }
                                     }
                                 }
                             }
                         }
                         catch { }
-                        Thread.Sleep(2000);
+                        Thread.Sleep(5000);
                     } while (true);
                 });
             }
@@ -314,6 +311,30 @@ namespace MSniper
             {
                 activeBotsToolStripMenuItem.Visible = false;
             }
+        }
+
+        private void isActiveBotsAlive()
+        {
+            for (int i = 0; i < activeBotsToolStripMenuItem.DropDownItems.Count; i++)
+            {
+                Process prc = GetNecroBotProcesses()
+               .Where(p => p.MainWindowHandle.ToString() == activeBotsToolStripMenuItem.DropDownItems[i].Tag.ToString())
+               .FirstOrDefault();
+                if (prc == null)
+                {
+                    activeBotsToolStripMenuItem.DropDownItems.RemoveAt(i);
+                }
+            }
+        }
+
+        private int ActiveBotsContains(IntPtr? intptr)
+        {
+            for (int i = 0; i < activeBotsToolStripMenuItem.DropDownItems.Count; i++)
+            {
+                if (activeBotsToolStripMenuItem.DropDownItems[i].Tag.ToString() == intptr.Value.ToString())
+                    return i;
+            }
+            return -1;
         }
 
         public void Main()
@@ -472,8 +493,11 @@ namespace MSniper
                 Process[] pList = GetNecroBotProcesses();
                 for (int i = 0; i < pList.Length; i++)
                 {
-                    pList[i] = GetProcess(pList[i]);
-                    string username = pList[i].MainWindowTitle.Split('-').First().Split(' ')[2];
+                    //pList[i] = GetProcess(pList[i]);
+                    string username = pList[i].GetWindowTitle();//pList[i].MainWindowTitle.Split('-').First().Split(' ')[2];
+                    if (string.IsNullOrEmpty(username))
+                        continue;
+
                     if (!isBotUpperThan094(pList[i].MainModule.FileVersionInfo))
                     {
                         Console.WriteLine(culture.GetTranslation(TranslationString.IncompatibleVersionMsg, username), config.Error);
@@ -598,27 +622,6 @@ namespace MSniper
                 }
                 catch { }
             } while (true);//waiting access
-        }
-
-        private Process GetProcess(Process p)
-        {
-            DateTime start = DateTime.Now;
-            TimeSpan ts;
-            do
-            {
-                p = Process.GetProcessById(p.Id);
-                Thread.Sleep(1);
-                ts = DateTime.Now - start;
-                if (ts.TotalSeconds > 10)
-                {
-                    string pname = p.ProcessName;
-                    int pid = p.Id;
-                    Process.GetProcessById(p.Id).Kill();
-                    throw new Exception(culture.GetTranslation(TranslationString.CanNotAccessProcess, pname, pid));//waiting long time after that throwing exeption, prevent to stucking
-                    return p;
-                }
-            } while ((p.MainWindowTitle.Split(' ').Length == 1));
-            return p;
         }
 
         private bool isBotUpperThan094(FileVersionInfo fversion)
