@@ -56,21 +56,9 @@ namespace MSniper
             {
                 Process.Start("https://github.com/NoxxDev/NecroBot/releases/latest");
             };
-            v102ToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            featuresToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
             {
-                Process.Start($"{Variables.GithubIOUri}#v100--v102");
-            };
-            v103ToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
-            {
-                Process.Start($"{Variables.GithubIOUri}#v103");
-            };
-            v104ToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
-            {
-                Process.Start($"{Variables.GithubIOUri}#v104");
-            };
-            v105ToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
-            {
-                Process.Start($"{Variables.GithubIOUri}#v105");
+                Process.Start($"{Variables.GithubIOUri}#features");
             };
             configurationToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
             {

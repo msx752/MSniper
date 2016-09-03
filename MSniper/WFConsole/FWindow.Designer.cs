@@ -38,16 +38,12 @@
             this.advantageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.featuresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.v102ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.v103ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.v104ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mSniperLatestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.necroBotLatestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getFeedsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.donateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Console = new MSniper.FConsole();
-            this.v105ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -117,32 +113,9 @@
             // 
             // featuresToolStripMenuItem
             // 
-            this.featuresToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.v102ToolStripMenuItem,
-            this.v103ToolStripMenuItem,
-            this.v104ToolStripMenuItem,
-            this.v105ToolStripMenuItem});
             this.featuresToolStripMenuItem.Name = "featuresToolStripMenuItem";
             this.featuresToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.featuresToolStripMenuItem.Text = "Features";
-            // 
-            // v102ToolStripMenuItem
-            // 
-            this.v102ToolStripMenuItem.Name = "v102ToolStripMenuItem";
-            this.v102ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.v102ToolStripMenuItem.Text = "v1.0.0~2";
-            // 
-            // v103ToolStripMenuItem
-            // 
-            this.v103ToolStripMenuItem.Name = "v103ToolStripMenuItem";
-            this.v103ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.v103ToolStripMenuItem.Text = "v1.0.3";
-            // 
-            // v104ToolStripMenuItem
-            // 
-            this.v104ToolStripMenuItem.Name = "v104ToolStripMenuItem";
-            this.v104ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.v104ToolStripMenuItem.Text = "v1.0.4";
             // 
             // projectToolStripMenuItem
             // 
@@ -197,12 +170,6 @@
             this.Console.Text = "";
             this.Console.Title = "MSniper";
             // 
-            // v105ToolStripMenuItem
-            // 
-            this.v105ToolStripMenuItem.Name = "v105ToolStripMenuItem";
-            this.v105ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.v105ToolStripMenuItem.Text = "v1.0.5";
-            // 
             // FWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -237,13 +204,9 @@
         private System.Windows.Forms.ToolStripMenuItem projectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mSniperLatestToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem necroBotLatestToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem v102ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem v103ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem v104ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem advantageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileInformationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem getFeedsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem donateToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem v105ToolStripMenuItem;
     }
 }
