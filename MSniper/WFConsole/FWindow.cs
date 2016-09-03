@@ -122,7 +122,7 @@ namespace MSniper
 
         public Process[] GetNecroBotProcesses()
         {
-            Process[] plist = Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith(Variables.BotEXEName)).ToArray();
+            Process[] plist = Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith(Variables.BotEXEName) && !x.ProcessName.ToLower().EndsWith(".vshost")).ToArray();
             BotCount = plist.Count();
             return plist;
         }
@@ -189,7 +189,7 @@ namespace MSniper
             }
             catch (Exception)
             {
-                
+
             }
         }
 
