@@ -348,7 +348,7 @@ namespace MSniper
         {
             Task.Run(() =>
             {
-                //Console.Clear();
+                Console.Clear();
                 ExportReferences();
                 LoadConfigurations();
                 ShowActiveBots();

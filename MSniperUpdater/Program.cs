@@ -45,29 +45,56 @@ namespace MSniperUpdater
             if (args.Length > 0)
             {
                 Process[] plist = Process.GetProcessesByName("msniper");
+                Console.WriteLine("killing msniper.exe....");
                 for (int i = 0; i < plist.Length; i++)
                 {
                     try
                     {
                         while (true)
                         {
-                            Process.GetProcessById(plist[i].Id).Kill();
+                            for (int i2 = 0; i2 < 10; i2++)
+                            {
+                                plist[i].Kill();
+                                break;
+                                Thread.Sleep(200);
+                            }
+                            break;
                         }
+
                     }
                     catch { }
                 }
 
+                Thread.Sleep(500);
                 string[] deleteList = new string[] {
+                        "msniper.exe",
                         "Newtonsoft.Json.dll",
                         "registerProtocol.bat",
                         "removeProtocol.bat",
                         "resetSnipeList.bat"
                     };
+                Console.WriteLine("deleting old files....");
                 foreach (var item in deleteList)
                 {
-                    string delete = Path.Combine(Application.StartupPath, item);
-                    File.Delete(delete);
+                    try
+                    {
+                        while (true)
+                        {
+                            for (int i2 = 0; i2 < 10; i2++)
+                            {
+                                string delete = Path.Combine(Application.StartupPath, item);
+                                Thread.Sleep(200);
+                                File.Delete(delete);
+                                break;
+                            }
+                            break;
+                        }
+
+                    }
+                    catch { }
                 }
+                Console.WriteLine("copying NEW files....");
+                Thread.Sleep(300);
                 string[] CopyList = Directory.GetFiles(Application.StartupPath, $"temp\\{args[0]}\\");
                 foreach (var item in CopyList)
                 {
@@ -75,15 +102,8 @@ namespace MSniperUpdater
                     string newDir = Path.Combine(Application.StartupPath, f.Name);
                     File.Copy(f.FullName, newDir, true);
                 }
-                string run_exe = Path.Combine(Application.StartupPath, "msniper.exe");
-                Task.Run(() =>
-                {
-                    ProcessStartInfo psi = new ProcessStartInfo(run_exe);
-                    Process proc = new Process();
-                    proc.StartInfo = psi;
-                    proc.Start();
-                    proc.WaitForExit();
-                });
+                Console.WriteLine("TEMP DELETING....");
+                Thread.Sleep(100);
                 string temp_FOlder = Directory.GetParent(Directory.GetParent(CopyList[0]).ToString()).ToString();
                 try
                 {
@@ -93,15 +113,26 @@ namespace MSniperUpdater
                 {
                     Directory.Delete(temp_FOlder, true);
                 }
+                Console.WriteLine("STARTING MSNIPER....");
+                string run_exe = Path.Combine(Application.StartupPath, "msniper.exe");
+                Task.Run(() =>
+                {
+                    ProcessStartInfo psi = new ProcessStartInfo(run_exe);
+                    Process proc = new Process();
+                    proc.StartInfo = psi;
+                    proc.Start();
+                    proc.WaitForExit();
+                });
                 Thread.Sleep(2000);
                 Process.GetCurrentProcess().Kill();
             }
             else
             {
-                Console.WriteLine("\t wrong parameter");
+                Console.WriteLine("\t runs with parameter");
+                Console.WriteLine("\t runs with parameter");
             }
 
-            Console.ReadLine();
+            //Console.ReadLine();
         }
     }
 }

@@ -50,7 +50,7 @@ namespace MSniper
         {
             //https://github.com/msx752/MSniper/blob/master/MSniper/MSniperUpdater.exe1?raw=true
             string url = $"{Variables.GithubProjectUri}/blob/master/MSniper/MSniperUpdater.exe1?raw=true";
-            string updater = Path.Combine(Application.StartupPath, "msniperupdater.exe");
+            string updater = Path.Combine(Application.StartupPath, "MSniperUpdater.exe");
             byte[] updaterData = DownloadData(url);
             File.WriteAllBytes(updater, updaterData);
             Thread.Sleep(500);
