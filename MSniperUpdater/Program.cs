@@ -41,7 +41,7 @@ namespace MSniperUpdater
         }
         static void Main(string[] args)
         {
-            args = new string[] { "MSniper.v1.0.5" };
+            //args = new string[] { "MSniper.v1.0.5" };
             if (args.Length > 0)
             {
                 Process[] plist = Process.GetProcessesByName("msniper");
@@ -93,6 +93,10 @@ namespace MSniperUpdater
                 }
                 Thread.Sleep(1000);
                 Process.GetCurrentProcess().Kill();
+            }
+            else
+            {
+                Console.WriteLine("\t wrong parameter");
             }
 
             Console.ReadLine();
