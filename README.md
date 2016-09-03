@@ -7,8 +7,6 @@
 # MSniper
 - Manual Snipe for [NecroBot](https://github.com/NoxxDev/NecroBot)
 
-join to discord for help
-
 ![Display](https://github.com/msx752/MSniper/raw/master/msniper1.gif)
 
 #### [Description](https://msx752.github.io/MSniper/#description)
