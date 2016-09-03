@@ -16,8 +16,34 @@ namespace MSniper
             TextChanged += FConsole_TextChanged;
             LinkClicked += FConsole_LinkClicked;
             MouseDown += FConsole_MouseDown;
-
+            MouseMove += FConsole_MouseMove;
+            MouseUp += FConsole_MouseUp;
             InitializeFConsole();
+        }
+
+        private void FConsole_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (!InputEnable)
+            { Select(Text.Length, 0); }
+        }
+
+        private void FConsole_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!InputEnable)
+                Select(Text.Length, 0);
+        }
+
+        private void FConsole_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right&& InputEnable)
+            {
+                MultiplePaste();
+            }
+            else
+            {
+                if (!InputEnable)
+                    Select(Text.Length, 0);
+            }
         }
 
         public string[] Arguments { get; set; }
@@ -60,7 +86,7 @@ namespace MSniper
             InputEnable = false;
             if (Parent != null)
             {
-                Parent.MinimumSize = MinimumSize;
+                //Parent.MinimumSize = MinimumSize;
                 (Parent as Form).WindowState = FormWindowState.Normal;
                 Parent.BackColor = BackColor;
             }
@@ -170,14 +196,6 @@ namespace MSniper
             }
         }
 
-        private void FConsole_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                MultiplePaste();
-            }
-        }
-
         private void MultiplePaste()
         {
             ReadOnly = true;
@@ -214,7 +232,7 @@ namespace MSniper
             if (Lines.Count() > 0)
             {
                 int line = Lines.Count() - 1;
-                int s1 = GetFirstCharIndexFromLine(line);
+                int s1 = GetFirstCharIndexOfCurrentLine();
                 int s2 = line < Lines.Count() - 1 ?
                           GetFirstCharIndexFromLine(line + 1) - 1 :
                           Text.Length;

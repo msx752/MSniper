@@ -62,7 +62,7 @@
             this.donateToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(634, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(578, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -154,13 +154,13 @@
             // mSniperLatestToolStripMenuItem
             // 
             this.mSniperLatestToolStripMenuItem.Name = "mSniperLatestToolStripMenuItem";
-            this.mSniperLatestToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mSniperLatestToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.mSniperLatestToolStripMenuItem.Text = "MSniper";
             // 
             // necroBotLatestToolStripMenuItem
             // 
             this.necroBotLatestToolStripMenuItem.Name = "necroBotLatestToolStripMenuItem";
-            this.necroBotLatestToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.necroBotLatestToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.necroBotLatestToolStripMenuItem.Text = "NecroBot";
             // 
             // getFeedsToolStripMenuItem
@@ -189,7 +189,7 @@
             this.Console.Name = "Console";
             this.Console.ReadOnly = true;
             this.Console.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.Console.Size = new System.Drawing.Size(634, 287);
+            this.Console.Size = new System.Drawing.Size(578, 287);
             this.Console.State = MSniper.ConsoleState.ReadLine;
             this.Console.TabIndex = 0;
             this.Console.Text = "";
@@ -200,7 +200,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(634, 311);
+            this.ClientSize = new System.Drawing.Size(578, 311);
             this.Controls.Add(this.Console);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
