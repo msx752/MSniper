@@ -49,13 +49,15 @@ namespace MSniperUpdater
                 {
                     try
                     {
-                        Process.GetProcessById(plist[i].Id).Kill();
+                        while (true)
+                        {
+                            Process.GetProcessById(plist[i].Id).Kill();
+                        }
                     }
                     catch { }
                 }
 
                 string[] deleteList = new string[] {
-                        "MSniper.exe",
                         "Newtonsoft.Json.dll",
                         "registerProtocol.bat",
                         "removeProtocol.bat",
@@ -71,7 +73,7 @@ namespace MSniperUpdater
                 {
                     FileInfo f = new FileInfo(item);
                     string newDir = Path.Combine(Application.StartupPath, f.Name);
-                    File.Copy(f.FullName, newDir);
+                    File.Copy(f.FullName, newDir, true);
                 }
                 string run_exe = Path.Combine(Application.StartupPath, "msniper.exe");
                 Task.Run(() =>
@@ -82,16 +84,16 @@ namespace MSniperUpdater
                     proc.Start();
                     proc.WaitForExit();
                 });
-                string temp_FOlder = Directory.GetParent(CopyList[0]).ToString();
+                string temp_FOlder = Directory.GetParent(Directory.GetParent(CopyList[0]).ToString()).ToString();
                 try
                 {
-                    Directory.Delete(temp_FOlder,true);
+                    Directory.Delete(temp_FOlder, true);
                 }
                 catch
                 {
                     Directory.Delete(temp_FOlder, true);
                 }
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
                 Process.GetCurrentProcess().Kill();
             }
             else

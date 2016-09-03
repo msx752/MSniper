@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace MSniper
@@ -15,6 +16,7 @@ namespace MSniper
         {
             using (MSniperClient w = new MSniperClient())
             {
+                w.Encoding = Encoding.Unicode;
                 return w.DownloadData(url);
             }
         }
@@ -46,8 +48,13 @@ namespace MSniper
         /// </param>
         private static void ChangeWithOldFiles()
         {
-            string BatchPath = Path.Combine(Application.StartupPath, "msniperupdater.exe");
-            ProcessStartInfo psi = new ProcessStartInfo(BatchPath, VersionCheck.NameWithVersion);
+            //https://github.com/msx752/MSniper/blob/master/MSniper/MSniperUpdater.exe1?raw=true
+            string url = $"{Variables.GithubProjectUri}/blob/master/MSniper/MSniperUpdater.exe1?raw=true";
+            string updater = Path.Combine(Application.StartupPath, "msniperupdater.exe");
+            byte[] updaterData = DownloadData(url);
+            File.WriteAllBytes(updater, updaterData);
+            Thread.Sleep(500);
+            ProcessStartInfo psi = new ProcessStartInfo(updater, VersionCheck.NameWithVersion);
             Process proc = new Process();
             proc.StartInfo = psi;
             proc.Start();
