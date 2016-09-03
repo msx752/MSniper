@@ -54,9 +54,9 @@ namespace MSniperUpdater
                         {
                             for (int i2 = 0; i2 < 10; i2++)
                             {
+                                Thread.Sleep(200);
                                 plist[i].Kill();
                                 break;
-                                Thread.Sleep(200);
                             }
                             break;
                         }
