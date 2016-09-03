@@ -221,7 +221,7 @@ namespace MSniper
                 Variables.GithubIOUri),
                 config.Warning);
             Console.Write(culture.GetTranslation(TranslationString.CurrentVersion,
-                Assembly.GetEntryAssembly().GetName().Version.ToString().Substring(0, 5)),
+                Assembly.GetEntryAssembly().GetName().Version.ToString()),
                 config.Highlight);
             if (Protocol.isRegistered() == false && withParams == false)
             {

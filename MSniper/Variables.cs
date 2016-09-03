@@ -9,7 +9,7 @@ namespace MSniper
     {
         public static string BotEXEName => "necrobot";
         public static string By => "Msx752";
-        public static string CurrentVersion => Assembly.GetExecutingAssembly().GetName().Version.ToString().Substring(0, 5);
+        public static string CurrentVersion => Assembly.GetExecutingAssembly().GetName().Version.ToString();
         public static string ExecutablePath => Application.ExecutablePath;
         public static string FileLink => $"{GithubProjectUri}/releases/download/{{0}}/{ProgramName}.v{{0}}.zip";
         public static string GithubProjectUri => $"https://github.com/{By}/{ProgramName}";
