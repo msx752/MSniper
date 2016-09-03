@@ -127,6 +127,11 @@ namespace MSniper
             }
             catch (Exception ex)
             {
+                try
+                {
+                    return GetFile(VersionCheck.RemoteVersion.Substring(0, 5));
+                }
+                catch { }
                 Program.frm.Console.WriteLine(ex.Message, Program.frm.config.Error);
                 return null;
             }
