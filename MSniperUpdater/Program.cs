@@ -13,32 +13,6 @@ namespace MSniperUpdater
 {
     class Program
     {
-        private static void CreateEmptyFile(string fullpath)
-        {
-            if (!Directory.Exists(Path.GetDirectoryName(fullpath)))
-            {
-                Directory.CreateDirectory(Path.GetDirectoryName(fullpath));
-            }
-            if (!File.Exists(fullpath))
-            {
-                StreamWriter sw = new StreamWriter(fullpath, false);
-                sw.Write(' ');
-                sw.Close();
-            }
-        }
-
-        private static void DecompressZip(string zipFullPath, string NameWithVersion)
-        {
-            using (ZipArchive archive = ZipFile.OpenRead(zipFullPath))
-            {
-                foreach (ZipArchiveEntry entry in archive.Entries)
-                {
-                    string path = Path.Combine(NameWithVersion, entry.FullName);
-                    CreateEmptyFile(path);
-                    entry.ExtractToFile(path, true);
-                }
-            }
-        }
         static void Main(string[] args)
         {
             //args = new string[] { "MSniper.v1.0.5" };
