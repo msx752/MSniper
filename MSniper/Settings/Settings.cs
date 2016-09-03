@@ -12,7 +12,6 @@ namespace MSniper.Settings
     {
         string TranslationLanguageCode { get; set; }
         int CloseDelaySec { get; set; }
-        bool DeleteTempFolder { get; set; }
         bool DownloadNewVersion { get; set; }
         Color Error { get; }
         string ErrorColor { get; set; }
@@ -32,7 +31,6 @@ namespace MSniper.Settings
     {
         public string TranslationLanguageCode { get; set; } = "en";
         public int CloseDelaySec { get; set; } = 10;
-        public bool DeleteTempFolder { get; set; } = true;
         public bool DownloadNewVersion { get; set; } = true;
         public bool ShowActiveBots { get; set; } = true;
 

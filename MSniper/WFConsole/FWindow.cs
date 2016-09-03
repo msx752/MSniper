@@ -68,6 +68,10 @@ namespace MSniper
             {
                 Process.Start($"{Variables.GithubIOUri}#v104");
             };
+            v105ToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            {
+                Process.Start($"{Variables.GithubIOUri}#v105");
+            };
             configurationToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
             {
                 Process.Start($"{Variables.GithubIOUri}#configuration");
