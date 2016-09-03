@@ -159,21 +159,6 @@ namespace MSniper
                 path = Path.Combine(Application.StartupPath, "resetSnipeList.bat");
                 if (!File.Exists(path))
                     File.WriteAllText(path, Properties.Resources.resetSnipeList);
-
-                //if (Directory.Exists(Variables.TempPath))
-                //{
-                //    if (config.DeleteTempFolder)//deleting temp folder
-                //    {
-                //        try
-                //        {
-                //            Directory.Delete(Variables.TempPath, true);
-                //        }
-                //        catch
-                //        {
-                //            Directory.Delete(Variables.TempPath, true);
-                //        }
-                //    }
-                //}
             }
             catch (Exception)
             {
@@ -240,7 +225,6 @@ namespace MSniper
                     Console.Write($"{culture.GetTranslation(TranslationString.Warning)}:", config.Error);
                     Console.WriteLine(culture.GetTranslation(TranslationString.WarningShutdownProcess), config.Highlight);
                     char c = Console.ReadKey();
-                    //Console.SetCursorPosition(0, Console.CursorTop);
                     if (c == 'd' || c == 'D')
                     {
                         Downloader.DownloadNewVersion();
@@ -457,7 +441,6 @@ namespace MSniper
                     Console.WriteLine(culture.GetTranslation(TranslationString.RemoveAllSnipe, val), config.Success);
                 }
             }
-
             Console.WriteLine(culture.GetTranslation(TranslationString.RemoveAllSnipeFinished, plist.Count()), config.Success);
         }
 
@@ -492,8 +475,7 @@ namespace MSniper
                 Process[] pList = GetNecroBotProcesses();
                 for (int i = 0; i < pList.Length; i++)
                 {
-                    //pList[i] = GetProcess(pList[i]);
-                    string username = pList[i].GetWindowTitle();//pList[i].MainWindowTitle.Split('-').First().Split(' ')[2];
+                    string username = pList[i].GetWindowTitle();
                     if (string.IsNullOrEmpty(username))
                         continue;
 
@@ -540,7 +522,6 @@ namespace MSniper
             Translation culture = new Translation();
             culture.Save("en");
             Process.GetCurrentProcess().Kill();
-            ///////////////////////////////////////
         }
 
         private static string GetSnipeMSPath(string NecroBotEXEPath)
