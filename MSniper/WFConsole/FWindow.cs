@@ -187,8 +187,7 @@ namespace MSniper.WFConsole
 
         public void Helper(bool withParams)
         {
-            Console.WriteLine("");
-            Console.WriteLine("--------------------------------------------------------");
+            Console.WriteLine("\n--------------------------------------------------------");
             Console.WriteLine(Culture.GetTranslation(TranslationString.Description,
                 Variables.ProgramName, Variables.CurrentVersion, Variables.By));
             Console.WriteLine(Culture.GetTranslation(TranslationString.GitHubProject,

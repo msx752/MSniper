@@ -160,34 +160,45 @@ namespace MSniper.Settings.Localization
                 //CultureInfo.DefaultThreadCurrentCulture = culture;
                 //Thread.CurrentThread.CurrentCulture = culture;
 
-                var translationsLanguageCode = logicSettings.TranslationLanguageCode;
+                string translationsLanguageCode = string.Empty;
+                try
+                {
+                    translationsLanguageCode = new CultureInfo(logicSettings.TranslationLanguageCode).ToString();
+                }
+                catch (CultureNotFoundException ex)
+                {
+                    CultureNotFound(logicSettings, ref translationsLanguageCode);
+                }
                 if (logicSettings.AutoDetectCulture)
                 {
                     var strCulture = Variables.SupportedLanguages
                         .Find(p => p.Name == Thread.CurrentThread.CurrentCulture.Name ||
-                        p.TwoLetterISOLanguageName == Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName);
+                                   p.TwoLetterISOLanguageName ==
+                                   Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName);
                     if (strCulture != null)
                     {
                         translationsLanguageCode = strCulture.Name;
-                        Program.frm.Console.WriteLine($"automatic supported culture detected: {strCulture.Name}", logicSettings.Success);
+                        Program.frm.Console.WriteLine($"automatic supported culture detected: {strCulture.Name}",
+                            logicSettings.Success);
                     }
                 }
                 var input = string.Empty;
 
-                if (Variables.SupportedLanguages.FindIndex(p => string.Equals(p.ToString(), translationsLanguageCode, StringComparison.CurrentCultureIgnoreCase)) == -1)
+                if (
+                    Variables.SupportedLanguages.FindIndex(
+                        p =>
+                            string.Equals(p.ToString(), translationsLanguageCode,
+                                StringComparison.CurrentCultureIgnoreCase)) == -1)
                 {
-                    input = GetTranslationFromServer(logicSettings.TranslationLanguageCode);//developer mode
+                    input = GetTranslationFromServer(logicSettings.TranslationLanguageCode); //developer mode
                     if (input == null)
                     {
-                        Program.frm.Console.WriteLine($"[ {logicSettings.TranslationLanguageCode} ] language not found in program", logicSettings.Error);
-                        Thread.Sleep(1000);
-                        Program.frm.Console.WriteLine($"now using default language [ {new Configs().TranslationLanguageCode} ]..", logicSettings.Success);
-                        translationsLanguageCode = new Configs().TranslationLanguageCode;
-                        Program.frm.Delay(3);
+                        CultureNotFound(logicSettings, ref translationsLanguageCode);
                     }
                 }
                 if (string.IsNullOrEmpty(input))
-                    input = Resources.ResourceManager.GetString($"translation_{translationsLanguageCode.Replace("-", "_")}");
+                    input =
+                        Resources.ResourceManager.GetString($"translation_{translationsLanguageCode.Replace("-", "_")}");
 
                 var jsonSettings = new JsonSerializerSettings();
                 jsonSettings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
@@ -205,11 +216,25 @@ namespace MSniper.Settings.Localization
             catch (Exception ex)
             {
                 Program.frm.Console.WriteLine("");
-                Program.frm.Console.WriteLine($"[ERROR] Issue loading translations: {ex.ToString()}", logicSettings.Error);
+                Program.frm.Console.WriteLine($"[ERROR] Issue loading translations: {ex.ToString()}",
+                    logicSettings.Error);
                 Program.frm.Delay(7);
             }
 
             return translations;
+        }
+
+        public static void CultureNotFound(IConfigs logicSettings, ref string translationsLanguageCode)
+        {
+            Program.frm.Console.WriteLine(
+                            $"[ {logicSettings.TranslationLanguageCode} ] language not found in program",
+                            logicSettings.Error);
+            Thread.Sleep(1000);
+            Program.frm.Console.WriteLine(
+                $"now using default language [ {new Configs().TranslationLanguageCode} ]..",
+                logicSettings.Success);
+            translationsLanguageCode = new Configs().TranslationLanguageCode;
+            Program.frm.Delay(3);
         }
 
         public static string GetTranslationFromServer(string languageCode)
