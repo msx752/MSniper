@@ -142,7 +142,7 @@
   <data name="translation_es" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\settings\localization\languages\translation.es.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
   </data>
-  <data name="translation_tw" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\settings\localization\languages\translation.tw.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
+  <data name="translation_zh_CN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Settings\Localization\Languages\translation.zh-CN.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
   </data>
 </root>

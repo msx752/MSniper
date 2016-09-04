@@ -39,7 +39,7 @@ namespace MSniper.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    var temp = new global::System.Resources.ResourceManager("MSniper.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MSniper.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -65,7 +65,7 @@ namespace MSniper.Properties {
         /// </summary>
         internal static System.Drawing.Icon msniper {
             get {
-                var obj = ResourceManager.GetObject("msniper", resourceCulture);
+                object obj = ResourceManager.GetObject("msniper", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -75,13 +75,13 @@ namespace MSniper.Properties {
         /// </summary>
         internal static byte[] Newtonsoft_Json {
             get {
-                var obj = ResourceManager.GetObject("Newtonsoft_Json", resourceCulture);
+                object obj = ResourceManager.GetObject("Newtonsoft_Json", resourceCulture);
                 return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MSniper -register.
+        ///   Looks up a localized string similar to start MSniper -register.
         /// </summary>
         internal static string registerProtocol {
             get {
@@ -90,7 +90,7 @@ namespace MSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MSniper -remove.
+        ///   Looks up a localized string similar to start MSniper -remove.
         /// </summary>
         internal static string removeProtocol {
             get {
@@ -99,7 +99,7 @@ namespace MSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MSniper -resetallsnipelist.
+        ///   Looks up a localized string similar to start MSniper -resetallsnipelist.
         /// </summary>
         internal static string resetSnipeList {
             get {
@@ -116,11 +116,11 @@ namespace MSniper.Properties {
         ///    },
         ///    {
         ///      &quot;Key&quot;: &quot;description&quot;,
-        ///      &quot;Value&quot;: &quot;{0} - {1} Manual Pokemon Sniper - by {2}&quot;
+        ///      &quot;Value&quot;: &quot;{0} - v{1} Manual Pokemon Sniper - by {2}&quot;
         ///    },
         ///    {
         ///      &quot;Key&quot;: &quot;gitHubProject&quot;,
-        ///      &quot;Value&quot;: &quot;GitHub Project {0}&quot;
+        ///      &quot;Value&quot;: &quot;Github Project {0}&quot;
         ///    },
         ///    {
         ///      &quot;Key&quot;: &quot;currentVersion&quot;,
@@ -131,7 +131,7 @@ namespace MSniper.Properties {
         ///      &quot;Value&quot;: &quot;Protocol not found - Please run once {0}&quot;
         ///    },
         ///    {
-        ///      &quot;Key&quot;: &quot;shu [rest of string was truncated]&quot;;.
+        ///      &quot;Key&quot;: &quot;sh [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string translation_en {
             get {
@@ -148,7 +148,7 @@ namespace MSniper.Properties {
         ///    },
         ///    {
         ///      &quot;Key&quot;: &quot;description&quot;,
-        ///      &quot;Value&quot;: &quot;{0} - {1} Sniper Manual Pokemon - Por {2}&quot;
+        ///      &quot;Value&quot;: &quot;{0} - v{1} Sniper Manual Pokemon - Por {2}&quot;
         ///    },
         ///    {
         ///      &quot;Key&quot;: &quot;gitHubProject&quot;,
@@ -161,7 +161,7 @@ namespace MSniper.Properties {
         ///    {
         ///      &quot;Key&quot;: &quot;protocolNotFound&quot;,
         ///      &quot;Value&quot;: &quot;Protocolo no encontrado - Porfavor, inicie el protocolo una vez {0}&quot;
-        ///     [rest of string was truncated]&quot;;.
+        ///    [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string translation_es {
             get {
@@ -178,7 +178,7 @@ namespace MSniper.Properties {
         ///    },
         ///    {
         ///      &quot;Key&quot;: &quot;description&quot;,
-        ///      &quot;Value&quot;: &quot;{0} - {1} Manuel Pokemon Avcı - by {2}&quot;
+        ///      &quot;Value&quot;: &quot;{0} - v{1} Manuel Pokemon Avcı - by {2}&quot;
         ///    },
         ///    {
         ///      &quot;Key&quot;: &quot;gitHubProject&quot;,
@@ -193,7 +193,7 @@ namespace MSniper.Properties {
         ///      &quot;Value&quot;: &quot;Protokol bulunamadı - Lütfen bir kere {0} &apos;yi çalıştırın&quot;
         ///    },
         ///    {
-        ///    [rest of string was truncated]&quot;;.
+        ///   [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string translation_tr {
             get {
@@ -210,7 +210,7 @@ namespace MSniper.Properties {
         ///    },
         ///    {
         ///      &quot;Key&quot;: &quot;description&quot;,
-        ///      &quot;Value&quot;: &quot;{0} - {1} 手動狙擊器 - by {2}&quot;
+        ///      &quot;Value&quot;: &quot;{0} - v{1} 手動狙擊器 - by {2}&quot;
         ///    },
         ///    {
         ///      &quot;Key&quot;: &quot;gitHubProject&quot;,
@@ -227,11 +227,11 @@ namespace MSniper.Properties {
         ///    {
         ///      &quot;Key&quot;: &quot;shutdownMsg&quot;,
         ///      &quot;Value&quot;: &quot;程序將關閉於 {0} 秒&quot;
-        ///  [rest of string was truncated]&quot;;.
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string translation_tw {
+        internal static string translation_zh_CN {
             get {
-                return ResourceManager.GetString("translation_tw", resourceCulture);
+                return ResourceManager.GetString("translation_zh_CN", resourceCulture);
             }
         }
     }

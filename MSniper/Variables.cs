@@ -24,7 +24,7 @@ namespace MSniper
 
         public static List<string> SupportedLanguages => new List<string>()
         {
-            "en","tr","es","tw"
+            "en","tr","es","zh_cn"
         };
 
         public static string TempPath => Path.Combine(Application.StartupPath, "temp");

@@ -135,7 +135,7 @@
     <None Include="Settings\Localization\Languages\translation.en.json" />
     <None Include="Settings\Localization\Languages\translation.es.json" />
     <None Include="Settings\Localization\Languages\translation.tr.json" />
-    <None Include="Settings\Localization\Languages\translation.tw.json" />
+    <None Include="Settings\Localization\Languages\translation.zh-CN.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.config" />
