@@ -1,27 +1,16 @@
-﻿using MSniper;
-using MSniper.Properties;
+﻿using MSniper.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace MSniper.Settings.Localization
 {
     //code revised and getting from https://github.com/NoxxDev/NecroBot/blob/master/PoGo.NecroBot.Logic/Common/Translations.cs
-
-    public interface ITranslation
-    {
-        string GetTranslation(TranslationString translationString, params object[] data);
-        string GetTranslation(TranslationString translationString);
-    }
 
     public enum TranslationString
     {
@@ -71,8 +60,16 @@ namespace MSniper.Settings.Localization
         Donate,
         CanNotAccessProcess
     }
+
+    public interface ITranslation
+    {
+        string GetTranslation(TranslationString translationString, params object[] data);
+
+        string GetTranslation(TranslationString translationString);
+    }
+
     /// <summary>
-    /// default language: english
+    /// default language: english 
     /// </summary>
     public class Translation : ITranslation
     {
@@ -131,20 +128,35 @@ namespace MSniper.Settings.Localization
             new KeyValuePair<TranslationString, string>(TranslationString.CanNotAccessProcess,"can not access to {0}.exe({1}), killing")
         };
 
-        public string GetTranslation(TranslationString translationString, params object[] data)
+        public static void CultureNotFound(IConfigs logicSettings, ref string translationsLanguageCode)
         {
-            var translation = _translationStrings.FirstOrDefault(t => t.Key.Equals(translationString)).Value;
-            return translation != default(string)
-                ? string.Format(translation, data)
-                : $"Translation for {translationString} is missing";
+            Program.frm.Console.WriteLine(
+                            $"[ {logicSettings.TranslationLanguageCode} ] language not found in program",
+                            logicSettings.Error);
+            if (!logicSettings.AutoCultureDetect)
+            {
+                Program.frm.Console.WriteLine(
+                               $"you can set TRUE 'AutoDetectCulture' in settings.json",
+                               logicSettings.Notification);
+            }
+            Thread.Sleep(1000);
+            Program.frm.Console.WriteLine(
+                $"now using default language [ {new Configs().TranslationLanguageCode} ]..",
+                logicSettings.Success);
+            translationsLanguageCode = new Configs().TranslationLanguageCode;
+            Program.frm.Delay(3);
         }
 
-        public string GetTranslation(TranslationString translationString)
+        public static string GetTranslationFromServer(string languageCode)
         {
-            var translation = _translationStrings.FirstOrDefault(t => t.Key.Equals(translationString)).Value;
-            return translation != default(string)
-                ? translation
-                : $"Translation for {translationString} is missing";
+            try
+            {
+                return Downloader.DownloadString(string.Format(Variables.TranslationUri, languageCode));
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public static Translation Load(IConfigs logicSettings)
@@ -169,7 +181,7 @@ namespace MSniper.Settings.Localization
                 {
                     CultureNotFound(logicSettings, ref translationsLanguageCode);
                 }
-                if (logicSettings.AutoDetectCulture)
+                if (logicSettings.AutoCultureDetect)
                 {
                     var strCulture = Variables.SupportedLanguages
                         .Find(p => p.Name == Thread.CurrentThread.CurrentCulture.Name ||
@@ -224,30 +236,22 @@ namespace MSniper.Settings.Localization
             return translations;
         }
 
-        public static void CultureNotFound(IConfigs logicSettings, ref string translationsLanguageCode)
+        public string GetTranslation(TranslationString translationString, params object[] data)
         {
-            Program.frm.Console.WriteLine(
-                            $"[ {logicSettings.TranslationLanguageCode} ] language not found in program",
-                            logicSettings.Error);
-            Thread.Sleep(1000);
-            Program.frm.Console.WriteLine(
-                $"now using default language [ {new Configs().TranslationLanguageCode} ]..",
-                logicSettings.Success);
-            translationsLanguageCode = new Configs().TranslationLanguageCode;
-            Program.frm.Delay(3);
+            var translation = _translationStrings.FirstOrDefault(t => t.Key.Equals(translationString)).Value;
+            return translation != default(string)
+                ? string.Format(translation, data)
+                : $"Translation for {translationString} is missing";
         }
 
-        public static string GetTranslationFromServer(string languageCode)
+        public string GetTranslation(TranslationString translationString)
         {
-            try
-            {
-                return Downloader.DownloadString(string.Format(Variables.TranslationUri, languageCode));
-            }
-            catch
-            {
-                return null;
-            }
+            var translation = _translationStrings.FirstOrDefault(t => t.Key.Equals(translationString)).Value;
+            return translation != default(string)
+                ? translation
+                : $"Translation for {translationString} is missing";
         }
+
         public void Save(string languageCode)
         {
             string fullPath = $"{Variables.TranslationsPath}\\translation.{languageCode}.json";
@@ -262,6 +266,5 @@ namespace MSniper.Settings.Localization
 
             File.WriteAllText(fullPath, output);
         }
-
     }
 }
