@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace MSniper
+namespace MSniper.WFConsole
 {
     public class FConsole : RichTextBox
     {
@@ -87,7 +87,7 @@ namespace MSniper
             if (Parent != null)
             {
                 //Parent.MinimumSize = MinimumSize;
-                (Parent as Form).WindowState = FormWindowState.Normal;
+                ((Form) Parent).WindowState = FormWindowState.Normal;
                 Parent.BackColor = BackColor;
             }
             DetectUrls = true;
@@ -229,7 +229,7 @@ namespace MSniper
 
         public void SelectLastLine()
         {
-            if (Lines.Count() > 0)
+            if (Lines.Any())
             {
                 int line = Lines.Count() - 1;
                 int s1 = GetFirstCharIndexOfCurrentLine();

@@ -1,4 +1,4 @@
-﻿namespace MSniper
+﻿namespace MSniper.Enums
 {
     public enum PokemonId
     {

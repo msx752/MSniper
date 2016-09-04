@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FWindow));
-            this.Console = new MSniper.FConsole();
+            this.Console = new FConsole();
             this.activeBotsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.linksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,7 +62,7 @@
             this.Console.ReadOnly = true;
             this.Console.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.Console.Size = new System.Drawing.Size(578, 287);
-            this.Console.State = MSniper.ConsoleState.ReadLine;
+            this.Console.State = ConsoleState.ReadLine;
             this.Console.TabIndex = 0;
             this.Console.Text = "";
             this.Console.Title = "MSniper";

@@ -10,6 +10,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MSniper.Enums;
+using MSniper.Extensions;
 using MSniper.Settings;
 using MSniper.Settings.Localization;
 using Newtonsoft.Json;
@@ -129,7 +131,7 @@ namespace MSniper.WFConsole
         {
             for (int i = seconds; i >= 0; i--)
             {
-                TranslationString ts = TranslationString.ShutdownMsg;
+                var ts = TranslationString.ShutdownMsg;
                 if (!isShutdownMsg)
                     ts = TranslationString.SubsequentProcessing;
 
@@ -248,15 +250,8 @@ namespace MSniper.WFConsole
                         try
                         {
                             Process[] plist = GetNecroBotProcesses();
-                            if (plist.Length == 0)
-                            {
-                                activeBotsToolStripMenuItem.Visible = false;
-                            }
-                            else
-                            {
-                                activeBotsToolStripMenuItem.Visible = true;
-                            }
-                            isActiveBotsAlive();
+                            activeBotsToolStripMenuItem.Visible = plist.Length != 0;
+                            IsActiveBotsAlive();
                             foreach (Process item in plist)
                             {
                                 string username = item.GetWindowTitle();
@@ -293,7 +288,7 @@ namespace MSniper.WFConsole
             }
         }
 
-        private void isActiveBotsAlive()
+        private void IsActiveBotsAlive()
         {
             for (var i = 0; i < activeBotsToolStripMenuItem.DropDownItems.Count; i++)
             {
@@ -366,7 +361,7 @@ namespace MSniper.WFConsole
                             var re4 = "(,)";//separator
                             var re5 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
 
-                            Regex r = new Regex(re0 + re1 + re2 + re3 + re4 + re5, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                            var r = new Regex(re0 + re1 + re2 + re3 + re4 + re5, RegexOptions.IgnoreCase | RegexOptions.Singleline);
                             Match m = r.Match(Console.Arguments.First());
                             if (m.Success)
                             {
@@ -475,7 +470,7 @@ namespace MSniper.WFConsole
                     if (string.IsNullOrEmpty(username))
                         continue;
 
-                    if (!isBotUpperThan094(pList[i].MainModule.FileVersionInfo))
+                    if (!IsBotUpperThan094(pList[i].MainModule.FileVersionInfo))
                     {
                         Console.WriteLine(Culture.GetTranslation(TranslationString.IncompatibleVersionMsg, username), Config.Error);
                         continue;
@@ -548,7 +543,7 @@ namespace MSniper.WFConsole
         {
             if (File.Exists(path))
             {
-                string jsn = "";
+                var jsn = "";
                 do
                 {
                     try
@@ -567,7 +562,7 @@ namespace MSniper.WFConsole
             }
         }
 
-        private static bool WriteSnipeMs(List<MSniperInfo> _MSniperLocation, string path)
+        private static bool WriteSnipeMs(List<MSniperInfo> mSniperLocation, string path)
         {
             do
             {
@@ -575,7 +570,7 @@ namespace MSniper.WFConsole
                 {
                     var sw = new StreamWriter(path, false, Encoding.UTF8);
                     sw.WriteLine(JsonConvert.SerializeObject(
-                        _MSniperLocation,
+                        mSniperLocation,
                         Formatting.Indented,
                         new StringEnumConverter { CamelCaseText = true }));
                     sw.Close();
@@ -587,7 +582,7 @@ namespace MSniper.WFConsole
             while (true);//waiting access
         }
 
-        private void FileDelete(string path)
+        private static void FileDelete(string path)
         {
             do
             {
@@ -600,7 +595,7 @@ namespace MSniper.WFConsole
             } while (true);//waiting access
         }
 
-        private bool isBotUpperThan094(FileVersionInfo fversion)
+        private bool IsBotUpperThan094(FileVersionInfo fversion)
         {
             return new Version(fversion.FileVersion) >= new Version(Variables.MinRequireVersion);
         }
