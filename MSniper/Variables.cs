@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
@@ -22,9 +23,12 @@ namespace MSniper
         public static string SnipeFileName => "SnipeMS.json";
         public static string StartupPath => Path.GetDirectoryName(ExecutablePath);
 
-        public static List<string> SupportedLanguages => new List<string>()
+        public static List<CultureInfo> SupportedLanguages => new List<CultureInfo>()
         {
-            "en","tr","es","zh_cn"
+            new CultureInfo("tr-TR"),
+            new CultureInfo("zh-CN"),
+            new CultureInfo("en-US"),
+            new CultureInfo("es-ES")
         };
 
         public static string TempPath => Path.Combine(Application.StartupPath, "temp");

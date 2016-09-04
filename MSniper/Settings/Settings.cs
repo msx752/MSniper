@@ -11,6 +11,7 @@ namespace MSniper.Settings
     public interface IConfigs
     {
         string TranslationLanguageCode { get; set; }
+        bool AutoDetectCulture { get; set; }
         int CloseDelaySec { get; set; }
         bool DownloadNewVersion { get; set; }
         Color Error { get; }
@@ -29,7 +30,8 @@ namespace MSniper.Settings
 
     public class Configs : IConfigs
     {
-        public string TranslationLanguageCode { get; set; } = "en";
+        public string TranslationLanguageCode { get; set; } = "en-US";
+        public bool AutoDetectCulture { get; set; } = true;
         public int CloseDelaySec { get; set; } = 10;
         public bool DownloadNewVersion { get; set; } = true;
         public bool ShowActiveBots { get; set; } = true;

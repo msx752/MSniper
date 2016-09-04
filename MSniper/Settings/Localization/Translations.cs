@@ -5,6 +5,7 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -68,7 +69,7 @@ namespace MSniper.Settings.Localization
         ProjectsLink,
         GetLiveFeed,
         Donate,
-        CanNotAccessProcess,
+        CanNotAccessProcess
     }
     /// <summary>
     /// default language: english
@@ -127,7 +128,7 @@ namespace MSniper.Settings.Localization
             new KeyValuePair<TranslationString, string>(TranslationString.ProjectsLink,"Projects Link"),
             new KeyValuePair<TranslationString, string>(TranslationString.GetLiveFeed,"Get Live Feed"),
             new KeyValuePair<TranslationString, string>(TranslationString.Donate,"Donate"),
-            new KeyValuePair<TranslationString, string>(TranslationString.CanNotAccessProcess,"can not access to {0}.exe({1}), killing"),
+            new KeyValuePair<TranslationString, string>(TranslationString.CanNotAccessProcess,"can not access to {0}.exe({1}), killing")
         };
 
         public string GetTranslation(TranslationString translationString, params object[] data)
@@ -155,22 +156,38 @@ namespace MSniper.Settings.Localization
         {
             try
             {
-                var translationsLanguageCode = logicSettings.TranslationLanguageCode.Replace("-", "_");
-                var input = "";
-                if (Variables.SupportedLanguages.FindIndex(p => p.ToLower() == translationsLanguageCode.ToLower()) == -1)
+                //var culture = CultureInfo.CreateSpecificCulture("tr-TR");
+                //CultureInfo.DefaultThreadCurrentCulture = culture;
+                //Thread.CurrentThread.CurrentCulture = culture;
+
+                var translationsLanguageCode = logicSettings.TranslationLanguageCode;
+                if (logicSettings.AutoDetectCulture)
+                {
+                    var strCulture = Variables.SupportedLanguages
+                        .Find(p => p.Name == Thread.CurrentThread.CurrentCulture.Name ||
+                        p.TwoLetterISOLanguageName == Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName);
+                    if (strCulture != null)
+                    {
+                        translationsLanguageCode = strCulture.Name;
+                        Program.frm.Console.WriteLine($"automatic supported culture detected: {strCulture.Name}", logicSettings.Success);
+                    }
+                }
+                var input = string.Empty;
+
+                if (Variables.SupportedLanguages.FindIndex(p => string.Equals(p.ToString(), translationsLanguageCode, StringComparison.CurrentCultureIgnoreCase)) == -1)
                 {
                     input = GetTranslationFromServer(logicSettings.TranslationLanguageCode);//developer mode
                     if (input == null)
                     {
-                        Program.frm.Console.WriteLine($"[ {logicSettings.TranslationLanguageCode} ] language not found in program", Color.Red);
+                        Program.frm.Console.WriteLine($"[ {logicSettings.TranslationLanguageCode} ] language not found in program", logicSettings.Error);
                         Thread.Sleep(1000);
-                        Program.frm.Console.WriteLine($"now using default language [ {new Configs().TranslationLanguageCode} ]..", Color.Green);
+                        Program.frm.Console.WriteLine($"now using default language [ {new Configs().TranslationLanguageCode} ]..", logicSettings.Success);
                         translationsLanguageCode = new Configs().TranslationLanguageCode;
                         Program.frm.Delay(3);
                     }
                 }
                 if (string.IsNullOrEmpty(input))
-                    input = Resources.ResourceManager.GetString($"translation_{translationsLanguageCode}");
+                    input = Resources.ResourceManager.GetString($"translation_{translationsLanguageCode.Replace("-", "_")}");
 
                 var jsonSettings = new JsonSerializerSettings();
                 jsonSettings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
@@ -188,7 +205,7 @@ namespace MSniper.Settings.Localization
             catch (Exception ex)
             {
                 Program.frm.Console.WriteLine("");
-                Program.frm.Console.WriteLine($"[ERROR] Issue loading translations: {ex.ToString()}", Color.Red);
+                Program.frm.Console.WriteLine($"[ERROR] Issue loading translations: {ex.ToString()}", logicSettings.Error);
                 Program.frm.Delay(7);
             }
 

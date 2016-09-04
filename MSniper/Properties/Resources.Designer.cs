@@ -133,9 +133,9 @@ namespace MSniper.Properties {
         ///    {
         ///      &quot;Key&quot;: &quot;sh [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string translation_en {
+        internal static string translation_en_US {
             get {
-                return ResourceManager.GetString("translation_en", resourceCulture);
+                return ResourceManager.GetString("translation_en_US", resourceCulture);
             }
         }
         
@@ -163,9 +163,9 @@ namespace MSniper.Properties {
         ///      &quot;Value&quot;: &quot;Protocolo no encontrado - Porfavor, inicie el protocolo una vez {0}&quot;
         ///    [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string translation_es {
+        internal static string translation_es_ES {
             get {
-                return ResourceManager.GetString("translation_es", resourceCulture);
+                return ResourceManager.GetString("translation_es_ES", resourceCulture);
             }
         }
         
@@ -195,9 +195,9 @@ namespace MSniper.Properties {
         ///    {
         ///   [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string translation_tr {
+        internal static string translation_tr_TR {
             get {
-                return ResourceManager.GetString("translation_tr", resourceCulture);
+                return ResourceManager.GetString("translation_tr_TR", resourceCulture);
             }
         }
         

@@ -132,9 +132,9 @@
     <EmbeddedResource Include="Resources\registerProtocol.bat" />
     <EmbeddedResource Include="Resources\removeProtocol.bat" />
     <EmbeddedResource Include="Resources\resetSnipeList.bat" />
-    <None Include="Settings\Localization\Languages\translation.en.json" />
-    <None Include="Settings\Localization\Languages\translation.es.json" />
-    <None Include="Settings\Localization\Languages\translation.tr.json" />
+    <None Include="Settings\Localization\Languages\translation.en-US.json" />
+    <None Include="Settings\Localization\Languages\translation.es-ES.json" />
+    <None Include="Settings\Localization\Languages\translation.tr-TR.json" />
     <None Include="Settings\Localization\Languages\translation.zh-CN.json" />
   </ItemGroup>
   <ItemGroup>

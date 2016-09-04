@@ -514,10 +514,6 @@ namespace MSniper.WFConsole
 
         private static Configs LoadConfigs()
         {
-            var strCulture = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
-            var culture = CultureInfo.CreateSpecificCulture("en");
-            CultureInfo.DefaultThreadCurrentCulture = culture;
-            Thread.CurrentThread.CurrentCulture = culture;
 
             var settings = new Configs();
             if (File.Exists(Variables.SettingPath))
