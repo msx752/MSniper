@@ -8,7 +8,7 @@
 
         public override string ToString()
         {
-            return string.Format("{0} {1},{2}", Id, Latitude, Longitude);
+            return $"{Id} {Latitude},{Longitude}";
         }
     }
 }

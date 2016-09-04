@@ -1,18 +1,19 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace MSniper
 {
     public static class Protocol
     {
-        private static List<string> protocols = new List<string>() { "msniper", "pokesniper2" };
+        private static readonly List<string> Protocols = new List<string>() { "msniper", "pokesniper2" };
         public static void Delete()
         {
             try
             {
-                foreach (var protocolName in protocols)
+                foreach (var protocolName in Protocols)
                 {
                     if (Registry.ClassesRoot.OpenSubKey(protocolName) != null)
                         Registry.ClassesRoot.DeleteSubKeyTree(protocolName, true);
@@ -24,17 +25,11 @@ namespace MSniper
             }
         }
 
-        public static bool isRegistered()
+        public static bool IsRegistered()
         {
-            foreach (var protocolName in protocols)
-            {
-                if (Registry.ClassesRoot.OpenSubKey(protocolName) == null)
-                {
-                    return false;
-                }
-            }
-            return true;
+            return Protocols.All(protocolName => Registry.ClassesRoot.OpenSubKey(protocolName) != null);
         }
+
         //not necessary
         //public static void isProtocolExists(string protocolName)
         //{
@@ -53,10 +48,10 @@ namespace MSniper
         {
             try
             {
-                foreach (var protocolName in protocols)
+                foreach (var protocolName in Protocols)
                 {
-                    RegistryKey nkey = Registry.ClassesRoot.CreateSubKey(protocolName);
-                    nkey.SetValue(null, string.Format("URL:{0} protocol", protocolName));
+                    var nkey = Registry.ClassesRoot.CreateSubKey(protocolName);
+                    nkey.SetValue(null, $"URL:{protocolName} protocol");
                     nkey.SetValue("URL Protocol", string.Empty);
                     Registry.ClassesRoot.CreateSubKey(protocolName + "\\Shell");
                     Registry.ClassesRoot.CreateSubKey(protocolName + "\\Shell\\open");

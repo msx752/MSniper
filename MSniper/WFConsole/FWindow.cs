@@ -1,12 +1,6 @@
-﻿using MSniper.Settings;
-using MSniper.Settings.Localization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -16,8 +10,12 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MSniper.Settings;
+using MSniper.Settings.Localization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-namespace MSniper
+namespace MSniper.WFConsole
 {
     public partial class FWindow : Form
     {
@@ -31,54 +29,54 @@ namespace MSniper
 
             #region menustrip actions
 
-            getFeedsToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            getFeedsToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
                 //if (RunningNormally && BotCount > 0)
                 //{
-                LFeed = new LiveFeed.LiveFeed();
-                LFeed.ShowDialog();
-                LFeed.Dispose();
+                //LFeed = new LiveFeed.LiveFeed();
+                //LFeed.ShowDialog();
+                //LFeed.Dispose();
                 //}
                 //else
                 //{
                 //    MessageBox.Show("necrobot not found or uninitialized normally");
                 //}
             };
-            donateToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            donateToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
-                Process.Start($"{Variables.GithubIOUri}#donation");
+                Process.Start($"{Variables.GithubIoUri}#donation");
             };
-            mSniperLatestToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            mSniperLatestToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
                 Process.Start($"{Variables.GithubProjectUri}");
             };
-            necroBotLatestToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            necroBotLatestToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
                 Process.Start("https://github.com/NoxxDev/NecroBot/releases/latest");
             };
-            featuresToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            featuresToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
-                Process.Start($"{Variables.GithubIOUri}#features");
+                Process.Start($"{Variables.GithubIoUri}#features");
             };
-            configurationToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            configurationToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
-                Process.Start($"{Variables.GithubIOUri}#configuration");
+                Process.Start($"{Variables.GithubIoUri}#configuration");
             };
-            usageToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            usageToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
-                Process.Start($"{Variables.GithubIOUri}#usage");
+                Process.Start($"{Variables.GithubIoUri}#usage");
             };
-            askedQuestionsToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            askedQuestionsToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
-                Process.Start($"{Variables.GithubIOUri}#frequently-asked-questions");
+                Process.Start($"{Variables.GithubIoUri}#frequently-asked-questions");
             };
-            advantageToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            advantageToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
-                Process.Start($"{Variables.GithubIOUri}#advantage");
+                Process.Start($"{Variables.GithubIoUri}#advantage");
             };
-            fileInformationToolStripMenuItem.Click += delegate (Object sender, EventArgs e)
+            fileInformationToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
-                Process.Start($"{Variables.GithubIOUri}#file-information");
+                Process.Start($"{Variables.GithubIoUri}#file-information");
             };
 
             #endregion menustrip actions
@@ -104,23 +102,24 @@ namespace MSniper
 
         public bool RunningNormally { get; set; }
 
-        public Configs config { get; set; }
+        public Configs Config { get; set; }
 
-        public Translation culture { get; set; }
+        public Translation Culture { get; set; }
 
         public Process[] GetNecroBotProcesses()
         {
-            Process[] plist = Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith(Variables.BotEXEName) && !x.ProcessName.ToLower().EndsWith(".vshost")).ToArray();
+            Process[] plist = Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith(Variables.BotExeName) && !x.ProcessName.ToLower().EndsWith(".vshost")).ToArray();
             BotCount = plist.Count();
             return plist;
         }
 
         public void CheckNecroBots(bool shutdownMSniper)
         {
-            if (GetNecroBotProcesses().Count() == 0)
+            if (!GetNecroBotProcesses().Any())
             {
-                Console.WriteLine(culture.GetTranslation(TranslationString.AnyNecroBotNotFound), config.Error);
-                Console.WriteLine($" *{culture.GetTranslation(TranslationString.RunBeforeMSniper)}*", config.Error);
+                Console.WriteLine(string.Empty.PadRight(10)+Culture.GetTranslation(TranslationString.AnyNecroBotNotFound), Config.Error);
+                Console.WriteLine(string.Empty.PadRight(5) + $" *{Culture.GetTranslation(TranslationString.RunBeforeMSniper)}*", Config.Error);
+                Console.WriteLine("--------------------------------------------------------");
                 if (shutdownMSniper)
                     Shutdown();
             }
@@ -134,10 +133,11 @@ namespace MSniper
                 if (!isShutdownMsg)
                     ts = TranslationString.SubsequentProcessing;
 
-                if (culture != null)
-                    Console.UpdateLine(Console.Lines.Count() - 1, culture.GetTranslation(ts, i));
+                if (Culture != null)
+                    Console.UpdateLine(Console.Lines.Count() - 1, Culture.GetTranslation(ts, i));
                 else
-                    Console.UpdateLine(Console.Lines.Count() - 1, string.Format("Subsequent processing passing in {0} seconds or Close the Program", i));
+                    Console.UpdateLine(Console.Lines.Count() - 1,
+                        $"Subsequent processing passing in {i} seconds or Close the Program");
 
                 Thread.Sleep(1000);
             }
@@ -168,21 +168,21 @@ namespace MSniper
 
         public void LoadConfigurations()
         {
-            config = LoadConfigs();
-            culture = LoadCulture(config);
+            Config = LoadConfigs();
+            Culture = LoadCulture(Config);
 
             #region controls culture
-            activeBotsToolStripMenuItem.Text = culture.GetTranslation(TranslationString.ActiveBots);
-            linksToolStripMenuItem.Text = culture.GetTranslation(TranslationString.HowTo);
-            configurationToolStripMenuItem.Text = culture.GetTranslation(TranslationString.Configuration);
-            usageToolStripMenuItem.Text = culture.GetTranslation(TranslationString.Usage);
-            askedQuestionsToolStripMenuItem.Text = culture.GetTranslation(TranslationString.AskedQuestions);
-            advantageToolStripMenuItem.Text = culture.GetTranslation(TranslationString.Advantage);
-            fileInformationToolStripMenuItem.Text = culture.GetTranslation(TranslationString.FileInformation);
-            featuresToolStripMenuItem.Text = culture.GetTranslation(TranslationString.Features);
-            projectToolStripMenuItem.Text = culture.GetTranslation(TranslationString.ProjectsLink);
-            getFeedsToolStripMenuItem.Text = culture.GetTranslation(TranslationString.GetLiveFeed);
-            donateToolStripMenuItem.Text = culture.GetTranslation(TranslationString.Donate);
+            activeBotsToolStripMenuItem.Text = Culture.GetTranslation(TranslationString.ActiveBots);
+            linksToolStripMenuItem.Text = Culture.GetTranslation(TranslationString.HowTo);
+            configurationToolStripMenuItem.Text = Culture.GetTranslation(TranslationString.Configuration);
+            usageToolStripMenuItem.Text = Culture.GetTranslation(TranslationString.Usage);
+            askedQuestionsToolStripMenuItem.Text = Culture.GetTranslation(TranslationString.AskedQuestions);
+            advantageToolStripMenuItem.Text = Culture.GetTranslation(TranslationString.Advantage);
+            fileInformationToolStripMenuItem.Text = Culture.GetTranslation(TranslationString.FileInformation);
+            featuresToolStripMenuItem.Text = Culture.GetTranslation(TranslationString.Features);
+            projectToolStripMenuItem.Text = Culture.GetTranslation(TranslationString.ProjectsLink);
+            getFeedsToolStripMenuItem.Text = Culture.GetTranslation(TranslationString.GetLiveFeed);
+            donateToolStripMenuItem.Text = Culture.GetTranslation(TranslationString.Donate);
 
             #endregion
 
@@ -191,39 +191,39 @@ namespace MSniper
 
         public void Helper(bool withParams)
         {
-            Console.WriteLine("");
-            Console.WriteLine(culture.GetTranslation(TranslationString.Description,
+            Console.WriteLine("--------------------------------------------------------");
+            Console.WriteLine(Culture.GetTranslation(TranslationString.Description,
                 Variables.ProgramName, Variables.CurrentVersion, Variables.By));
-            Console.WriteLine(culture.GetTranslation(TranslationString.GitHubProject,
-                Variables.GithubIOUri),
-                config.Warning);
-            Console.Write(culture.GetTranslation(TranslationString.CurrentVersion,
+            Console.WriteLine(Culture.GetTranslation(TranslationString.GitHubProject,
+                Variables.GithubIoUri),
+                Config.Warning);
+            Console.Write(Culture.GetTranslation(TranslationString.CurrentVersion,
                 Assembly.GetEntryAssembly().GetName().Version.ToString()),
-                config.Highlight);
-            if (Protocol.isRegistered() == false && withParams == false)
+                Config.Highlight);
+            if (Protocol.IsRegistered() == false && withParams == false)
             {
                 Console.WriteLine(" ");
-                Console.WriteLine(culture.GetTranslation(TranslationString.ProtocolNotFound,
+                Console.WriteLine(Culture.GetTranslation(TranslationString.ProtocolNotFound,
                 "registerProtocol.bat"),
-                config.Error);
+                Config.Error);
                 Shutdown();
             }
 
             if (VersionCheck.IsLatest())
             {
-                Console.WriteLine($"\t* {culture.GetTranslation(TranslationString.LatestVersion)} *", config.Highlight);
+                Console.WriteLine($"\t* {Culture.GetTranslation(TranslationString.LatestVersion)} *", Config.Highlight);
             }
             else
             {
-                Console.WriteLine(string.Format($"\t* {culture.GetTranslation(TranslationString.NewVersion)}: {{0}} *", VersionCheck.RemoteVersion), config.Success);
+                Console.WriteLine(string.Format($"* {Culture.GetTranslation(TranslationString.NewVersion)}: {{0}} *", VersionCheck.RemoteVersion), Config.Success);
 
                 string downloadlink = Variables.GithubProjectUri + "/releases/latest";
-                Console.WriteLine(string.Format($"* {culture.GetTranslation(TranslationString.DownloadLink)}:  {{0}} *", downloadlink), config.Warning);
-                if (config.DownloadNewVersion && withParams == false)
+                Console.WriteLine(string.Format($"* {Culture.GetTranslation(TranslationString.DownloadLink)}:  {{0}} *", downloadlink), Config.Warning);
+                if (Config.DownloadNewVersion && withParams == false)
                 {
-                    Console.WriteLine(culture.GetTranslation(TranslationString.AutoDownloadMsg), config.Notification);
-                    Console.Write($"{culture.GetTranslation(TranslationString.Warning)}:", config.Error);
-                    Console.WriteLine(culture.GetTranslation(TranslationString.WarningShutdownProcess), config.Highlight);
+                    Console.WriteLine(Culture.GetTranslation(TranslationString.AutoDownloadMsg), Config.Notification);
+                    Console.Write($"{Culture.GetTranslation(TranslationString.Warning)}:", Config.Error);
+                    Console.WriteLine(Culture.GetTranslation(TranslationString.WarningShutdownProcess), Config.Highlight);
                     char c = Console.ReadKey();
                     if (c == 'd' || c == 'D')
                     {
@@ -232,14 +232,14 @@ namespace MSniper
                     Shutdown();
                 }
             }
-            Console.WriteLine(culture.GetTranslation(TranslationString.IntegrateMsg,
-                Variables.ProgramName, Variables.MinRequireVersion), config.Notification);
+            Console.WriteLine(Culture.GetTranslation(TranslationString.IntegrateMsg,
+                Variables.ProgramName, Variables.MinRequireVersion), Config.Notification);
             Console.WriteLine("--------------------------------------------------------");
         }
 
         public void ShowActiveBots()
         {
-            if (config.ShowActiveBots)
+            if (Config.ShowActiveBots)
             {
                 Task.Run(() =>
                 {
@@ -263,11 +263,10 @@ namespace MSniper
                                 if (string.IsNullOrEmpty(username))
                                     continue;
 
-                                ToolStripMenuItem btn = new ToolStripMenuItem(username);
-                                btn.Tag = item.MainWindowHandle;
-                                btn.Click += delegate (Object sender, EventArgs e)
+                                var btn = new ToolStripMenuItem(username) {Tag = item.MainWindowHandle};
+                                btn.Click += delegate (object sender, EventArgs e)
                                 {
-                                    int id = int.Parse(btn.Tag.ToString());
+                                    var id = int.Parse(btn.Tag.ToString());
                                     Dlls.BringToFront(new IntPtr(id));
                                 };
                                 int isExists = ActiveBotsContains(btn.Tag as IntPtr?);
@@ -277,11 +276,9 @@ namespace MSniper
                                 }
                                 else
                                 {
-                                    if (btn.Text != activeBotsToolStripMenuItem.DropDownItems[isExists].Text)
-                                    {
-                                        activeBotsToolStripMenuItem.DropDownItems.RemoveAt(isExists);
-                                        activeBotsToolStripMenuItem.DropDownItems.Add(btn);
-                                    }
+                                    if (btn.Text == activeBotsToolStripMenuItem.DropDownItems[isExists].Text) continue;
+                                    activeBotsToolStripMenuItem.DropDownItems.RemoveAt(isExists);
+                                    activeBotsToolStripMenuItem.DropDownItems.Add(btn);
                                 }
                             }
                         }
@@ -298,11 +295,10 @@ namespace MSniper
 
         private void isActiveBotsAlive()
         {
-            for (int i = 0; i < activeBotsToolStripMenuItem.DropDownItems.Count; i++)
+            for (var i = 0; i < activeBotsToolStripMenuItem.DropDownItems.Count; i++)
             {
-                Process prc = GetNecroBotProcesses()
-               .Where(p => p.MainWindowHandle.ToString() == activeBotsToolStripMenuItem.DropDownItems[i].Tag.ToString())
-               .FirstOrDefault();
+                var prc = GetNecroBotProcesses()
+               .FirstOrDefault(p => p.MainWindowHandle.ToString() == activeBotsToolStripMenuItem.DropDownItems[i].Tag.ToString());
                 if (prc == null)
                 {
                     activeBotsToolStripMenuItem.DropDownItems.RemoveAt(i);
@@ -314,7 +310,7 @@ namespace MSniper
         {
             for (int i = 0; i < activeBotsToolStripMenuItem.DropDownItems.Count; i++)
             {
-                if (activeBotsToolStripMenuItem.DropDownItems[i].Tag.ToString() == intptr.Value.ToString())
+                if (intptr != null && activeBotsToolStripMenuItem.DropDownItems[i].Tag.ToString() == intptr.Value.ToString())
                     return i;
             }
             return -1;
@@ -328,10 +324,10 @@ namespace MSniper
                 ExportReferences();
                 LoadConfigurations();
                 ShowActiveBots();
-                Console.Title = culture.GetTranslation(TranslationString.Title,
+                Console.Title = Culture.GetTranslation(TranslationString.Title,
                     Variables.ProgramName, Variables.CurrentVersion, Variables.By
                     );
-                Helper(Console.Arguments.Length == 0 ? false : true);
+                Helper(Console.Arguments.Length != 0);
                 CheckNecroBots(Console.Arguments.Length != 1);
                 //args = new string[] { "msniper://Ivysaur/-33.890835,151.223859" };//for debug mode
                 //args = new string[] { "-registerp" };//for debug mode
@@ -346,7 +342,7 @@ namespace MSniper
 
                         case "-registerp":
                             Protocol.Register();
-                            Console.WriteLine(culture.GetTranslation(TranslationString.ProtocolRegistered), config.Success);
+                            Console.WriteLine(Culture.GetTranslation(TranslationString.ProtocolRegistered), Config.Success);
                             break;
 
                         case "-remove":
@@ -355,20 +351,20 @@ namespace MSniper
 
                         case "-removep":
                             Protocol.Delete();
-                            Console.WriteLine(culture.GetTranslation(TranslationString.ProtocolDeleted), config.Success);
+                            Console.WriteLine(Culture.GetTranslation(TranslationString.ProtocolDeleted), Config.Success);
                             break;
 
                         case "-resetallsnipelist":
-                            RemoveAllSnipeMSJSON();
+                            RemoveAllSnipeMsjson();
                             break;
 
                         default:
-                            string re0 = "(pokesniper2://|msniper://)";//protocol
-                            string re1 = "((?:\\w+))";//pokemon name
-                            string re2 = "(\\/)";//separator
-                            string re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
-                            string re4 = "(,)";//separator
-                            string re5 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
+                            var re0 = "(pokesniper2://|msniper://)"; //protocol
+                            var re1 = "((?:\\w+))";//pokemon name
+                            var re2 = "(\\/)";//separator
+                            var re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
+                            var re4 = "(,)";//separator
+                            var re5 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
 
                             Regex r = new Regex(re0 + re1 + re2 + re3 + re4 + re5, RegexOptions.IgnoreCase | RegexOptions.Singleline);
                             Match m = r.Match(Console.Arguments.First());
@@ -378,7 +374,7 @@ namespace MSniper
                             }
                             else
                             {
-                                Console.WriteLine(culture.GetTranslation(TranslationString.UnknownLinkFormat), config.Error);
+                                Console.WriteLine(Culture.GetTranslation(TranslationString.UnknownLinkFormat), Config.Error);
                             }
                             break;
                     }
@@ -386,12 +382,12 @@ namespace MSniper
                 else if (Console.Arguments.Length == 0)
                 {
                     RunningNormally = true;
-                    Console.WriteLine(culture.GetTranslation(TranslationString.CustomPasteDesc));
-                    Console.WriteLine(culture.GetTranslation(TranslationString.CustomPasteFormat));
+                    Console.WriteLine(Culture.GetTranslation(TranslationString.CustomPasteDesc));
+                    Console.WriteLine(Culture.GetTranslation(TranslationString.CustomPasteFormat));
                     Console.WriteLine("--------------------------------------------------------");
                     do
                     {
-                        Console.WriteLine(culture.GetTranslation(TranslationString.WaitingDataMsg), config.Highlight);
+                        Console.WriteLine(Culture.GetTranslation(TranslationString.WaitingDataMsg), Config.Highlight);
                         string snipping = Console.ReadLine();
                         CheckNecroBots(true);
                         //snipping = "dragonite 37.766627 , -122.403677";//for debug mode (spaces are ignored)
@@ -407,20 +403,18 @@ namespace MSniper
                         bool error = true;
                         foreach (Match m in r.Matches(snipping))
                         {
-                            if (m.Success)
-                            {
-                                string pokemonN = m.Groups[1].ToString();
-                                error = false;
-                                PokemonId prkmnm = PokemonId.Abra;
-                                bool verified = Enum.TryParse<PokemonId>(pokemonN, true, out prkmnm);
-                                if (verified)
-                                    Snipe(pokemonN, m.Groups[3].ToString(), m.Groups[5].ToString());
-                                else
-                                    Console.WriteLine(culture.GetTranslation(TranslationString.WrongPokemonName, pokemonN), config.Error);
-                            }
+                            if (!m.Success) continue;
+                            var pokemonN = m.Groups[1].ToString();
+                            error = false;
+                            var prkmnm = PokemonId.Abra;
+                            var verified = Enum.TryParse<PokemonId>(pokemonN, true, out prkmnm);
+                            if (verified)
+                                Snipe(pokemonN, m.Groups[3].ToString(), m.Groups[5].ToString());
+                            else
+                                Console.WriteLine(Culture.GetTranslation(TranslationString.WrongPokemonName, pokemonN), Config.Error);
                         }
                         if (error)
-                            Console.WriteLine(culture.GetTranslation(TranslationString.CustomPasteWrongFormat), config.Error);
+                            Console.WriteLine(Culture.GetTranslation(TranslationString.CustomPasteWrongFormat), Config.Error);
                     }
                     while (true);
                 }
@@ -428,27 +422,29 @@ namespace MSniper
             });
         }
 
-        public void RemoveAllSnipeMSJSON()
+        public void RemoveAllSnipeMsjson()
         {
             Process[] plist = GetNecroBotProcesses();
             foreach (var item in plist)
             {
-                string pathRemote = GetSnipeMSPath(Path.GetDirectoryName(item.MainModule.FileName));
+                string pathRemote = GetSnipeMsPath(Path.GetDirectoryName(item.MainModule.FileName));
                 if (File.Exists(pathRemote))
                 {
                     FileDelete(pathRemote);
                     string val = item.MainWindowTitle.Split('-').First().Split(' ')[2];
-                    Console.WriteLine(culture.GetTranslation(TranslationString.RemoveAllSnipe, val), config.Success);
+                    Console.WriteLine(Culture.GetTranslation(TranslationString.RemoveAllSnipe, val), Config.Success);
                 }
             }
-            Console.WriteLine(culture.GetTranslation(TranslationString.RemoveAllSnipeFinished, plist.Count()), config.Success);
+            Console.WriteLine(Culture.GetTranslation(TranslationString.RemoveAllSnipeFinished, plist.Count()), Config.Success);
         }
 
         public void Runas(string executablepath, string parameters, bool afterKillSelf = true)
         {
-            ProcessStartInfo psi = new ProcessStartInfo(Application.ExecutablePath);
-            psi.Verb = "runas";
-            psi.Arguments = parameters;
+            ProcessStartInfo psi = new ProcessStartInfo(Application.ExecutablePath)
+            {
+                Verb = "runas",
+                Arguments = parameters
+            };
             Process.Start(psi);
             if (afterKillSelf)
                 Process.GetCurrentProcess().Kill();
@@ -456,7 +452,7 @@ namespace MSniper
 
         public void Shutdown()
         {
-            Shutdown(config.CloseDelaySec);
+            Shutdown(Config.CloseDelaySec);
         }
 
         public void Shutdown(int seconds)
@@ -481,38 +477,38 @@ namespace MSniper
 
                     if (!isBotUpperThan094(pList[i].MainModule.FileVersionInfo))
                     {
-                        Console.WriteLine(culture.GetTranslation(TranslationString.IncompatibleVersionMsg, username), config.Error);
+                        Console.WriteLine(Culture.GetTranslation(TranslationString.IncompatibleVersionMsg, username), Config.Error);
                         continue;
                     }
-                    string pathRemote = GetSnipeMSPath(Path.GetDirectoryName(pList[i].MainModule.FileName));
-                    List<MSniperInfo> MSniperLocation = ReadSnipeMS(pathRemote);
+                    string pathRemote = GetSnipeMsPath(Path.GetDirectoryName(pList[i].MainModule.FileName));
+                    List<MSniperInfo> mSniperLocation = ReadSnipeMs(pathRemote);
                     MSniperInfo newPokemon = new MSniperInfo()
                     {
                         Latitude = lat,
                         Longitude = lon,
                         Id = pokemonName
                     };
-                    if (MSniperLocation.FindIndex(p => p.Id == newPokemon.Id && p.Latitude == newPokemon.Latitude && p.Longitude == newPokemon.Longitude) == -1)
+                    if (mSniperLocation.FindIndex(p => p.Id == newPokemon.Id && p.Latitude == newPokemon.Latitude && p.Longitude == newPokemon.Longitude) == -1)
                     {
-                        MSniperLocation.Add(newPokemon);
-                        if (WriteSnipeMS(MSniperLocation, newPokemon, pathRemote))
+                        mSniperLocation.Add(newPokemon);
+                        if (WriteSnipeMs(mSniperLocation, pathRemote))
                         {
-                            Console.WriteLine(culture.GetTranslation(TranslationString.SendingPokemonToNecroBot,
+                            Console.WriteLine(Culture.GetTranslation(TranslationString.SendingPokemonToNecroBot,
                                 newPokemon.Id.ToLower(),
                                 newPokemon.Latitude,
                                 newPokemon.Longitude,
-                                username), config.Success);
+                                username), Config.Success);
                         }
                     }
                     else
                     {
-                        Console.WriteLine(culture.GetTranslation(TranslationString.AlreadySnipped, newPokemon), config.Error);
+                        Console.WriteLine(Culture.GetTranslation(TranslationString.AlreadySnipped, newPokemon), Config.Error);
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message, config.Error);
+                Console.WriteLine(ex.Message, Config.Error);
             }
         }
 
@@ -524,9 +520,9 @@ namespace MSniper
             Process.GetCurrentProcess().Kill();
         }
 
-        private static string GetSnipeMSPath(string NecroBotEXEPath)
+        private static string GetSnipeMsPath(string necroBotExePath)
         {
-            return Path.Combine(NecroBotEXEPath, Variables.SnipeFileName);
+            return Path.Combine(necroBotExePath, Variables.SnipeFileName);
         }
 
         private static Configs LoadConfigs()
@@ -536,19 +532,19 @@ namespace MSniper
             CultureInfo.DefaultThreadCurrentCulture = culture;
             Thread.CurrentThread.CurrentCulture = culture;
 
-            Configs _settings = new Configs();
+            var settings = new Configs();
             if (File.Exists(Variables.SettingPath))
             {
-                _settings = Configs.Load();
+                settings = Configs.Load();
             }
             else
             {
-                Configs.SaveFiles(_settings);
+                Configs.SaveFiles(settings);
             }
-            return _settings;
+            return settings;
         }
 
-        private static List<MSniperInfo> ReadSnipeMS(string path)
+        private static List<MSniperInfo> ReadSnipeMs(string path)
         {
             if (File.Exists(path))
             {
@@ -571,13 +567,13 @@ namespace MSniper
             }
         }
 
-        private static bool WriteSnipeMS(List<MSniperInfo> _MSniperLocation, MSniperInfo _newpokemon, string path)
+        private static bool WriteSnipeMs(List<MSniperInfo> _MSniperLocation, string path)
         {
             do
             {
                 try
                 {
-                    StreamWriter sw = new StreamWriter(path, false, Encoding.UTF8);
+                    var sw = new StreamWriter(path, false, Encoding.UTF8);
                     sw.WriteLine(JsonConvert.SerializeObject(
                         _MSniperLocation,
                         Formatting.Indented,
@@ -606,14 +602,7 @@ namespace MSniper
 
         private bool isBotUpperThan094(FileVersionInfo fversion)
         {
-            if (new Version(fversion.FileVersion) >= new Version(Variables.MinRequireVersion))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return new Version(fversion.FileVersion) >= new Version(Variables.MinRequireVersion);
         }
 
         private Translation LoadCulture(Configs _settings)

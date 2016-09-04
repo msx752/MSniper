@@ -13,7 +13,7 @@ namespace MSniper
         {
             try
             {
-                string title = Process.GetProcessById(p.Id).MainWindowTitle;
+                var title = Process.GetProcessById(p.Id).MainWindowTitle;
                 try
                 {
                     return title.Split('-').First().Split(' ')[2];

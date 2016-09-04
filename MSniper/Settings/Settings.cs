@@ -46,15 +46,19 @@ namespace MSniper.Settings
 
 
         [JsonIgnore]
-        public Color Error { get { return HexToColor(ErrorColor); } }
+        public Color Error => HexToColor(ErrorColor);
+
         [JsonIgnore]
-        public Color Highlight { get { return HexToColor(HighlightColor); } }
+        public Color Highlight => HexToColor(HighlightColor);
+
         [JsonIgnore]
-        public Color Notification { get { return HexToColor(NotificationColor); } }
+        public Color Notification => HexToColor(NotificationColor);
+
         [JsonIgnore]
-        public Color Success { get { return HexToColor(SuccessColor); } }
+        public Color Success => HexToColor(SuccessColor);
+
         [JsonIgnore]
-        public Color Warning { get { return HexToColor(WarningColor); } }
+        public Color Warning => HexToColor(WarningColor);
 
         public static string ColorToHex(Color c)
         {
@@ -67,58 +71,56 @@ namespace MSniper.Settings
 
         public static Configs Load()
         {
-            Configs _settings = new Configs();
-            string configFile = Variables.SettingPath;
-            if (File.Exists(configFile))
+            var settings = new Configs();
+            var configFile = Variables.SettingPath;
+            if (!File.Exists(configFile)) return settings;
+            try
             {
-                try
+                //if the file exists, load the settings
+                string input = "";
+                int count = 0;
+                while (true)
                 {
-                    //if the file exists, load the settings
-                    string input = "";
-                    int count = 0;
-                    while (true)
-                    {
-                        try
-                        {
-                            input = File.ReadAllText(configFile);
-
-                            break;
-                        }
-                        catch (Exception exception)
-                        {
-                            if (count > 10)
-                            {
-                                //sometimes we have to wait close to config.json for access
-                                Program.frm.Console.WriteLine("configFile: " + exception.Message, Color.Red);
-                            }
-                            count++;
-                            Thread.Sleep(1000);
-                        }
-                    };
-
-                    var jsonSettings = new JsonSerializerSettings();
-                    jsonSettings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
-                    jsonSettings.ObjectCreationHandling = ObjectCreationHandling.Replace;
-
                     try
                     {
-                        _settings = JsonConvert.DeserializeObject<Configs>(input, jsonSettings);
-                        SaveFiles(_settings);
+                        input = File.ReadAllText(configFile);
+
+                        break;
                     }
-                    catch (JsonSerializationException exception)
+                    catch (Exception exception)
                     {
-                        Program.frm.Console.WriteLine("Settings.json WRONG FORMAT: " + exception.Message, Color.Red);
-                        Program.frm.Delay(30);
+                        if (count > 10)
+                        {
+                            //sometimes we have to wait close to config.json for access
+                            Program.frm.Console.WriteLine("configFile: " + exception.Message, Color.Red);
+                        }
+                        count++;
+                        Thread.Sleep(1000);
                     }
-                }
-                catch (JsonReaderException exception)
+                };
+
+                var jsonSettings = new JsonSerializerSettings();
+                jsonSettings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
+                jsonSettings.ObjectCreationHandling = ObjectCreationHandling.Replace;
+
+                try
                 {
-                    Program.frm.Console.WriteLine("JSON Exception: " + exception.Message, Color.Red);
-                    return _settings;
+                    settings = JsonConvert.DeserializeObject<Configs>(input, jsonSettings);
+                    SaveFiles(settings);
+                }
+                catch (JsonSerializationException exception)
+                {
+                    Program.frm.Console.WriteLine("Settings.json WRONG FORMAT: " + exception.Message, Color.Red);
+                    Program.frm.Delay(30);
                 }
             }
+            catch (JsonReaderException exception)
+            {
+                Program.frm.Console.WriteLine("JSON Exception: " + exception.Message, Color.Red);
+                return settings;
+            }
 
-            return _settings;
+            return settings;
         }
 
         public static void SaveFiles(Configs settings)

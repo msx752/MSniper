@@ -8,8 +8,8 @@ namespace MSniper
 {
     public static class VersionCheck
     {
-        private static Version RVersion = null;
-        public static string RemoteVersion => RVersion.ToString();
+        private static Version _rVersion = null;
+        public static string RemoteVersion => _rVersion.ToString();
         public static string NameWithVersion => "MSniper.v" + RemoteVersion;
 
         public static bool IsLatest()
@@ -23,7 +23,7 @@ namespace MSniper
                     return false;
 
                 var gitVersion = new Version($"{match.Groups[1]}.{match.Groups[2]}.{match.Groups[3]}.{match.Groups[4]}");
-                RVersion = gitVersion;
+                _rVersion = gitVersion;
                 if (gitVersion > Assembly.GetExecutingAssembly().GetName().Version)
                 {
                     return false;
@@ -31,7 +31,7 @@ namespace MSniper
             }
             catch (Exception ex)
             {
-                Program.frm.Console.WriteLine(ex.Message, Program.frm.config.Error);
+                Program.frm.Console.WriteLine(ex.Message, Program.frm.Config.Error);
                 return true; //better than just doing nothing when git server down
             }
 

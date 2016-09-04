@@ -14,7 +14,7 @@ namespace MSniper
     {
         public static byte[] DownloadData(string url)
         {
-            using (MSniperClient w = new MSniperClient())
+            using (var w = new MSniperClient())
             {
                 w.Encoding = Encoding.Unicode;
                 return w.DownloadData(url);
@@ -23,19 +23,19 @@ namespace MSniper
 
         public static void DownloadNewVersion()
         {
-            Program.frm.Console.WriteLine(Program.frm.culture.GetTranslation(TranslationString.DownloadingNewVersion, VersionCheck.NameWithVersion), Program.frm.config.Success);
+            Program.frm.Console.WriteLine(Program.frm.Culture.GetTranslation(TranslationString.DownloadingNewVersion, VersionCheck.NameWithVersion), Program.frm.Config.Success);
             byte[] downloaded = GetFile(VersionCheck.RemoteVersion);
-            Program.frm.Console.WriteLine(Program.frm.culture.GetTranslation(TranslationString.DownloadFinished), Program.frm.config.Success);
+            Program.frm.Console.WriteLine(Program.frm.Culture.GetTranslation(TranslationString.DownloadFinished), Program.frm.Config.Success);
             WriteFile(downloaded, Variables.TempRarFileUri);
-            Program.frm.Console.WriteLine(Program.frm.culture.GetTranslation(TranslationString.DecompressingNewFile), Program.frm.config.Success);
+            Program.frm.Console.WriteLine(Program.frm.Culture.GetTranslation(TranslationString.DecompressingNewFile), Program.frm.Config.Success);
             DecompressZip(Variables.TempRarFileUri);
-            Program.frm.Console.WriteLine(Program.frm.culture.GetTranslation(TranslationString.OldFilesChangingWithNews), Program.frm.config.Success);
+            Program.frm.Console.WriteLine(Program.frm.Culture.GetTranslation(TranslationString.OldFilesChangingWithNews), Program.frm.Config.Success);
             ChangeWithOldFiles();
         }
 
         public static string DownloadString(string url)
         {
-            using (MSniperClient w = new MSniperClient())
+            using (var w = new MSniperClient())
             {
                 return w.DownloadString(url);
             }
@@ -54,9 +54,8 @@ namespace MSniper
             byte[] updaterData = DownloadData(url);
             File.WriteAllBytes(updater, updaterData);
             Thread.Sleep(500);
-            ProcessStartInfo psi = new ProcessStartInfo(updater, VersionCheck.NameWithVersion);
-            Process proc = new Process();
-            proc.StartInfo = psi;
+            var psi = new ProcessStartInfo(updater, VersionCheck.NameWithVersion);
+            var proc = new Process {StartInfo = psi};
             proc.Start();
             proc.WaitForExit();
             Process.GetCurrentProcess().Kill();
@@ -68,49 +67,47 @@ namespace MSniper
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(fullpath));
             }
-            if (!File.Exists(fullpath))
-            {
-                StreamWriter sw = new StreamWriter(fullpath, false);
-                sw.Write(' ');
-                sw.Close();
-            }
+            if (File.Exists(fullpath)) return;
+            var sw = new StreamWriter(fullpath, false);
+            sw.Write(' ');
+            sw.Close();
         }
 
-        /// <summary>
-        /// returns fileupdater.bat full path 
-        /// </summary>
-        /// <returns>
-        /// </returns>
-        private static string CreateUpdaterBatch()
-        {
-            string path = Path.Combine(Variables.TempPath, "fileUpdater.bat");
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("@echo off");
-            sb.AppendLine("ECHO ### FILES CHANGING ###");
-            sb.AppendLine(string.Format("ECHO ### {0}.exe  ###", VersionCheck.NameWithVersion));
-            sb.AppendLine("ECHO .");
-            sb.AppendLine("taskkill /F /IM \"MSniper.exe\"");
-            sb.AppendLine("timeout /t 1");
-            sb.AppendLine(string.Format("xcopy /s/y/e/q/r \"%cd%\\temp\\{0}\" \"%cd%\"", VersionCheck.NameWithVersion));
-            sb.AppendLine("timeout /t 1");
-            sb.AppendLine(string.Format("del /S \"..\\{0}\"", "registerProtocol.bat"));
-            sb.AppendLine(string.Format("del /S \"..\\{0}\"", "removeProtocol.bat"));
-            sb.AppendLine(string.Format("del /S \"..\\{0}\"", "resetSnipeList.bat"));
-            sb.AppendLine(string.Format("del /S \"..\\{0}\"", "Newtonsoft.Json.dll"));
-            sb.AppendLine("timeout /t 1");
-            sb.AppendLine("start \"\" \"%cd%\\MSniper.exe\"");
-            sb.AppendLine("ECHO ### FINISHED ###");
-            File.WriteAllText(path, sb.ToString());
-            return path;
-        }
+        ///// <summary>
+        ///// returns fileupdater.bat full path 
+        ///// </summary>
+        ///// <returns>
+        ///// </returns>
+        //private static string CreateUpdaterBatch()
+        //{
+        //    var path = Path.Combine(Variables.TempPath, "fileUpdater.bat");
+        //    var sb = new StringBuilder();
+        //    sb.AppendLine("@echo off");
+        //    sb.AppendLine("ECHO ### FILES CHANGING ###");
+        //    sb.AppendLine($"ECHO ### {VersionCheck.NameWithVersion}.exe  ###");
+        //    sb.AppendLine("ECHO .");
+        //    sb.AppendLine("taskkill /F /IM \"MSniper.exe\"");
+        //    sb.AppendLine("timeout /t 1");
+        //    sb.AppendLine($"xcopy /s/y/e/q/r \"%cd%\\temp\\{VersionCheck.NameWithVersion}\" \"%cd%\"");
+        //    sb.AppendLine("timeout /t 1");
+        //    sb.AppendLine("del /S \"..\\registerProtocol.bat\"");
+        //    sb.AppendLine("del /S \"..\\removeProtocol.bat\"");
+        //    sb.AppendLine("del /S \"..\\resetSnipeList.bat\"");
+        //    sb.AppendLine("del /S \"..\\Newtonsoft.Json.dll\"");
+        //    sb.AppendLine("timeout /t 1");
+        //    sb.AppendLine("start \"\" \"%cd%\\MSniper.exe\"");
+        //    sb.AppendLine("ECHO ### FINISHED ###");
+        //    File.WriteAllText(path, sb.ToString());
+        //    return path;
+        //}
 
         private static void DecompressZip(string zipFullPath)
         {
-            using (ZipArchive archive = ZipFile.OpenRead(zipFullPath))
+            using (var archive = ZipFile.OpenRead(zipFullPath))
             {
-                foreach (ZipArchiveEntry entry in archive.Entries)
+                foreach (var entry in archive.Entries)
                 {
-                    string path = Path.Combine(Variables.TempPath, VersionCheck.NameWithVersion, entry.FullName);
+                    var path = Path.Combine(Variables.TempPath, VersionCheck.NameWithVersion, entry.FullName);
                     CreateEmptyFile(path);
                     entry.ExtractToFile(path, true);
                 }
@@ -121,8 +118,8 @@ namespace MSniper
         {
             try
             {
-                string url = string.Format(Variables.FileLink, fileVersion);
-                byte[] downloadedFile = DownloadData(url);
+                var url = string.Format(Variables.FileLink, fileVersion);
+                var downloadedFile = DownloadData(url);
                 return downloadedFile;
             }
             catch (Exception ex)
@@ -132,7 +129,7 @@ namespace MSniper
                     return GetFile(VersionCheck.RemoteVersion.Substring(0, 5));
                 }
                 catch { }
-                Program.frm.Console.WriteLine(ex.Message, Program.frm.config.Error);
+                Program.frm.Console.WriteLine(ex.Message, Program.frm.Config.Error);
                 return null;
             }
         }

@@ -7,14 +7,14 @@ namespace MSniper
 {
     public static class Variables
     {
-        public static string BotEXEName => "necrobot";
+        public static string BotExeName => "necrobot";
         public static string By => "Msx752";
         public static string CurrentVersion => Assembly.GetExecutingAssembly().GetName().Version.ToString();
         public static string ExecutablePath => Application.ExecutablePath;
         public static string FileLink => $"{GithubProjectUri}/releases/download/{{0}}/{ProgramName}.v{{0}}.zip";
         public static string GithubProjectUri => $"https://github.com/{By}/{ProgramName}";
         public static string GithubRawUri => $"https://raw.githubusercontent.com/{By}/{ProgramName}";
-        public static string GithubIOUri => $"https://{By}.github.io/{ProgramName}/";
+        public static string GithubIoUri => $"https://{By}.github.io/{ProgramName}/";
         public static string MinRequireVersion => "0.9.5";
         public static string ProgramName => "MSniper";
         public static string SettingPath => Path.Combine(Application.StartupPath, SettingsFileName);
