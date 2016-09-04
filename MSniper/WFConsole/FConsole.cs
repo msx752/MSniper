@@ -142,7 +142,7 @@ namespace MSniper.WFConsole
             {
                 if (recentlist.Count != 0)
                 {
-                    string recentText = string.Empty;
+                    var recentText = string.Empty;
                     if (e.KeyCode == Keys.Up)
                     {
                         recentText = RecentUndo();
@@ -231,9 +231,9 @@ namespace MSniper.WFConsole
         {
             if (Lines.Any())
             {
-                int line = Lines.Count() - 1;
-                int s1 = GetFirstCharIndexOfCurrentLine();
-                int s2 = line < Lines.Count() - 1 ?
+                var line = Lines.Count() - 1;
+                var s1 = GetFirstCharIndexOfCurrentLine();
+                var s2 = line < Lines.Count() - 1 ?
                           GetFirstCharIndexFromLine(line + 1) - 1 :
                           Text.Length;
                 Select(s1, s2 - s1);

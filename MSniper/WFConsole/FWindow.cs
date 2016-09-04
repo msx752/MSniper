@@ -86,10 +86,7 @@ namespace MSniper.WFConsole
             Console.InitializeFConsole();
         }
 
-        private void FWindow_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Process.GetCurrentProcess().Kill();
-        }
+        private void FWindow_FormClosed(object sender, FormClosedEventArgs e) => Process.GetCurrentProcess().Kill();
 
         private void FWindow_Load(object sender, EventArgs e)
         {
@@ -110,36 +107,33 @@ namespace MSniper.WFConsole
 
         public Process[] GetNecroBotProcesses()
         {
-            Process[] plist = Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith(Variables.BotExeName) && !x.ProcessName.ToLower().EndsWith(".vshost")).ToArray();
+            var plist = Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith(Variables.BotExeName) && !x.ProcessName.ToLower().EndsWith(".vshost")).ToArray();
             BotCount = plist.Count();
             return plist;
         }
 
         public void CheckNecroBots(bool shutdownMSniper)
         {
-            if (!GetNecroBotProcesses().Any())
-            {
-                Console.WriteLine(string.Empty.PadRight(10)+Culture.GetTranslation(TranslationString.AnyNecroBotNotFound), Config.Error);
-                Console.WriteLine(string.Empty.PadRight(5) + $" *{Culture.GetTranslation(TranslationString.RunBeforeMSniper)}*", Config.Error);
-                Console.WriteLine("--------------------------------------------------------");
-                if (shutdownMSniper)
-                    Shutdown();
-            }
+            if (GetNecroBotProcesses().Any()) return;
+            Console.WriteLine(string.Empty.PadRight(10)+Culture.GetTranslation(TranslationString.AnyNecroBotNotFound), Config.Error);
+            Console.WriteLine(string.Empty.PadRight(5) + $" *{Culture.GetTranslation(TranslationString.RunBeforeMSniper)}*", Config.Error);
+            Console.WriteLine("--------------------------------------------------------");
+            if (shutdownMSniper)
+                Shutdown();
         }
 
         public void Delay(int seconds, bool isShutdownMsg = false)
         {
-            for (int i = seconds; i >= 0; i--)
+            for (var i = seconds; i >= 0; i--)
             {
                 var ts = TranslationString.ShutdownMsg;
                 if (!isShutdownMsg)
                     ts = TranslationString.SubsequentProcessing;
 
-                if (Culture != null)
-                    Console.UpdateLine(Console.Lines.Count() - 1, Culture.GetTranslation(ts, i));
-                else
-                    Console.UpdateLine(Console.Lines.Count() - 1,
-                        $"Subsequent processing passing in {i} seconds or Close the Program");
+                Console.UpdateLine(Console.Lines.Count() - 1,
+                    Culture != null
+                        ? Culture.GetTranslation(ts, i)
+                        : $"Subsequent processing passing in {i} seconds or Close the Program");
 
                 Thread.Sleep(1000);
             }
@@ -149,7 +143,7 @@ namespace MSniper.WFConsole
         {
             try
             {
-                string path = Path.Combine(Application.StartupPath, "Newtonsoft.Json.dll");
+                var path = Path.Combine(Application.StartupPath, "Newtonsoft.Json.dll");
                 if (!File.Exists(path))
                     File.WriteAllBytes(path, Properties.Resources.Newtonsoft_Json);
                 path = Path.Combine(Application.StartupPath, "registerProtocol.bat");
@@ -219,14 +213,14 @@ namespace MSniper.WFConsole
             {
                 Console.WriteLine(string.Format($"* {Culture.GetTranslation(TranslationString.NewVersion)}: {{0}} *", VersionCheck.RemoteVersion), Config.Success);
 
-                string downloadlink = Variables.GithubProjectUri + "/releases/latest";
+                var downloadlink = Variables.GithubProjectUri + "/releases/latest";
                 Console.WriteLine(string.Format($"* {Culture.GetTranslation(TranslationString.DownloadLink)}:  {{0}} *", downloadlink), Config.Warning);
                 if (Config.DownloadNewVersion && withParams == false)
                 {
                     Console.WriteLine(Culture.GetTranslation(TranslationString.AutoDownloadMsg), Config.Notification);
                     Console.Write($"{Culture.GetTranslation(TranslationString.Warning)}:", Config.Error);
                     Console.WriteLine(Culture.GetTranslation(TranslationString.WarningShutdownProcess), Config.Highlight);
-                    char c = Console.ReadKey();
+                    var c = Console.ReadKey();
                     if (c == 'd' || c == 'D')
                     {
                         Downloader.DownloadNewVersion();
@@ -249,12 +243,12 @@ namespace MSniper.WFConsole
                     {
                         try
                         {
-                            Process[] plist = GetNecroBotProcesses();
+                            var plist = GetNecroBotProcesses();
                             activeBotsToolStripMenuItem.Visible = plist.Length != 0;
                             IsActiveBotsAlive();
-                            foreach (Process item in plist)
+                            foreach (var item in plist)
                             {
-                                string username = item.GetWindowTitle();
+                                var username = item.GetWindowTitle();
                                 if (string.IsNullOrEmpty(username))
                                     continue;
 
@@ -264,7 +258,7 @@ namespace MSniper.WFConsole
                                     var id = int.Parse(btn.Tag.ToString());
                                     Dlls.BringToFront(new IntPtr(id));
                                 };
-                                int isExists = ActiveBotsContains(btn.Tag as IntPtr?);
+                                var isExists = ActiveBotsContains(btn.Tag as IntPtr?);
                                 if (isExists == -1)
                                 {
                                     activeBotsToolStripMenuItem.DropDownItems.Add(btn);
@@ -303,7 +297,7 @@ namespace MSniper.WFConsole
 
         private int ActiveBotsContains(IntPtr? intptr)
         {
-            for (int i = 0; i < activeBotsToolStripMenuItem.DropDownItems.Count; i++)
+            for (var i = 0; i < activeBotsToolStripMenuItem.DropDownItems.Count; i++)
             {
                 if (intptr != null && activeBotsToolStripMenuItem.DropDownItems[i].Tag.ToString() == intptr.Value.ToString())
                     return i;
@@ -362,7 +356,7 @@ namespace MSniper.WFConsole
                             var re5 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
 
                             var r = new Regex(re0 + re1 + re2 + re3 + re4 + re5, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-                            Match m = r.Match(Console.Arguments.First());
+                            var m = r.Match(Console.Arguments.First());
                             if (m.Success)
                             {
                                 Snipe(m.Groups[2].ToString(), m.Groups[4].ToString(), m.Groups[6].ToString());
@@ -383,19 +377,19 @@ namespace MSniper.WFConsole
                     do
                     {
                         Console.WriteLine(Culture.GetTranslation(TranslationString.WaitingDataMsg), Config.Highlight);
-                        string snipping = Console.ReadLine();
+                        var snipping = Console.ReadLine();
                         CheckNecroBots(true);
                         //snipping = "dragonite 37.766627 , -122.403677";//for debug mode (spaces are ignored)
                         if (snipping.ToLower() == "e")
                             break;
-                        string re1 = "((?:\\w+))";//pokemon name
-                        string re2 = "( )";//separator
-                        string re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
-                        string re4 = "(\\s*,\\s*)";//separator
-                        string re5 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
-                        Regex r = new Regex(re1 + re2 + re3 + re4 + re5, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                        var re1 = "((?:\\w+))";//pokemon name
+                        var re2 = "( )";//separator
+                        var re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
+                        var re4 = "(\\s*,\\s*)";//separator
+                        var re5 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
+                        var r = new Regex(re1 + re2 + re3 + re4 + re5, RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
-                        bool error = true;
+                        var error = true;
                         foreach (Match m in r.Matches(snipping))
                         {
                             if (!m.Success) continue;
@@ -419,14 +413,14 @@ namespace MSniper.WFConsole
 
         public void RemoveAllSnipeMsjson()
         {
-            Process[] plist = GetNecroBotProcesses();
+            var plist = GetNecroBotProcesses();
             foreach (var item in plist)
             {
-                string pathRemote = GetSnipeMsPath(Path.GetDirectoryName(item.MainModule.FileName));
+                var pathRemote = GetSnipeMsPath(Path.GetDirectoryName(item.MainModule.FileName));
                 if (File.Exists(pathRemote))
                 {
                     FileDelete(pathRemote);
-                    string val = item.MainWindowTitle.Split('-').First().Split(' ')[2];
+                    var val = item.MainWindowTitle.Split('-').First().Split(' ')[2];
                     Console.WriteLine(Culture.GetTranslation(TranslationString.RemoveAllSnipe, val), Config.Success);
                 }
             }
@@ -435,7 +429,7 @@ namespace MSniper.WFConsole
 
         public void Runas(string executablepath, string parameters, bool afterKillSelf = true)
         {
-            ProcessStartInfo psi = new ProcessStartInfo(Application.ExecutablePath)
+            var psi = new ProcessStartInfo(Application.ExecutablePath)
             {
                 Verb = "runas",
                 Arguments = parameters
@@ -461,23 +455,23 @@ namespace MSniper.WFConsole
         {
             try
             {
-                double lat = double.Parse(latt, CultureInfo.InvariantCulture);
-                double lon = double.Parse(lonn, CultureInfo.InvariantCulture);
-                Process[] pList = GetNecroBotProcesses();
-                for (int i = 0; i < pList.Length; i++)
+                var lat = double.Parse(latt, CultureInfo.InvariantCulture);
+                var lon = double.Parse(lonn, CultureInfo.InvariantCulture);
+                var pList = GetNecroBotProcesses();
+                foreach (var t in pList)
                 {
-                    string username = pList[i].GetWindowTitle();
+                    var username = t.GetWindowTitle();
                     if (string.IsNullOrEmpty(username))
                         continue;
 
-                    if (!IsBotUpperThan094(pList[i].MainModule.FileVersionInfo))
+                    if (!IsBotUpperThan094(t.MainModule.FileVersionInfo))
                     {
                         Console.WriteLine(Culture.GetTranslation(TranslationString.IncompatibleVersionMsg, username), Config.Error);
                         continue;
                     }
-                    string pathRemote = GetSnipeMsPath(Path.GetDirectoryName(pList[i].MainModule.FileName));
-                    List<MSniperInfo> mSniperLocation = ReadSnipeMs(pathRemote);
-                    MSniperInfo newPokemon = new MSniperInfo()
+                    var pathRemote = GetSnipeMsPath(Path.GetDirectoryName(t.MainModule.FileName));
+                    var mSniperLocation = ReadSnipeMs(pathRemote);
+                    var newPokemon = new MSniperInfo()
                     {
                         Latitude = lat,
                         Longitude = lon,
@@ -510,19 +504,16 @@ namespace MSniper.WFConsole
         private static void ExportDefaultTranslation()
         {
             // this method only using for information \temp\languages\translation.en.json
-            Translation culture = new Translation();
+            var culture = new Translation();
             culture.Save("en");
             Process.GetCurrentProcess().Kill();
         }
 
-        private static string GetSnipeMsPath(string necroBotExePath)
-        {
-            return Path.Combine(necroBotExePath, Variables.SnipeFileName);
-        }
+        private static string GetSnipeMsPath(string necroBotExePath) => Path.Combine(necroBotExePath, Variables.SnipeFileName);
 
         private static Configs LoadConfigs()
         {
-            string strCulture = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+            var strCulture = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
             var culture = CultureInfo.CreateSpecificCulture("en");
             CultureInfo.DefaultThreadCurrentCulture = culture;
             Thread.CurrentThread.CurrentCulture = culture;
@@ -595,15 +586,8 @@ namespace MSniper.WFConsole
             } while (true);//waiting access
         }
 
-        private bool IsBotUpperThan094(FileVersionInfo fversion)
-        {
-            return new Version(fversion.FileVersion) >= new Version(Variables.MinRequireVersion);
-        }
+        private bool IsBotUpperThan094(FileVersionInfo fversion) => new Version(fversion.FileVersion) >= new Version(Variables.MinRequireVersion);
 
-        private Translation LoadCulture(Configs _settings)
-        {
-            return Translation.Load(_settings);
-        }
-
+        private Translation LoadCulture(Configs settings) => Translation.Load(settings);
     }
 }

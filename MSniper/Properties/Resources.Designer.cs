@@ -39,7 +39,7 @@ namespace MSniper.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MSniper.Properties.Resources", typeof(Resources).Assembly);
+                    var temp = new global::System.Resources.ResourceManager("MSniper.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -65,7 +65,7 @@ namespace MSniper.Properties {
         /// </summary>
         internal static System.Drawing.Icon msniper {
             get {
-                object obj = ResourceManager.GetObject("msniper", resourceCulture);
+                var obj = ResourceManager.GetObject("msniper", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -75,7 +75,7 @@ namespace MSniper.Properties {
         /// </summary>
         internal static byte[] Newtonsoft_Json {
             get {
-                object obj = ResourceManager.GetObject("Newtonsoft_Json", resourceCulture);
+                var obj = ResourceManager.GetObject("Newtonsoft_Json", resourceCulture);
                 return ((byte[])(obj));
             }
         }

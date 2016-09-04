@@ -156,7 +156,7 @@ namespace MSniper.Settings.Localization
             try
             {
                 var translationsLanguageCode = logicSettings.TranslationLanguageCode.Replace("-", "_");
-                string input = "";
+                var input = "";
                 if (Variables.SupportedLanguages.FindIndex(p => p.ToLower() == translationsLanguageCode) == -1)
                 {
                     input = GetTranslationFromServer(logicSettings.TranslationLanguageCode);//developer mode

@@ -22,11 +22,11 @@ namespace MSniper.LiveFeed
         private void LiveFeed_Load(object sender, EventArgs e)
         {
 
-            List<PokemonId> lst = Enum.GetValues(typeof(PokemonId)).Cast<PokemonId>().ToList();
+            var lst = Enum.GetValues(typeof(PokemonId)).Cast<PokemonId>().ToList();
             foreach (var item in lst)
                 cmbPokemons.Items.Add(item);
 
-            for (int i = 0; i <= 100; i++)
+            for (var i = 0; i <= 100; i++)
                 cmbIv.Items.Add(i);
 
             //for (int i = 0; i < 100; i++)
@@ -40,8 +40,8 @@ namespace MSniper.LiveFeed
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            int IVPercent = -1;
-            bool success1 = int.TryParse(cmbIv.Text, out IVPercent);
+            var IVPercent = -1;
+            var success1 = int.TryParse(cmbIv.Text, out IVPercent);
             //if (!success1)
             //{ MessageBox.Show("Wrong IV%"); return; }
             if (!(IVPercent >= 0 && IVPercent <= 100))

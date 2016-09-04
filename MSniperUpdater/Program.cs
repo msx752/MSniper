@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -8,28 +7,29 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Console;
 
 namespace MSniperUpdater
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             //args = new string[] { "MSniper.v1.0.5" };
             if (args.Length > 0)
             {
-                Process[] plist = Process.GetProcessesByName("msniper");
-                Console.WriteLine("killing msniper.exe....");
-                for (int i = 0; i < plist.Length; i++)
+                var plist = Process.GetProcessesByName("msniper");
+                WriteLine("killing msniper.exe....");
+                foreach (var t in plist)
                 {
                     try
                     {
                         while (true)
                         {
-                            for (int i2 = 0; i2 < 10; i2++)
+                            for (var i2 = 0; i2 < 10; i2++)
                             {
                                 Thread.Sleep(200);
-                                plist[i].Kill();
+                                t.Kill();
                                 break;
                             }
                             break;
@@ -40,60 +40,58 @@ namespace MSniperUpdater
                 }
 
                 Thread.Sleep(500);
-                string[] deleteList = new string[] {
+                var deleteList = new string[] {
                         "msniper.exe",
                         "Newtonsoft.Json.dll",
                         "registerProtocol.bat",
                         "removeProtocol.bat",
                         "resetSnipeList.bat"
                     };
-                Console.WriteLine("deleting old files....");
+                WriteLine("deleting old files....");
                 foreach (var item in deleteList)
                 {
                     try
                     {
                         while (true)
                         {
-                            for (int i2 = 0; i2 < 10; i2++)
+                            for (var i2 = 0; i2 < 10; i2++)
                             {
-                                string delete = Path.Combine(Application.StartupPath, item);
+                                var delete = Path.Combine(Application.StartupPath, item);
                                 Thread.Sleep(200);
                                 File.Delete(delete);
                                 break;
                             }
                             break;
                         }
-
                     }
                     catch { }
                 }
-                Console.WriteLine("copying NEW files....");
+                WriteLine("copying NEW files....");
                 Thread.Sleep(300);
-                string[] CopyList = Directory.GetFiles(Application.StartupPath, $"temp\\{args[0]}\\");
-                foreach (var item in CopyList)
+                var copyList = Directory.GetFiles(Application.StartupPath, $"temp\\{args[0]}\\");
+                foreach (var item in copyList)
                 {
-                    FileInfo f = new FileInfo(item);
-                    string newDir = Path.Combine(Application.StartupPath, f.Name);
+                    var f = new FileInfo(item);
+                    var newDir = Path.Combine(Application.StartupPath, f.Name);
                     File.Copy(f.FullName, newDir, true);
                 }
-                Console.WriteLine("TEMP DELETING....");
+                WriteLine("TEMP DELETING....");
                 Thread.Sleep(100);
-                string temp_FOlder = Directory.GetParent(Directory.GetParent(CopyList[0]).ToString()).ToString();
+                var tempFolder = Directory.GetParent(Directory.GetParent(copyList[0]).ToString()).ToString();
                 try
                 {
-                    Directory.Delete(temp_FOlder, true);
+                    Directory.Delete(tempFolder, true);
                 }
                 catch
                 {
-                    Directory.Delete(temp_FOlder, true);
+                    Directory.Delete(tempFolder, true);
                 }
-                Console.WriteLine("STARTING MSNIPER....");
-                string run_exe = Path.Combine(Application.StartupPath, "msniper.exe");
+                WriteLine("STARTING MSNIPER....");
+                var runExe = Path.Combine(Application.StartupPath, "msniper.exe");
                 Task.Run(() =>
                 {
-                    ProcessStartInfo psi = new ProcessStartInfo(run_exe);
-                    Process proc = new Process();
-                    proc.StartInfo = psi;
+                    var psi = new ProcessStartInfo(runExe);
+                    var proc = new Process {StartInfo = psi};
                     proc.Start();
                     proc.WaitForExit();
                 });
@@ -102,8 +100,8 @@ namespace MSniperUpdater
             }
             else
             {
-                Console.WriteLine("\t runs with parameter");
-                Console.WriteLine("\t runs with parameter");
+                WriteLine("\t runs with parameter");
+                WriteLine("\t runs with parameter");
             }
 
             //Console.ReadLine();

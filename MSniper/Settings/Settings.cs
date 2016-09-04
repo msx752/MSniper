@@ -77,8 +77,8 @@ namespace MSniper.Settings
             try
             {
                 //if the file exists, load the settings
-                string input = "";
-                int count = 0;
+                var input = "";
+                var count = 0;
                 while (true)
                 {
                     try

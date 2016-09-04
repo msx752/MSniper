@@ -24,7 +24,7 @@ namespace MSniper
         public static void DownloadNewVersion()
         {
             Program.frm.Console.WriteLine(Program.frm.Culture.GetTranslation(TranslationString.DownloadingNewVersion, VersionCheck.NameWithVersion), Program.frm.Config.Success);
-            byte[] downloaded = GetFile(VersionCheck.RemoteVersion);
+            var downloaded = GetFile(VersionCheck.RemoteVersion);
             Program.frm.Console.WriteLine(Program.frm.Culture.GetTranslation(TranslationString.DownloadFinished), Program.frm.Config.Success);
             WriteFile(downloaded, Variables.TempRarFileUri);
             Program.frm.Console.WriteLine(Program.frm.Culture.GetTranslation(TranslationString.DecompressingNewFile), Program.frm.Config.Success);
@@ -50,8 +50,8 @@ namespace MSniper
         {
             //https://github.com/msx752/MSniper/blob/master/MSniper/MSniperUpdater.exe1?raw=true
             string url = $"{Variables.GithubProjectUri}/blob/master/MSniper/MSniperUpdater.exe1?raw=true";
-            string updater = Path.Combine(Application.StartupPath, "MSniperUpdater.exe");
-            byte[] updaterData = DownloadData(url);
+            var updater = Path.Combine(Application.StartupPath, "MSniperUpdater.exe");
+            var updaterData = DownloadData(url);
             File.WriteAllBytes(updater, updaterData);
             Thread.Sleep(500);
             var psi = new ProcessStartInfo(updater, VersionCheck.NameWithVersion);
