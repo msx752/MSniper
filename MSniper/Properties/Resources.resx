@@ -133,6 +133,9 @@
   <data name="resetSnipeList" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\resetSnipeList.bat;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1254</value>
   </data>
+  <data name="translation_zh_CN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Settings\Localization\Languages\translation.zh-CN.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
+  </data>
   <data name="translation_en_US" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\settings\localization\languages\translation.en-us.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
   </data>
@@ -141,8 +144,5 @@
   </data>
   <data name="translation_tr_TR" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\settings\localization\languages\translation.tr-tr.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
-  </data>
-  <data name="translation_zh_TW" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Settings\Localization\Languages\translation.zh-TW.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
   </data>
 </root>
