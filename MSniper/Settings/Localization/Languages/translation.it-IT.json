@@ -2,11 +2,11 @@
   "TranslationStrings": [
     {
       "Key": "title",
-      "Value": "[{0} v{1}]  -  by {2}"
+      "Value": "[{0} v{1}]  -  da {2}"
     },
     {
       "Key": "description",
-      "Value": "{0} - v{1} Pokemon Sniper Manuale - by {2}"
+      "Value": "{0} - v{1} Pokemon Sniper Manuale - da {2}"
     },
     {
       "Key": "gitHubProject",
