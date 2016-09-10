@@ -229,9 +229,9 @@ namespace MSniper.Properties {
         ///      &quot;Value&quot;: &quot;程序將關閉於 {0} 秒&quot;
         /// [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string translation_zh_CN {
+        internal static string translation_zh_TW {
             get {
-                return ResourceManager.GetString("translation_zh_CN", resourceCulture);
+                return ResourceManager.GetString("translation_zh_TW", resourceCulture);
             }
         }
     }

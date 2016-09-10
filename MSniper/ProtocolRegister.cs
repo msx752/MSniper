@@ -8,7 +8,7 @@ namespace MSniper
 {
     public static class Protocol
     {
-        private static readonly List<string> Protocols = new List<string>() { "msniper", "pokesniper2" };
+        private static readonly List<string> Protocols = new List<string>() { "msniper" };
         public static void Delete()
         {
             try
