@@ -1,0 +1,180 @@
+{
+  "TranslationStrings": [
+    {
+      "Key": "title",
+      "Value": "[{0} v{1}]  -  by {2}"
+    },
+    {
+      "Key": "description",
+      "Value": "{0} - v{1} Pokemon Sniper Manuale - by {2}"
+    },
+    {
+      "Key": "gitHubProject",
+      "Value": "Progetto GitHub {0}"
+    },
+    {
+      "Key": "currentVersion",
+      "Value": "Versione corrente: {0}"
+    },
+    {
+      "Key": "protocolNotFound",
+      "Value": "Protocollo non trovato - Perfavore esegui per una volta {0}"
+    },
+    {
+      "Key": "shutdownMsg",
+      "Value": "Il programma si chiuderà in {0} secondi"
+    },
+    {
+      "Key": "latestVersion",
+      "Value": "Versione più recente"
+    },
+    {
+      "Key": "newVersion",
+      "Value": "NUOVA VERSIONE"
+    },
+    {
+      "Key": "downloadLink",
+      "Value": "LINK DOWNLOAD"
+    },
+    {
+      "Key": "autoDownloadMsg",
+      "Value": "PREMI 'D' PER SCARICARE AUTOMATICAMENTE LA NUOVA VERSIONE O QUALSIASI ALTRO TASTO PER USCIRE.."
+    },
+    {
+      "Key": "warning",
+      "Value": "ATTENZIONE"
+    },
+    {
+      "Key": "warningShutdownProcess",
+      "Value": "Qualsiasi MSniper.exe verrà chiuso mentre si scaricherà"
+    },
+    {
+      "Key": "integrateMsg",
+      "Value": "{0} ha integrato NecroBot v{1} o superiore"
+    },
+    {
+      "Key": "anyNecroBotNotFound",
+      "Value": "Nessus NecroBot in esecuzione..."
+    },
+    {
+      "Key": "runBeforeMSniper",
+      "Value": "NecroBot deve essere eseguito prima di MSniper"
+    },
+    {
+      "Key": "protocolRegistered",
+      "Value": "Protocollo REGISTRATO correttamente:"
+    },
+    {
+      "Key": "protocolDeleted",
+      "Value": "Protocollo CANCELLATO correttamente:"
+    },
+    {
+      "Key": "removeAllSnipe",
+      "Value": "cancellato per {0}"
+    },
+    {
+      "Key": "removeAllSnipeFinished",
+      "Value": "Cancellando il contatore dei processi completati:{0}.."
+    },
+    {
+      "Key": "unknownLinkFormat",
+      "Value": "formato link sconosciuto"
+    },
+    {
+      "Key": "customPasteDesc",
+      "Value": "\t\tINCOLLA APPUNTI PERSONALIZZATO ATTIVATO"
+    },
+    {
+      "Key": "customPasteFormat",
+      "Value": "format: NomePokemon Latitudine,Longitudine"
+    },
+    {
+      "Key": "waitingDataMsg",
+      "Value": "in attesa dei dati.."
+    },
+    {
+      "Key": "customPasteWrongFormat",
+      "Value": "formato errato. riprova o premi 'E' per uscire.."
+    },
+    {
+      "Key": "incompatibleVersionMsg",
+      "Value": "Versione di Necrobot incompatibile per {0}"
+    },
+    {
+      "Key": "sendingPokemonToNecroBot",
+      "Value": "Inviato a {3}: {0} {1},{2}"
+    },
+    {
+      "Key": "alreadySnipped",
+      "Value": "{0}\t\tGià sniperato..."
+    },
+    {
+      "Key": "downloadingNewVersion",
+      "Value": "iniziando a scaricare {0} attendere prego..."
+    },
+    {
+      "Key": "downloadFinished",
+      "Value": "download completato..."
+    },
+    {
+      "Key": "decompressingNewFile",
+      "Value": "estraendo..."
+    },
+    {
+      "Key": "oldFilesChangingWithNews",
+      "Value": "aggiornando i file..."
+    },
+    {
+      "Key": "subsequentProcessing",
+      "Value": "Il processamento sequenziale finirà in {0} secondi o Chiudi il programma"
+    },
+    {
+      "Key": "wrongPokemonName",
+      "Value": "Pokemon '{0}' non definito"
+    },
+    {
+      "Key": "activeBots",
+      "Value": "NecroBot Attivi"
+    },
+    {
+      "Key": "howTo",
+      "Value": "Come"
+    },
+    {
+      "Key": "configuration",
+      "Value": "Configurazione"
+    },
+    {
+      "Key": "usage",
+      "Value": "Uso"
+    },
+    {
+      "Key": "askedQuestions",
+      "Value": "Domande richieste"
+    },
+    {
+      "Key": "advantage",
+      "Value": "Vantaggio"
+    },
+    {
+      "Key": "fileInformation",
+      "Value": "Informazioni file"
+    },
+    {
+      "Key": "features",
+      "Value": "Caratteristiche"
+    },
+    {
+      "Key": "projectsLink",
+      "Value": "Link progetto"
+    },
+    {
+      "Key": "getLiveFeed",
+      "Value": "Ottieni feed in tempo reale"
+    },
+    {
+      "Key": "donate",
+      "Value": "Dona"
+    }
+  ]
+}
