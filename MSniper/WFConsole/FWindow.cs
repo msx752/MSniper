@@ -115,7 +115,7 @@ namespace MSniper.WFConsole
         public void CheckNecroBots(bool shutdownMSniper)
         {
             if (GetNecroBotProcesses().Any()) return;
-            Console.WriteLine(string.Empty.PadRight(10)+Culture.GetTranslation(TranslationString.AnyNecroBotNotFound), Config.Error);
+            Console.WriteLine(string.Empty.PadRight(10) + Culture.GetTranslation(TranslationString.AnyNecroBotNotFound), Config.Error);
             Console.WriteLine(string.Empty.PadRight(5) + $" *{Culture.GetTranslation(TranslationString.RunBeforeMSniper)}*", Config.Error);
             Console.WriteLine("--------------------------------------------------------");
             if (shutdownMSniper)
@@ -252,7 +252,7 @@ namespace MSniper.WFConsole
                                 if (string.IsNullOrEmpty(username))
                                     continue;
 
-                                var btn = new ToolStripMenuItem(username) {Tag = item.MainWindowHandle};
+                                var btn = new ToolStripMenuItem(username) { Tag = item.MainWindowHandle };
                                 btn.Click += delegate (object sender, EventArgs e)
                                 {
                                     var id = int.Parse(btn.Tag.ToString());
@@ -320,6 +320,7 @@ namespace MSniper.WFConsole
                 CheckNecroBots(Console.Arguments.Length != 1);
                 //args = new string[] { "msniper://Ivysaur/-33.890835,151.223859" };//for debug mode
                 //args = new string[] { "-registerp" };//for debug mode
+                //Console.Arguments = new string[] { "msniper://Missingno/2157859740816806781/6b12ae46d31/-33.864635340271498,151.20600957337419" };
                 if (Console.Arguments.Length == 1)
                 {
                     RunningNormally = false;
@@ -348,18 +349,22 @@ namespace MSniper.WFConsole
                             break;
 
                         default:
-                            var re0 = "(pokesniper2://|msniper://)"; //protocol
+                            var re0 = "(msniper://)"; //protocol
                             var re1 = "((?:\\w+))";//pokemon name
                             var re2 = "(\\/)";//separator
-                            var re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
-                            var re4 = "(,)";//separator
-                            var re5 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
+                            var re3 = "(\\d+)";
+                            var re4 = "(\\/)";//separator
+                            var re5 = "((?:[a-zA-Z0-9]*))";
+                            var re6 = "(\\/)";//separator
+                            var re7 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
+                            var re8 = "(,)";//separator
+                            var re9 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
 
-                            var r = new Regex(re0 + re1 + re2 + re3 + re4 + re5, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                            var r = new Regex(re0 + re1 + re2 + re3 + re4 + re5 + re6 + re7 + re8 + re9, RegexOptions.IgnoreCase | RegexOptions.Singleline);
                             var m = r.Match(Console.Arguments.First());
                             if (m.Success)
                             {
-                                Snipe(m.Groups[2].ToString(), m.Groups[4].ToString(), m.Groups[6].ToString());
+                                Snipe(m);
                             }
                             else
                             {
@@ -370,42 +375,42 @@ namespace MSniper.WFConsole
                 }
                 else if (Console.Arguments.Length == 0)
                 {
-                    RunningNormally = true;
-                    Console.WriteLine(Culture.GetTranslation(TranslationString.CustomPasteDesc));
-                    Console.WriteLine(Culture.GetTranslation(TranslationString.CustomPasteFormat));
-                    Console.WriteLine("--------------------------------------------------------");
-                    do
-                    {
-                        Console.WriteLine(Culture.GetTranslation(TranslationString.WaitingDataMsg), Config.Highlight);
-                        var snipping = Console.ReadLine();
-                        CheckNecroBots(true);
-                        //snipping = "dragonite 37.766627 , -122.403677";//for debug mode (spaces are ignored)
-                        if (snipping.ToLower() == "e")
-                            break;
-                        var re1 = "((?:\\w+\\s*))";//pokemon name
-                        var re2 = "( )";//separator
-                        var re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
-                        var re4 = "(\\s*,\\s*)";//separator
-                        var re5 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
-                        var r = new Regex(re1 + re2 + re3 + re4 + re5, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                    //RunningNormally = true;
+                    //Console.WriteLine(Culture.GetTranslation(TranslationString.CustomPasteDesc));
+                    //Console.WriteLine(Culture.GetTranslation(TranslationString.CustomPasteFormat));
+                    //Console.WriteLine("--------------------------------------------------------");
+                    //do
+                    //{
+                    //    Console.WriteLine(Culture.GetTranslation(TranslationString.WaitingDataMsg), Config.Highlight);
+                    //    var snipping = Console.ReadLine();
+                    //    CheckNecroBots(true);
+                    //    //snipping = "dragonite 37.766627 , -122.403677";//for debug mode (spaces are ignored)
+                    //    if (snipping.ToLower() == "e")
+                    //        break;
+                    //    var re1 = "((?:\\w+\\s*))";//pokemon name
+                    //    var re2 = "( )";//separator
+                    //    var re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
+                    //    var re4 = "(\\s*,\\s*)";//separator
+                    //    var re5 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
+                    //    var r = new Regex(re1 + re2 + re3 + re4 + re5, RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
-                        var error = true;
-                        foreach (Match m in r.Matches(snipping))
-                        {
-                            if (!m.Success) continue;
-                            var pokemonN = m.Groups[1].ToString().Replace(" ","");
-                            error = false;
-                            var prkmnm = PokemonId.Abra;
-                            var verified = Enum.TryParse<PokemonId>(pokemonN, true, out prkmnm);
-                            if (verified)
-                                Snipe(pokemonN, m.Groups[3].ToString(), m.Groups[5].ToString());
-                            else
-                                Console.WriteLine(Culture.GetTranslation(TranslationString.WrongPokemonName, pokemonN), Config.Error);
-                        }
-                        if (error)
-                            Console.WriteLine(Culture.GetTranslation(TranslationString.CustomPasteWrongFormat), Config.Error);
-                    }
-                    while (true);
+                    //    var error = true;
+                    //    foreach (Match m in r.Matches(snipping))
+                    //    {
+                    //        if (!m.Success) continue;
+                    //        var pokemonN = m.Groups[1].ToString().Replace(" ", "");
+                    //        error = false;
+                    //        var prkmnm = PokemonId.Abra;
+                    //        var verified = Enum.TryParse<PokemonId>(pokemonN, true, out prkmnm);
+                    //        if (verified)
+                    //            Snipe(pokemonN, m.Groups[3].ToString(), m.Groups[5].ToString());
+                    //        else
+                    //            Console.WriteLine(Culture.GetTranslation(TranslationString.WrongPokemonName, pokemonN), Config.Error);
+                    //    }
+                    //    if (error)
+                    //        Console.WriteLine(Culture.GetTranslation(TranslationString.CustomPasteWrongFormat), Config.Error);
+                    //}
+                    //while (true);
                 }
                 Shutdown();
             });
@@ -451,12 +456,10 @@ namespace MSniper.WFConsole
             Process.GetCurrentProcess().Kill();
         }
 
-        public void Snipe(string pokemonName, string latt, string lonn)
+        public void Snipe(Match m)
         {
             try
             {
-                var lat = double.Parse(latt, CultureInfo.InvariantCulture);
-                var lon = double.Parse(lonn, CultureInfo.InvariantCulture);
                 var pList = GetNecroBotProcesses();
                 foreach (var t in pList)
                 {
@@ -471,19 +474,22 @@ namespace MSniper.WFConsole
                     }
                     var pathRemote = GetSnipeMsPath(Path.GetDirectoryName(t.MainModule.FileName));
                     var mSniperLocation = ReadSnipeMs(pathRemote);
-                    var newPokemon = new MSniperInfo()
+                    var newPokemon = new EncounterInfo()
                     {
-                        Latitude = lat,
-                        Longitude = lon,
-                        Id = pokemonName
+                        PokemonId = (short)(PokemonId)Enum.Parse(typeof(PokemonId), m.Groups[2].ToString()),
+                        EncounterId = long.Parse(m.Groups[4].ToString()),
+                        SpawnPointId = m.Groups[6].ToString(),
+                        Latitude = double.Parse(m.Groups[8].Value, CultureInfo.InvariantCulture),
+                        Longitude = double.Parse(m.Groups[10].Value, CultureInfo.InvariantCulture),
                     };
-                    if (mSniperLocation.FindIndex(p => p.Id == newPokemon.Id && p.Latitude == newPokemon.Latitude && p.Longitude == newPokemon.Longitude) == -1)
+
+                    if (mSniperLocation.FindIndex(p => p.EncounterId == newPokemon.EncounterId && p.SpawnPointId == newPokemon.SpawnPointId) == -1)
                     {
                         mSniperLocation.Add(newPokemon);
                         if (WriteSnipeMs(mSniperLocation, pathRemote))
                         {
                             Console.WriteLine(Culture.GetTranslation(TranslationString.SendingPokemonToNecroBot,
-                                newPokemon.Id.ToLower(),
+                                newPokemon.PokemonId,
                                 newPokemon.Latitude,
                                 newPokemon.Longitude,
                                 username), Config.Success);
@@ -526,7 +532,7 @@ namespace MSniper.WFConsole
             return settings;
         }
 
-        private static List<MSniperInfo> ReadSnipeMs(string path)
+        private static List<EncounterInfo> ReadSnipeMs(string path)
         {
             if (File.Exists(path))
             {
@@ -541,15 +547,15 @@ namespace MSniper.WFConsole
                     catch { Thread.Sleep(200); }
                 }
                 while (true);//waiting access
-                return JsonConvert.DeserializeObject<List<MSniperInfo>>(jsn);
+                return JsonConvert.DeserializeObject<List<EncounterInfo>>(jsn);
             }
             else
             {
-                return new List<MSniperInfo>();
+                return new List<EncounterInfo>();
             }
         }
 
-        private static bool WriteSnipeMs(List<MSniperInfo> mSniperLocation, string path)
+        private static bool WriteSnipeMs(List<EncounterInfo> mSniperLocation, string path)
         {
             do
             {

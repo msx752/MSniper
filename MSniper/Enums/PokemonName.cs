@@ -2,6 +2,7 @@
 {
     public enum PokemonId
     {
+        Missingno = 0,
         Bulbasaur = 1,
         Ivysaur = 2,
         Venusaur = 3,

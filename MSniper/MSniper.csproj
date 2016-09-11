@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Downloader.cs" />
+    <Compile Include="EncounterInfo.cs" />
     <Compile Include="Enums\PokemonName.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="LiveFeed\LiveFeed.cs">
