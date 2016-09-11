@@ -26,9 +26,10 @@ namespace MSniper
         public static List<CultureInfo> SupportedLanguages => new List<CultureInfo>()
         {
             new CultureInfo("tr-TR"),
-            new CultureInfo("zh-CN"),
+            new CultureInfo("zh-TW"),
             new CultureInfo("en-US"),
-            new CultureInfo("es-ES")
+            new CultureInfo("es-ES"),
+            new CultureInfo("it-IT")
         };
 
         public static string TempPath => Path.Combine(Application.StartupPath, "temp");

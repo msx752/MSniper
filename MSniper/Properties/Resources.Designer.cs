@@ -178,6 +178,38 @@ namespace MSniper.Properties {
         ///    },
         ///    {
         ///      &quot;Key&quot;: &quot;description&quot;,
+        ///      &quot;Value&quot;: &quot;{0} - v{1} Pokemon Sniper Manuale - by {2}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;gitHubProject&quot;,
+        ///      &quot;Value&quot;: &quot;Progetto GitHub {0}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;currentVersion&quot;,
+        ///      &quot;Value&quot;: &quot;Versione corrente: {0}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;protocolNotFound&quot;,
+        ///      &quot;Value&quot;: &quot;Protocollo non trovato - Perfavore esegui per una volta {0}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;sh [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string translation_it_IT {
+            get {
+                return ResourceManager.GetString("translation_it_IT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;TranslationStrings&quot;: [
+        ///    {
+        ///      &quot;Key&quot;: &quot;title&quot;,
+        ///      &quot;Value&quot;: &quot;[{0} v{1}]  -  by {2}&quot;
+        ///    },
+        ///    {
+        ///      &quot;Key&quot;: &quot;description&quot;,
         ///      &quot;Value&quot;: &quot;{0} - v{1} Manuel Pokemon Avcı - by {2}&quot;
         ///    },
         ///    {
@@ -229,9 +261,9 @@ namespace MSniper.Properties {
         ///      &quot;Value&quot;: &quot;程序將關閉於 {0} 秒&quot;
         /// [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string translation_zh_CN {
+        internal static string translation_zh_TW {
             get {
-                return ResourceManager.GetString("translation_zh_CN", resourceCulture);
+                return ResourceManager.GetString("translation_zh_TW", resourceCulture);
             }
         }
     }
