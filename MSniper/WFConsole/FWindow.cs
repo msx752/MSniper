@@ -382,7 +382,7 @@ namespace MSniper.WFConsole
                         //snipping = "dragonite 37.766627 , -122.403677";//for debug mode (spaces are ignored)
                         if (snipping.ToLower() == "e")
                             break;
-                        var re1 = "((?:\\w+))";//pokemon name
+                        var re1 = "((?:\\w+\\s*))";//pokemon name
                         var re2 = "( )";//separator
                         var re3 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
                         var re4 = "(\\s*,\\s*)";//separator
@@ -393,7 +393,7 @@ namespace MSniper.WFConsole
                         foreach (Match m in r.Matches(snipping))
                         {
                             if (!m.Success) continue;
-                            var pokemonN = m.Groups[1].ToString();
+                            var pokemonN = m.Groups[1].ToString().Replace(" ","");
                             error = false;
                             var prkmnm = PokemonId.Abra;
                             var verified = Enum.TryParse<PokemonId>(pokemonN, true, out prkmnm);
