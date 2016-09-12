@@ -320,7 +320,7 @@ namespace MSniper.WFConsole
                 CheckNecroBots(Console.Arguments.Length != 1);
                 //args = new string[] { "msniper://Ivysaur/-33.890835,151.223859" };//for debug mode
                 //args = new string[] { "-registerp" };//for debug mode
-                //Console.Arguments = new string[] { "msniper://Missingno/2157859740816806781/6b12ae46d31/-33.864635340271498,151.20600957337419" };
+                //Console.Arguments = new string[] { "msniper://Missingno/2157859740816806781/6b12ae46d31/-33.864635340271498,151.20600957337419/10.12" };
                 if (Console.Arguments.Length == 1)
                 {
                     RunningNormally = false;
@@ -359,8 +359,10 @@ namespace MSniper.WFConsole
                             var re7 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lat
                             var re8 = "(,)";//separator
                             var re9 = "([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";//lon
+                            var re10 = "(\\/)";//separator
+                            var re11 = "(\\d*(\\.)?\\d+)";
 
-                            var r = new Regex(re0 + re1 + re2 + re3 + re4 + re5 + re6 + re7 + re8 + re9, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                            var r = new Regex(re0 + re1 + re2 + re3 + re4 + re5 + re6 + re7 + re8 + re9 + re10 + re11, RegexOptions.IgnoreCase | RegexOptions.Singleline);
                             var m = r.Match(Console.Arguments.First());
                             if (m.Success)
                             {
@@ -481,6 +483,7 @@ namespace MSniper.WFConsole
                         SpawnPointId = m.Groups[6].ToString(),
                         Latitude = double.Parse(m.Groups[8].Value, CultureInfo.InvariantCulture),
                         Longitude = double.Parse(m.Groups[10].Value, CultureInfo.InvariantCulture),
+                        Iv = double.Parse(m.Groups[12].Value, CultureInfo.InvariantCulture),
                     };
 
                     if (mSniperLocation.FindIndex(p => p.EncounterId == newPokemon.EncounterId && p.SpawnPointId == newPokemon.SpawnPointId) == -1)
