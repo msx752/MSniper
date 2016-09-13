@@ -479,7 +479,7 @@ namespace MSniper.WFConsole
                     var newPokemon = new EncounterInfo()
                     {
                         PokemonId = (short)(PokemonId)Enum.Parse(typeof(PokemonId), m.Groups[2].ToString()),
-                        EncounterId = long.Parse(m.Groups[4].ToString()),
+                        EncounterId = ulong.Parse(m.Groups[4].ToString()),
                         SpawnPointId = m.Groups[6].ToString(),
                         Latitude = double.Parse(m.Groups[8].Value, CultureInfo.InvariantCulture),
                         Longitude = double.Parse(m.Groups[10].Value, CultureInfo.InvariantCulture),

@@ -10,7 +10,7 @@ namespace MSniper
     public class EncounterInfo : IDisposable
     {
         public short PokemonId { get; set; }
-        public long EncounterId { get; set; }
+        public ulong EncounterId { get; set; }
         public string SpawnPointId { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
