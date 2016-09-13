@@ -32,10 +32,11 @@ namespace MSniper
 
                     if (strStatus.Contains("DISABLED"))
                     {
-                        Console.WriteLine(strReason + $"\n");
+                        Program.frm.Console.WriteLine(strReason + $"\n");
 
                         Program.frm.Console.WriteLine("The msniper will now close, please press enter to continue", System.Drawing.Color.Wheat);
-                        Console.ReadLine();
+                        Program.frm.Console.ReadLine();
+                        Program.frm.Shutdown(1);
                         return true;
                     }
                 }
