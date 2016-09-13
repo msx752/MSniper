@@ -492,7 +492,7 @@ namespace MSniper.WFConsole
                         if (WriteSnipeMs(mSniperLocation, pathRemote))
                         {
                             Console.WriteLine(Culture.GetTranslation(TranslationString.SendingPokemonToNecroBot,
-                                newPokemon.PokemonId,
+                                ((PokemonId)newPokemon.PokemonId).ToString(),
                                 newPokemon.Latitude,
                                 newPokemon.Longitude,
                                 username), Config.Success);
