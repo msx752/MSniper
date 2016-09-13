@@ -320,7 +320,7 @@ namespace MSniper.WFConsole
                 CheckNecroBots(Console.Arguments.Length != 1);
                 //args = new string[] { "msniper://Ivysaur/-33.890835,151.223859" };//for debug mode
                 //args = new string[] { "-registerp" };//for debug mode
-                //Console.Arguments = new string[] { "msniper://Missingno/2157859740816806781/6b12ae46d31/-33.864635340271498,151.20600957337419/10.12" };
+                //Console.Arguments = new string[] { "msniper://Staryu/8694528382595630333/89c258978a1/40.781605427526415,-73.961284780417373/51.31" };
                 if (Console.Arguments.Length == 1)
                 {
                     RunningNormally = false;
@@ -500,7 +500,7 @@ namespace MSniper.WFConsole
                     }
                     else
                     {
-                        Console.WriteLine(Culture.GetTranslation(TranslationString.AlreadySnipped, newPokemon), Config.Error);
+                        Console.WriteLine(Culture.GetTranslation(TranslationString.AlreadySnipped, newPokemon.EncounterId), Config.Error);
                     }
                 }
             }
