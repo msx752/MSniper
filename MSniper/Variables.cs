@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -22,6 +23,9 @@ namespace MSniper
         public static string SettingsFileName => "Settings.json";
         public static string SnipeFileName => "SnipeMS.json";
         public static string StartupPath => Path.GetDirectoryName(ExecutablePath);
+
+        public static string StrKillSwitchUri =
+            $"https://raw.githubusercontent.com/{By}/{ProgramName}/master/KillSwitch.txt";
 
         public static List<CultureInfo> SupportedLanguages => new List<CultureInfo>()
         {

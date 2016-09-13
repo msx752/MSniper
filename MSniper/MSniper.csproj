@@ -76,6 +76,7 @@
     <Compile Include="EncounterInfo.cs" />
     <Compile Include="Enums\PokemonName.cs" />
     <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="KillSwitch.cs" />
     <Compile Include="LiveFeed\LiveFeed.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -310,6 +310,8 @@ namespace MSniper.WFConsole
             Task.Run(() =>
             {
                 Console.Clear();
+                if (KillSwitch.CheckKillSwitch())
+                    return;
                 ExportReferences();
                 LoadConfigurations();
                 ShowActiveBots();
