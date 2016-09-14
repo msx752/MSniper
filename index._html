@@ -38,7 +38,7 @@
 <a id="description" class="anchor" href="#description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h1>
 
 <ul>
-<li>MSniper working with <code> NecroBot2 v0.9.9.2 or upper</code> .You can use everytime because program communicating with NecroBot and it will send pokemon location,so catch doing NecroBot.MSniper can working multiple NecroBot and same pokemon location will send all working bot at the same time.</li>
+<li>MSniper working with <code>NecroBotv0.9.5 or upper</code> .You can use everytime because program communicating with NecroBot and it will send pokemon location,so catch doing NecroBot.MSniper can working multiple NecroBot and same pokemon location will send all working bot at the same time.</li>
 </ul>
 
 <h1>
@@ -61,13 +61,19 @@
 <h2>
 <a id="config-json" class="anchor" href="#config-json" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Config.json</h2>
 <li>
-<code>"ActivateMSniper": true</code> for snipe
+<code>"CatchPokemon": true</code> of course <code>TRUE  (must be)</code>
 </li>
-
-
+<li>
+<code>"Enable": false</code> set <code>FALSE</code> (your choice)</li>
+<li>
+<code>"UseSnipeLocationServer": false</code> set <code>FALSE</code> (your choice)</li>
+<li>
+<code>"SnipeAtPokestops": false</code> set <code>FALSE</code> we don't need anymore
+You don't need another configuring, program will work (<code>if it TRUE MSniper will not work</code>).</li>
+<li><code>"DisableHumanWalking": false</code> (your choice)</li>
 <h2>
 <a id="settings-json" class="anchor" href="#settings-json" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Settings.json</h2>
-<li><code>"TranslationLanguageCode": "en"</code> changes application language such as tr,en,zh-TW,es</li>
+<li><code>"TranslationLanguageCode": "en"</code> changes application language such as tr,en,zh-CN(tw),es</li>
 <li><code>"CloseDelaySec": 10</code> application duration time</li>
 <li style="text-decoration:line-through"><code>"DeleteTempFolder ": true</code> msniper\temp\ file controller</li>
 <li><code>"DownloadNewVersion": true</code> controls automatic new version download</li>
@@ -87,9 +93,9 @@
 
 <ul>
 <li>
-<code>registerProtocol.bat:</code> registers <code>msniper://</code> protocol  (<code>if you change file location, you have to run again. maybe first you need run removeProtocol.bat</code>)</li>
+<code>registerProtocol.bat:</code> registers <code>msniper://</code> and <code>pokesniper2://</code> protocols  (<code>if you change file location, you have to run again. maybe first you need run removeProtocol.bat</code>)</li>
 <li>
-<code>removeProtocol.bat:</code> removes msniper:// protocol</li>
+<code>removeProtocol.bat:</code> removes msniper:// and  pokesniper2:// protocols</li>
 <li>
 <code>resetSnipeList.bat:</code> resets all working bot's snipping queues</li>
 <li style="text-decoration:line-through">
@@ -102,14 +108,15 @@
 <a id="protocols" class="anchor" href="#protocols" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Protocols</h1>
 
 <ul>
-<li>msniper://  (working with <a href="http://msniper.com/">http://msniper.com/</a>)</li>
+<li>msniper://</li>
 <li>
+<p>pokesniper2://</p>
 
 <h2>
 <a id="protocol-example" class="anchor" href="#protocol-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Protocol Example</h2>
 
 <ul>
-<li><code>msniper://Dratini/13993121785675533021/2e69f07a347/-6.2691040262865299,106.73051289906371/89.34</code></li>
+<li><code>msniper://Dragonite 12.193245,-120.352751</code></li>
 </ul>
 </li>
 </ul>
@@ -126,7 +133,7 @@
 <li>Snipping while NecroBot is working</li>
 <li>new protocol <code>msniper://</code>
 </li>
-<li style="text-decoration:line-through">program can works with old protocol <code>pokesiniper2://</code>
+<li>program can works with old protocol <code>pokesiniper2://</code>
 </li>
 <li>program can working multiple NecroBot and same pokemon location will send all working NecroBot at the same time</li>
 </ul>
@@ -197,26 +204,18 @@
 <li>'A 32 bit processor cannot access modules of a 64 bit process' bug fixed</li>
 </ul>
 
-<h2>
-<a id="v1062" class="anchor" href="#v1062" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>v1.0.6.2</h2>
-
-<ul>
-<li>integrated with Necrobot2 v0.9.9.2 or Upper</li>
-<li>activated msniper.com for special snipe</li>
-<li>fast pokemon snipe and live pokemon list on msniper.com</li>
-<li>disabled old msniper (only working with msniper.com)</li>
-</ul>
-
 <h1>
 <a id="advantage" class="anchor" href="#advantage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Advantage</h1>
 
 <ul>
 <li>you can run multiple MSniper</li>
 <li>sending one pokemon, sharing with <code>all running NecroBot</code></li>
-<li>program can use with MSniper Pokemon Service + NecroBot</li>
+<li>program can use with PogoLocationFeeder + NecroBot</li>
+<li>you can paste complex text, MSniper can find necessary data (<code>Rule: PokemonName lat,lon</code>)</li>
+<li>you can paste multiline in MSniper</li>
 <li>MSniper detects bots such <code>necrobot13123.exe</code> doesn't matter after necrobot text</li>
 <li>configurable console colors</li>
-<li>embedded Pokemon Live Feed</li>
+<!--<li>embedded Pokemon Live Feed</li>-->
 </ul>
 
 <h1>
@@ -248,9 +247,22 @@
 <a id="method-1" class="anchor" href="#method-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Method 1</h2>
 
 <ul>
-<li>thirdly, use <a href="http://msniper.com/">http://msniper.com/</a> snipe website</li>
+<li>thirdly, use any snipe website</li>
 </ul>
 
+<h2>
+<a id="method-2" class="anchor" href="#method-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Method 2</h2>
+
+<ul>
+<li>thirdly, run MSniper.exe normally and paste pokemon location data in console</li>
+</ul>
+
+<h2>
+<a id="method-3" class="anchor" href="#method-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Method 3</h2>
+
+<ul>
+<li style="text-decoration:line-through">thirdly, run MSniper.exe normally and use <code>Get Live Feed</code> in MSniper (still improving)</li>
+</ul>
 </li>
 </ul>
 
@@ -259,7 +271,7 @@
 
 <ul>
 <li>
-<a href="https://github.com/Necrobot-Private/NecroBot/releases/latest">NecroBot2</a> <code>v0.9.9.2 or Upper</code>
+<a href="https://github.com/Necrobot-Private/NecroBot/releases/latest">NecroBot</a> <code>v0.9.5 or Upper</code>
 </li>
 </ul>
 
