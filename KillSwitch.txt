@@ -1,8 +1,2 @@
-Status=DISABLED;
-
-######### 14.09.2016
-
-program now offline because necrobot2 not working
-
-i am waiting a new version API for necrobot2, if it release then i will activate.
-.
+Status=ENABLED;
+now online
