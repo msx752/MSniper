@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace MSniper.Settings.Localization
 {
-    //code revised and getting from https://github.com/NoxxDev/NecroBot/blob/master/PoGo.NecroBot.Logic/Common/Translations.cs
+    //code revised and getting from https://github.com/Necrobot-Private/NecroBot/blob/master/PoGo.NecroBot.Logic/Common/Translations.cs
 
     public enum TranslationString
     {
@@ -58,7 +58,8 @@ namespace MSniper.Settings.Localization
         ProjectsLink,
         GetLiveFeed,
         Donate,
-        CanNotAccessProcess
+        CanNotAccessProcess,
+        SnipeWebsite
     }
 
     public interface ITranslation
@@ -84,6 +85,7 @@ namespace MSniper.Settings.Localization
             new KeyValuePair<TranslationString, string>(TranslationString.Title, "[{0} v{1}]  -  by {2}"),
             new KeyValuePair<TranslationString, string>(TranslationString.Description, "{0} - v{1} Manual Pokemon Sniper - by {2}"),
             new KeyValuePair<TranslationString, string>(TranslationString.GitHubProject, "Github Project {0}"),
+            new KeyValuePair<TranslationString, string>(TranslationString.SnipeWebsite, "Snipe Website {0}"),
             new KeyValuePair<TranslationString, string>(TranslationString.CurrentVersion, "Current Version: {0}"),
             new KeyValuePair<TranslationString, string>(TranslationString.ProtocolNotFound, "Protocol not found - Please run once {0}"),
             new KeyValuePair<TranslationString, string>(TranslationString.ShutdownMsg, "Program is closing in {0} seconds"),

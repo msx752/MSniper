@@ -54,7 +54,7 @@ namespace MSniper.WFConsole
             };
             necroBotLatestToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
-                Process.Start("https://github.com/NoxxDev/NecroBot/releases/latest");
+                Process.Start("https://github.com/Necrobot-Private/NecroBot/releases/latest");
             };
             featuresToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
@@ -192,6 +192,9 @@ namespace MSniper.WFConsole
                 Variables.ProgramName, Variables.CurrentVersion, Variables.By));
             Console.WriteLine(Culture.GetTranslation(TranslationString.GitHubProject,
                 Variables.GithubIoUri),
+                Config.Warning);
+            Console.WriteLine(Culture.GetTranslation(TranslationString.SnipeWebsite,
+                Variables.SnipeWebsite),
                 Config.Warning);
             Console.Write(Culture.GetTranslation(TranslationString.CurrentVersion,
                 Assembly.GetEntryAssembly().GetName().Version.ToString()),
@@ -379,6 +382,9 @@ namespace MSniper.WFConsole
                 }
                 else if (Console.Arguments.Length == 0)
                 {
+                    RunningNormally = true;
+                    Console.WriteLine("manual snipe disabled - please use http://msniper.com",System.Drawing.Color.Green);
+                    Console.WriteLine("--------------------------------------------------------");
                     //RunningNormally = true;
                     //Console.WriteLine(Culture.GetTranslation(TranslationString.CustomPasteDesc));
                     //Console.WriteLine(Culture.GetTranslation(TranslationString.CustomPasteFormat));

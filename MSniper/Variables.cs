@@ -17,7 +17,8 @@ namespace MSniper
         public static string GithubProjectUri => $"https://github.com/{By}/{ProgramName}";
         public static string GithubRawUri => $"https://raw.githubusercontent.com/{By}/{ProgramName}";
         public static string GithubIoUri => $"https://{By}.github.io/{ProgramName}/";
-        public static string MinRequireVersion => "0.9.5";
+        public static string SnipeWebsite => $"http://msniper.com/";
+        public static string MinRequireVersion => "0.9.9.2";
         public static string ProgramName => "MSniper";
         public static string SettingPath => Path.Combine(Application.StartupPath, SettingsFileName);
         public static string SettingsFileName => "Settings.json";
