@@ -374,6 +374,7 @@ namespace MSniper.WFConsole
                                 Snipe(m);
                                 break;
                             }
+                            re0 = "(msniper://|pokesniper2://)"; //protocol
                             r = new Regex(re0 + re1 + re6 + re7 + re8 + re9, RegexOptions.IgnoreCase | RegexOptions.Singleline);
                             m = r.Match(Console.Arguments.First());
                             if (m.Success)
