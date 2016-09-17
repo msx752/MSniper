@@ -5,7 +5,7 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-purple.svg)](https://www.paypal.me/mustafasalih)
 
 # MSniper
-- Manual Snipe for [NecroBot](https://github.com/NoxxDev/NecroBot)
+- Live Snipe with [MService](https://github.com/msx752/msniper-location-service) for [NecroBot2](https://github.com/Necrobot-Private/NecroBot)
 
 ![Display](https://github.com/msx752/MSniper/raw/master/msniper1.gif)
 
@@ -21,7 +21,7 @@
 - [Usage](https://msx752.github.io/MSniper/#usage)
 
 ### Requirements
-- [NecroBot](https://github.com/NoxxDev/NecroBot/releases/latest) `v0.9.5 or Upper`
+- [NecroBot](https://github.com/Necrobot-Private/NecroBot/releases/latest) `v0.9.9.2 or Upper`
 
 #### Download Latest Version
 - [MSniper Latest](https://github.com/msx752/MSniper/releases/latest)
