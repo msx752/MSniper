@@ -52,6 +52,10 @@ namespace MSniper.WFConsole
             {
                 Process.Start($"{Variables.GithubProjectUri}");
             };
+            msniperServiceToolStripMenuItem.Click += delegate (object sender, EventArgs e)
+            {
+                Process.Start("http://msniper.com");
+            };
             necroBotLatestToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
                 Process.Start("https://github.com/Necrobot-Private/NecroBot/releases/latest");

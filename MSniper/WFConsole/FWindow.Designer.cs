@@ -28,8 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(FWindow));
-            this.Console = new FConsole();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FWindow));
             this.activeBotsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.linksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,28 +43,10 @@
             this.getFeedsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.donateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.msniperServiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Console = new MSniper.WFConsole.FConsole();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // Console
-            // 
-            this.Console.Arguments = new string[0];
-            this.Console.BackColor = System.Drawing.Color.Black;
-            this.Console.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Console.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Console.Font = new System.Drawing.Font("Consolas", 10F);
-            this.Console.ForeColor = System.Drawing.Color.Gray;
-            this.Console.HyperlinkColor = System.Drawing.Color.Empty;
-            this.Console.Location = new System.Drawing.Point(0, 24);
-            this.Console.MinimumSize = new System.Drawing.Size(100, 200);
-            this.Console.Name = "Console";
-            this.Console.ReadOnly = true;
-            this.Console.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.Console.Size = new System.Drawing.Size(578, 287);
-            this.Console.State = ConsoleState.ReadLine;
-            this.Console.TabIndex = 0;
-            this.Console.Text = "";
-            this.Console.Title = "MSniper";
             // 
             // activeBotsToolStripMenuItem
             // 
@@ -126,7 +107,8 @@
             // 
             this.projectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mSniperLatestToolStripMenuItem,
-            this.necroBotLatestToolStripMenuItem});
+            this.necroBotLatestToolStripMenuItem,
+            this.msniperServiceToolStripMenuItem});
             this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
             this.projectToolStripMenuItem.Size = new System.Drawing.Size(86, 20);
             this.projectToolStripMenuItem.Text = "Projects Link";
@@ -134,13 +116,13 @@
             // mSniperLatestToolStripMenuItem
             // 
             this.mSniperLatestToolStripMenuItem.Name = "mSniperLatestToolStripMenuItem";
-            this.mSniperLatestToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mSniperLatestToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.mSniperLatestToolStripMenuItem.Text = "MSniper";
             // 
             // necroBotLatestToolStripMenuItem
             // 
             this.necroBotLatestToolStripMenuItem.Name = "necroBotLatestToolStripMenuItem";
-            this.necroBotLatestToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.necroBotLatestToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.necroBotLatestToolStripMenuItem.Text = "NecroBot";
             // 
             // getFeedsToolStripMenuItem
@@ -170,6 +152,32 @@
             this.menuStrip1.Size = new System.Drawing.Size(578, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // msniperServiceToolStripMenuItem
+            // 
+            this.msniperServiceToolStripMenuItem.Name = "msniperServiceToolStripMenuItem";
+            this.msniperServiceToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.msniperServiceToolStripMenuItem.Text = "PokemonService";
+            // 
+            // Console
+            // 
+            this.Console.Arguments = new string[0];
+            this.Console.BackColor = System.Drawing.Color.Black;
+            this.Console.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Console.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Console.Font = new System.Drawing.Font("Consolas", 10F);
+            this.Console.ForeColor = System.Drawing.Color.Gray;
+            this.Console.HyperlinkColor = System.Drawing.Color.Empty;
+            this.Console.Location = new System.Drawing.Point(0, 24);
+            this.Console.MinimumSize = new System.Drawing.Size(100, 200);
+            this.Console.Name = "Console";
+            this.Console.ReadOnly = true;
+            this.Console.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.Console.Size = new System.Drawing.Size(578, 287);
+            this.Console.State = MSniper.WFConsole.ConsoleState.ReadLine;
+            this.Console.TabIndex = 0;
+            this.Console.Text = "";
+            this.Console.Title = "MSniper";
             // 
             // FWindow
             // 
@@ -209,5 +217,6 @@
         private System.Windows.Forms.ToolStripMenuItem getFeedsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem donateToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem msniperServiceToolStripMenuItem;
     }
 }
