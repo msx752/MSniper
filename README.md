@@ -21,7 +21,7 @@
 - [Usage](https://msx752.github.io/MSniper/#usage)
 
 ### Requirements
-- [NecroBot](https://github.com/Necrobot-Private/NecroBot/releases/latest) `v0.9.9.2 or Upper`
+- [NecroBot](https://github.com/Necrobot-Private/NecroBot/releases/latest) `v1.0.0.0 or Upper`
 
 #### Download Latest Version
 - [MSniper Latest](https://github.com/msx752/MSniper/releases/latest)
