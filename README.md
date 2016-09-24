@@ -5,7 +5,11 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-purple.svg)](https://www.paypal.me/mustafasalih)
 
 # MSniper
-- Live Snipe with [MService](https://github.com/msx752/msniper-location-service) for [NecroBot2](https://github.com/Necrobot-Private/NecroBot)
+- Live Snipe with [MService](https://github.com/msx752/msniper-location-service) for
+
+##### be careful using bot will cause ban, using bot your own risk
+
+- [NecroBot2](https://github.com/Necrobot-Private/NecroBot)
 
 ![Display](https://github.com/msx752/MSniper/raw/master/msniper1.gif)
 
