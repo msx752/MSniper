@@ -13,7 +13,7 @@ function gaa(urlparm){
 $(document).ready(function () {
 	gaa();
 		$('a').click(function(){
-			gaa(location.pathname + this.innerText);
+			gaa(location.pathname +"$"+ this.innerText);
 		});
 });
 
