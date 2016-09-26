@@ -1,2 +1,5 @@
-Status=ENABLED;
-now online
+Status=DISABLED;
+.
+.
+.
+(for safety) Necrobot2 is down and MSniper is disabled until the new API (0.39.0) is cracked
