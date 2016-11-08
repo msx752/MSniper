@@ -7,8 +7,6 @@
 # MSniper
 - Live Snipe with [MService](https://github.com/msx752/msniper-location-service) for [NecroBot2](https://github.com/Necrobot-Private/NecroBot)
 
-# (for safety) Necrobot2 is down and MSniper is disabled until the new API (0.39.0) is cracked [more info](https://github.com/Necrobot-Private/NecroBot/issues/285)
-
 ##### be careful using bot will cause ban, using bot your own risk
 
 ![Display](https://github.com/msx752/MSniper/raw/master/msniper1.gif)
