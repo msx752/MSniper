@@ -2,9 +2,8 @@
 [![All Releases](https://img.shields.io/github/downloads/msx752/MSniper/total.svg?maxAge=100)](https://github.com/msx752/MSniper/releases)
 [![Latest Release](https://img.shields.io/github/release/msx752/MSniper.svg?maxAge=100)](https://github.com/msx752/MSniper/releases/latest)
 [![GPLv3](https://img.shields.io/badge/license-GPLv3-blue.svg?maxAge=259200)](https://github.com/msx752/MSniper/blob/master/LICENSE.md)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-purple.svg)](https://www.paypal.me/mustafasalih)
 
-# MSniper
+# MSniper [![Donate](https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=msniperservice%40outlook%2ecom&lc=GB&item_name=MSniper%20%2d%20Github%20Project&item_number=2059121116&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted)
 - Live Snipe with [MService](https://github.com/msx752/msniper-location-service) for [NecroBot2](https://github.com/Necrobot-Private/NecroBot)
 
 ##### be careful using bot will cause ban, using bot your own risk
