@@ -31,8 +31,9 @@ namespace MSniper
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            frm = new FWindow();
-            frm.Console.Arguments = _args;
+            frm = new FWindow {Console = {Arguments = _args}};
+            if (_args.Length > 0)
+                frm.WindowState = FormWindowState.Minimized;
             Application.Run(frm);
         }
         #endregion
