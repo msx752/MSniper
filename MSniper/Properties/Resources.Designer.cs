@@ -192,8 +192,7 @@ namespace MSniper.Properties {
         ///      &quot;Key&quot;: &quot;protocolNotFound&quot;,
         ///      &quot;Value&quot;: &quot;Protocollo non trovato - Perfavore esegui per una volta {0}&quot;
         ///    },
-        ///    {
-        ///      &quot;Key&quot;: &quot;sh [rest of string was truncated]&quot;;.
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string translation_it_IT {
             get {

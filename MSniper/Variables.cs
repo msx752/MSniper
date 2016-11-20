@@ -16,7 +16,8 @@ namespace MSniper
         public static string FileLink => $"{GithubProjectUri}/releases/download/{{0}}/{ProgramName}.v{{0}}.zip";
         public static string GithubProjectUri => $"https://github.com/{By}/{ProgramName}";
         public static string GithubRawUri => $"https://raw.githubusercontent.com/{By}/{ProgramName}";
-        public static string GithubIoUri => $"https://{By}.github.io/{ProgramName}/";
+        public static string GithubIoUri => $"https://github.com/{By}/{ProgramName}/";
+        //
         public static string SnipeWebsite => $"http://msniper.com/";
         public static string MinRequireVersion => "1.0.0.0";
         public static string ProgramName => "MSniper";
@@ -26,7 +27,8 @@ namespace MSniper
         public static string StartupPath => Path.GetDirectoryName(ExecutablePath);
 
         public static string StrKillSwitchUri =
-            $"https://raw.githubusercontent.com/{By}/{ProgramName}/master/KillSwitch.txt";
+            "https://raw.githubusercontent.com/Necrobot-Private/NecroBot/master/KillSwitch.txt";
+            //$"https://raw.githubusercontent.com/{By}/{ProgramName}/master/KillSwitch.txt";
 
         public static List<CultureInfo> SupportedLanguages => new List<CultureInfo>()
         {
