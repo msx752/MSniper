@@ -54,15 +54,11 @@ namespace MSniper.WFConsole
             };
             msniperServiceToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
-                Process.Start("http://msniper.com");
-            };
-            myPogoSnipersToolStripMenuItem.Click += delegate (object sender, EventArgs e)
-            {
-                Process.Start("http://mypogosnipers.com");
+                Process.Start("https://github.com/msx752/msniper-location-service");
             };
             necroBotLatestToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
-                Process.Start("https://github.com/Necrobot-Private/NecroBot/releases/latest");
+                Process.Start("https://github.com/Necrobot-Private/NecroBot");
             };
             featuresToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {

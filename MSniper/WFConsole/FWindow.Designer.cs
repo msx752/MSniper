@@ -44,7 +44,6 @@
             this.getFeedsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.donateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.myPogoSnipersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Console = new MSniper.WFConsole.FConsole();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -109,8 +108,7 @@
             this.projectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mSniperLatestToolStripMenuItem,
             this.necroBotLatestToolStripMenuItem,
-            this.msniperServiceToolStripMenuItem,
-            this.myPogoSnipersToolStripMenuItem});
+            this.msniperServiceToolStripMenuItem});
             this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
             this.projectToolStripMenuItem.Size = new System.Drawing.Size(86, 20);
             this.projectToolStripMenuItem.Text = "Projects Link";
@@ -118,20 +116,20 @@
             // mSniperLatestToolStripMenuItem
             // 
             this.mSniperLatestToolStripMenuItem.Name = "mSniperLatestToolStripMenuItem";
-            this.mSniperLatestToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.mSniperLatestToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.mSniperLatestToolStripMenuItem.Text = "MSniper";
             // 
             // necroBotLatestToolStripMenuItem
             // 
             this.necroBotLatestToolStripMenuItem.Name = "necroBotLatestToolStripMenuItem";
-            this.necroBotLatestToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.necroBotLatestToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.necroBotLatestToolStripMenuItem.Text = "NecroBot";
             // 
             // msniperServiceToolStripMenuItem
             // 
             this.msniperServiceToolStripMenuItem.Name = "msniperServiceToolStripMenuItem";
-            this.msniperServiceToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.msniperServiceToolStripMenuItem.Text = "PokemonService";
+            this.msniperServiceToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.msniperServiceToolStripMenuItem.Text = "MSniperService";
             // 
             // getFeedsToolStripMenuItem
             // 
@@ -160,12 +158,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(578, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
-            // 
-            // myPogoSnipersToolStripMenuItem
-            // 
-            this.myPogoSnipersToolStripMenuItem.Name = "myPogoSnipersToolStripMenuItem";
-            this.myPogoSnipersToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.myPogoSnipersToolStripMenuItem.Text = "MyPogoSnipers";
             // 
             // Console
             // 
@@ -226,6 +218,5 @@
         private System.Windows.Forms.ToolStripMenuItem donateToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem msniperServiceToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem myPogoSnipersToolStripMenuItem;
     }
 }
